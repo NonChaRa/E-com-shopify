@@ -1,0 +1,99 @@
+.split-feature-section {
+  /* Full Width Breakout */
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+
+  /* Height Increase for "Longer" look */
+  height: 120vh;
+  margin-top: 80px;
+  display: flex;
+  overflow: hidden;
+  background-color: #fdf6e3;
+  transform: translateZ(0); /* GPU acceleration */
+}
+.feature-panel {
+  flex: 1;
+  height: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  padding-bottom: 120px; /* Increased padding for the longer height */
+  overflow: hidden;
+}
+
+.feature-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  z-index: 1;
+  will-change: transform;
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.feature-panel:hover .feature-bg {
+  transform: scale(1.1);
+}
+
+.feature-panel::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0) 60%);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.feature-content {
+  text-align: center;
+  z-index: 3;
+  /* Prevents text jitter during background scale */
+  backface-visibility: hidden;
+}
+
+.feature-title {
+  font-family: var(--font-body);
+  font-size: 3.5rem;
+  color: #ffffff;
+  margin-bottom: 25px;
+  letter-spacing: -1px;
+}
+
+.feature-btn {
+  background-color: #ffffff;
+  color: #000000;
+  border: none;
+  padding: 14px 40px;
+  border-radius: 100px; /* Pill shape */
+  font-family: 'Instrument Sans', sans-serif; /* Your body font */
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  cursor: pointer;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+  margin-bottom: 200px;
+}
+
+.feature-btn:hover {
+  transform: scale(1.1);
+  background-color: #bf3f76; /* Your brand magenta */
+  color: white;
+}
+
+/* Mobile Stacking */
+@media (max-width: 1024px) {
+  .split-feature-section {
+    flex-direction: column;
+    height: 160vh; /* Taller on mobile to show both long images */
+  }
+  .feature-title {
+    font-size: 2.8rem;
+  }
+}

@@ -1,0 +1,175 @@
+/* --- ACCOUNT PAGE LAYOUT --- */
+.account-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 160px 40px 100px; /* Large top padding to clear fixed Navbar */
+  min-height: 80vh;
+}
+
+.account-header {
+  text-align: center;
+  margin-bottom: 80px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 40px;
+}
+
+.account-header h1 {
+  font-family: var(--font-body);
+  font-size: 32px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+}
+
+.user-email {
+  font-size: 14px;
+  color: #888;
+  text-transform: lowercase;
+}
+
+/* --- ORDER HISTORY SECTION --- */
+.order-history h3 {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: #000;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+}
+
+.no-orders {
+  padding: 60px;
+  text-align: center;
+  border: 1px dashed #ddd;
+  color: #888;
+  font-size: 13px;
+}
+
+/* --- ORDER CARD --- */
+.order-card {
+  background: #fff;
+  border: 1px solid #eee;
+  padding: 30px;
+  margin-bottom: 20px;
+  transition: border-color 0.3s ease;
+}
+
+.order-card:hover {
+  border-color: #000;
+}
+
+.order-main-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #f9f9f9;
+}
+
+.order-number {
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+
+.order-date {
+  font-size: 12px;
+  color: #888;
+}
+
+/* --- ORDER THUMBNAILS --- */
+.order-items {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 25px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+}
+
+.order-item-thumb {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.order-item-thumb img {
+  width: 80px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 12px; /* Slightly smaller radius for thumbs */
+  background: #f5f5f5;
+}
+
+.item-qty {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: #000;
+  color: #fff;
+  font-size: 10px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+
+/* --- STATUS PILLS & FOOTER --- */
+.order-status-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.status-pill {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Color coding based on Shopify Fulfillment Status */
+.status-pill.fulfilled {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.status-pill.unfulfilled {
+  background: #fff3e0;
+  color: #ef6c00;
+}
+
+.status-pill.restocked {
+  background: #f5f5f5;
+  color: #757575;
+}
+
+.order-total {
+  font-weight: 700;
+  font-size: 15px;
+}
+
+/* --- EMPTY STATE --- */
+.account-empty {
+  padding: 200px 40px;
+  text-align: center;
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .order-main-info {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+
+  .account-container {
+    padding-top: 120px;
+  }
+}

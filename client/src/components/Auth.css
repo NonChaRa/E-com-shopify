@@ -1,0 +1,194 @@
+/* --- Auth.css --- */
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(43, 87, 181, 0.2);
+  backdrop-filter: blur(12px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.auth-modal {
+  background-color: #fdf6e3 !important; /* Force Hero Cream */
+  padding: 60px;
+  width: 100%;
+  max-width: 480px;
+  position: relative;
+  border: 4px solid #000000 !important;
+  border-radius: 40px;
+  box-shadow: 20px 20px 0px #bf3f76 !important; /* Magenta Shadow */
+  transform: translateY(20px);
+  transition: transform 0.4s ease;
+}
+
+.modal-overlay.active .auth-modal {
+  transform: translateY(0);
+}
+
+.register-wide {
+  max-width: 550px;
+  box-shadow: 20px 20px 0px #2b57b5 !important; /* Blue Shadow */
+}
+
+/* --- TYPOGRAPHY --- */
+
+.auth-header h2 {
+  font-family: 'Bubblegum Sans', cursive;
+  font-size: 3.5rem;
+  line-height: 0.9;
+  margin-bottom: 5px;
+  letter-spacing: -2px;
+  transform: rotate(-1.5deg);
+  color: #000000 !important;
+}
+
+.auth-subtitle {
+  font-family: "Instrument Sans", sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  color: #2b57b5 !important;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 40px;
+  display: block;
+}
+
+/* --- FORMS & INPUTS --- */
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.input-group label {
+  font-family: "Instrument Sans", sans-serif;
+  font-weight: 800;
+  font-size: 10px;
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+  display: block;
+  color: #000000 !important;
+}
+
+.auth-input {
+  width: 100%;
+  background: #ffffff !important;
+  border: 2px solid #000000 !important;
+  padding: 18px;
+  border-radius: 12px;
+  font-family: "Instrument Sans", sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  color: #000000 !important; /* FORCE BLACK TEXT */
+  box-sizing: border-box;
+  opacity: 1 !important;
+}
+
+.auth-input::placeholder {
+  color: rgba(0, 0, 0, 0.4) !important;
+}
+
+.auth-input:focus {
+  outline: none;
+  border-color: #2b57b5;
+  box-shadow: 4px 4px 0px #f1a5b8;
+}
+
+/* --- BUTTONS --- */
+
+.auth-submit-btn {
+  background: #000000 !important;
+  color: #ffffff !important;
+  font-family: "Instrument Sans", sans-serif;
+  font-weight: 900;
+  letter-spacing: 2px;
+  padding: 22px;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  margin-top: 20px;
+  box-shadow: 6px 6px 0px #f1a5b8;
+  transition: all 0.2s ease;
+}
+
+.auth-submit-btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 8px 8px 0px #f1a5b8;
+  background: #bf3f76 !important;
+}
+
+.auth-toggle-text {
+  margin-top: 30px;
+  font-family: "Instrument Sans", sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-align: center;
+  color: #000000 !important;
+}
+
+.toggle-link {
+  color: #bf3f76 !important;
+  margin-left: 8px;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.close-modal {
+  position: absolute;
+  top: 25px;
+  right: 25px;
+  background: #ffffff;
+  border: 2px solid #000000;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  font-weight: 900;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 3px 3px 0px #000000;
+}
+
+.checkbox-group {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.checkbox-group input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+  cursor: pointer;
+  accent-color: #000000; /* Matching your black-and-white theme */
+  border: 2px solid #000000;
+}
+
+.checkbox-group label {
+  font-family: "Instrument Sans", sans-serif;
+  font-size: 11px;
+  line-height: 1.4;
+  color: #000000 !important;
+  font-weight: 500;
+  text-transform: none !important; /* Keep it as a readable sentence */
+  letter-spacing: 0;
+  cursor: pointer;
+}

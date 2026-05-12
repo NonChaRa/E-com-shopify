@@ -1,0 +1,69 @@
+.video-loop-section {
+  padding: 100px 40px;
+  background-image: url('../assets/black-white.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 30%; /* Adjusted so it sits perfectly in the middle gap */
+  color: #000;
+  overflow: hidden;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.section-title {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  margin-bottom: 15px;
+}
+
+.section-subtitle {
+  font-size: 14px;
+  color: #666;
+  font-style: italic;
+}
+
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.video-card {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 9 / 16;
+  background: #f3f3f3;
+  border-radius: 20px; /* Rounded corners to match the editorial look */
+  /* GPU Layer Promotion */
+  transform: translateZ(0);
+}
+
+.loop-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Optimization: prepare the GPU for transformations */
+  will-change: transform;
+}
+
+/* Spacer logic for mobile */
+@media (max-width: 768px) {
+  .video-grid {
+    grid-template-columns: 1fr;
+  }
+  .video-spacer {
+    display: none; /* Hiding the spacer on mobile to avoid empty gaps */
+  }
+  .video-loop-section {
+    background-image: none; /* Removing the middle SVG on mobile for speed */
+    padding: 60px 20px;
+  }
+}

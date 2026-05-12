@@ -1,0 +1,96 @@
+/* --- PORTAL OVERLAY --- */
+.inquiry-portal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4); /* Professional dim */
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000; /* Higher than Navbar (5000) */
+  backdrop-filter: blur(8px);
+  pointer-events: all;
+  opacity: 1;
+  visibility: visible;
+}
+
+/* --- MODAL CARD --- */
+.inquiry-modal-card {
+  background: #ffffff;
+  padding: 50px;
+  width: 90%;
+  max-width: 480px;
+  position: relative;
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.15);
+  border-radius: 4px; /* Minimalist sharp edges */
+  color: #000;
+  animation: modalFadeUp 0.4s ease;
+}
+
+@keyframes modalFadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.modal-close-x {
+  position: absolute;
+  top: 20px;
+  right: 25px;
+  background: none;
+  border: none;
+  font-size: 32px;
+  cursor: pointer;
+  color: #888;
+  line-height: 1;
+}
+
+.modal-close-x:hover { color: #000; }
+
+/* --- TYPOGRAPHY & FORMS --- */
+.modal-header-minimal h2 {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  letter-spacing: -0.5px;
+}
+
+.minimal-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 35px;
+}
+
+.minimal-input-group input {
+  padding: 15px 0;
+  border: none;
+  border-bottom: 1px solid #e0e0e0;
+  font-size: 14px;
+  outline: none;
+  background: transparent;
+  transition: border-color 0.3s;
+}
+
+.minimal-input-group input:focus {
+  border-color: #000;
+  color: black;
+}
+
+.modal-footer-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+}
+
+/* Inherit button styles from ProductPage.css or define here */
+.modal-footer-actions .add-to-cart-primary {
+  width: 100%;
+  padding: 18px;
+  background: #000;
+  color: #fff;
+  border: 1px solid #000;
+  border-radius: 40px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}

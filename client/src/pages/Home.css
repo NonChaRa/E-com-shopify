@@ -1,0 +1,235 @@
+/* --- THE WRAPPER & IMAGE --- */
+.editorial-image-wrapper {
+  position: relative;
+  overflow: hidden; /* Clips the sliding size menu */
+  border: 1px solid #000; /* Matching your cartoon-black */
+  border-radius: 24px;
+  background: #f9f9f9;
+}
+
+/* --- THE TRIGGER (+) BUTTON --- */
+.quick-add-trigger-circle {
+  position: absolute; /* This places it OVER the image */
+  bottom: 15px;
+  right: 15px;
+  width: 30px;
+  height: 30px;
+  background: #ffffff;
+  border: 1px solid #000;
+  border-radius: 50%;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 30; /* High z-index to stay on top */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: black;
+}
+
+.quick-add-trigger-circle:hover {
+  transform: scale(1.1);
+  background: var(--hero-blue); /* Uses your theme blue */
+}
+
+.quick-add-trigger-circle.is-active {
+  background: #000;
+  color: #fff;
+  transform: rotate(90deg);
+}
+
+/* --- THE SIZE SELECTOR OVERLAY --- */
+.quick-size-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  padding: 20px 10px;
+  transform: translateY(100%); /* Start hidden below */
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 15;
+  border-top: 2px solid #000;
+}
+
+.quick-size-overlay.active {
+  transform: translateY(0); /* Slide up */
+}
+
+.quick-add-label {
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  margin-bottom: 15px;
+  color: #000;
+}
+
+/* --- SIZE BUTTONS --- */
+.size-btn-grid {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.mini-size-btn {
+  background: #fff;
+  border: 2px solid #000;
+  padding: 6px 12px;
+  font-size: 11px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.1s ease;
+  min-width: 40px;
+  color: black;
+}
+
+.mini-size-btn:hover:not(:disabled) {
+  background: #000;
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 2px 2px 0px var(--hero-blue);
+}
+
+.mini-size-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  text-decoration: line-through;
+}
+
+/* --- REUSE YOUR EXISTING PRODUCT TEXT STYLES --- */
+.product-name {
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-top: 15px;
+}
+
+.product-price {
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: #666;
+  font-weight: 500;
+}
+
+/* --- PRE-ORDER CONFIRMATION UI --- */
+.preorder-confirm-ui {
+  text-align: center;
+  padding: 0 5px;
+  animation: fadeIn 0.3s ease;
+}
+
+.confirm-text {
+  font-size: 11px;
+  line-height: 1.4;
+  margin-bottom: 15px;
+  color: #000;
+  font-weight: 500;
+  padding: 0 10px;
+}
+
+.confirm-text strong {
+  font-weight: 900;
+  text-decoration: underline;
+}
+
+.confirm-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.confirm-add-btn {
+  background: #000;
+  color: #fff;
+  border: 2px solid #000;
+  padding: 10px;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.confirm-add-btn:hover {
+  background: var(--hero-blue);
+  color: #000;
+}
+
+.confirm-cancel-btn {
+  background: transparent;
+  color: #888;
+  border: none;
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.confirm-cancel-btn:hover {
+  color: #000;
+}
+
+/* --- CATEGORY LINKS --- */
+.collection-categories {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.category-link {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #999;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+
+.category-link:hover {
+  color: #000;
+}
+
+/* --- CENTERED EXPLORE BUTTON --- */
+.shop-all-cta-centered {
+  display: flex;
+  justify-content: center;
+  margin: 50px 0;
+}
+
+.editorial-explore-btn {
+  background-color: #ffffff;
+  color: #000000;
+  border: none;
+  padding: 14px 40px;
+  border-radius: 100px;
+  font-family: 'Instrument Sans', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  cursor: pointer;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+  border: 0.5px solid #000;
+}
+
+.editorial-explore-btn:hover {
+  transform: scale(1.1);
+  background-color: #bf3f76; /* Your brand magenta */
+  color: white;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}

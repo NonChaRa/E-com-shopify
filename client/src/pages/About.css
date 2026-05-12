@@ -1,0 +1,221 @@
+.about-page-wrapper {
+  padding-top: 100px;
+  /* Ensure the whole page defaults to a clean base */
+  background-color: #fff;
+  color: #000;
+}
+
+.editorial-title {
+  /* Simple, clean sans-serif */
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 42px;
+  font-weight: 700; /* Bold but clean */
+  font-style: normal; /* Removes italics */
+  text-align: center; /* Centers the title */
+  letter-spacing: -0.5px;
+  color: #000;
+  margin-bottom: 12px;
+  text-transform: none; /* Keeps it natural */
+}
+
+.editorial-subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #666;
+  text-align: center; /* Centers the subtitle */
+  max-width: 600px;
+  margin: 0 auto 60px; /* Centers the block and adds space below */
+  line-height: 1.6;
+}
+
+/* --- SECTION 1: THE DARK YEARS --- */
+.story-section.monochrome-bg {
+  background-color: #1a1a1a;
+  color: #ffffff; /* Forces all text inside to be white */
+  padding: 120px 20px;
+  text-align: center;
+  margin-top: 50px;
+}
+
+.monochrome-bg .serif-title {
+  color: #ffffff; /* Explicitly make this title white */
+}
+
+.monochrome-bg .narrative-text p {
+  color: #cccccc; /* Slightly softer white for the body text */
+}
+
+/* --- SECTION 2: THE TURNING POINT (LIGHT) --- */
+.bg-off-white {
+  background-color: #fcfcfc;
+  padding: 100px 40px;
+  color: #000000; /* Forces all text inside to be black */
+}
+
+/* Fix for the invisible text in your screenshot */
+.bg-off-white .caps-title {
+  color: #000000 !important;
+}
+
+.bg-off-white .narrative-text-small {
+  color: #444444 !important;
+}
+
+/* --- TYPOGRAPHY REFINEMENT --- */
+.serif-title {
+  font-family: "Playfair Display", serif;
+  font-size: 52px;
+  font-weight: 400;
+  font-style: italic;
+  margin-bottom: 40px;
+}
+
+.caps-title {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+/* --- THE SPLIT GRID FIX --- */
+.editorial-split-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 60px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.split-image {
+  width: 100%;
+}
+
+.split-image img {
+  width: 100%;
+  height: 600px;
+  object-fit: cover;
+  border-radius: 40px;
+  border: 2px solid #eee; /* Light border to define the image area */
+  display: block;
+}
+
+.split-content {
+  text-align: left;
+}
+
+/* --- NARRATIVE TEXT --- */
+.story-container-narrow {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.drop-cap::first-letter {
+  font-family: "Playfair Display", serif;
+  font-size: 80px;
+  float: left;
+  line-height: 60px;
+  padding-right: 15px;
+  margin-top: 5px;
+  color: #22668D;
+}
+
+/* --- 3-COLUMN GRID --- */
+.radiance-section {
+  padding: 100px 40px;
+  background-color: #fff;
+}
+
+/* Ensure the grid is also centered */
+.editorial-three-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+.final-statement {
+  font-family: 'Inter', sans-serif;
+  font-size: 24px;
+  font-weight: 500;
+  font-style: normal; /* Removes italics */
+  line-height: 1.5;
+  color: #000;
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.grid-item img {
+  width: 100%;
+  height: 500px;
+  object-fit: cover;
+  border-radius: 20px;
+}
+
+/* --- PHASE 3: RADIANCE FIXES --- */
+.radiance-section {
+  background-color: #ffffff;
+  padding: 100px 40px;
+}
+
+.radiance-section .serif-title {
+  color: #000000 !important; /* Force black title */
+  margin-bottom: 15px;
+}
+
+.radiance-section .feature-subtitle {
+  color: #666666 !important;
+  margin-bottom: 60px;
+}
+
+.editorial-three-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.grid-item img {
+  width: 100%;
+  height: 550px; /* Fixed height for uniformity */
+  object-fit: cover;
+  border-radius: 30px; /* Matching your studio aesthetic */
+  border: 2px solid #f0f0f0;
+}
+
+/* --- PHASE 4: MISSION FIXES --- */
+.mission-statement-section {
+  background-color: #ffffff;
+  padding: 120px 20px;
+  text-align: center;
+  border-top: 1px solid #eee; /* Subtle separator from the grid */
+}
+
+.mission-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.mission-statement-section .caps-title {
+  color: #000000 !important;
+  margin-bottom: 30px;
+}
+
+
+/* Mobile Fix */
+@media (max-width: 768px) {
+  .editorial-three-grid {
+    grid-template-columns: 1fr;
+  }
+  .grid-item img {
+    height: 400px;
+  }
+  .final-statement {
+    font-size: 20px;
+  }
+}

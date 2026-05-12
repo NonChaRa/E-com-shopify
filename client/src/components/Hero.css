@@ -1,0 +1,79 @@
+/* --- src/components/Hero.css --- */
+.hero-editorial {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 10%;
+  position: relative; /* REQUIRED for the pseudo-element to work */
+  background-color: var(--bg-cream); /* This color shows through the faded image */
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* THE MAGIC FADE LAYER */
+.hero-editorial::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 130%;
+
+  /* Move your background image here */
+  background-image: url('../assets/Bg-hero.png');
+  background-size: cover;
+
+  /* ADJUST OPACITY HERE: 0.3 is very soft, 0.7 is more vibrant */
+  opacity: 0.9;
+
+  z-index: 1; /* Sits behind the text */
+  pointer-events: none; /* Ensures you can still click things through it */
+}
+
+.hero-content-wrapper {
+  position: relative;
+  z-index: 10; /* Pushes the text block on top of the fade layer */
+  max-width: 650px;
+  text-align: left;
+}
+
+.hero-main-title {
+  font-family: var(--font-cartoon); /* Using your new Bubblegum/Fredoka font */
+  font-size: 5rem;
+  line-height: 1.1;
+  color: white; /* Or var(--black) depending on your bg.jpg contrast */
+  margin-bottom: 20px;
+  letter-spacing: -1px;
+}
+
+.hero-sub-text {
+  font-family: var(--font-body);
+  font-size: 18px;
+  color: white;
+  margin-bottom: 40px;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+/* The White Box Button from Toad&Co reference */
+.hero-cta-box {
+  background-color: white;
+  color: var(--black);
+  border: none;
+  padding: 15px 35px;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.hero-cta-box:hover {
+  background-color: var(--accent-orange);
+  color: white;
+  transform: translateY(-2px);
+}

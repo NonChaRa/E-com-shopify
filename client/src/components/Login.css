@@ -1,0 +1,87 @@
+/* --- LOGIN MODAL: VINTAGE THEME --- */
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(75, 157, 169, 0.3); /* Transparent Brand Teal backdrop */
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.login-modal {
+  background: var(--bg-cream); /* Matching page background */
+  padding: 60px 50px;
+  width: 100%;
+  max-width: 440px;
+  position: relative;
+  border: 4px solid var(--black);
+  box-shadow: 20px 20px 0px var(--accent-orange); /* Bold Orange Pop Shadow */
+}
+
+.login-header h2 {
+  font-family: var(--font-cyber);
+  color: var(--black);
+  font-size: 2rem;
+  letter-spacing: -2px;
+}
+
+.auth-subtitle {
+  font-family: var(--font-cartoon);
+  color: var(--brand-teal); /* Teal text */
+  font-size: 15px;
+  margin-bottom: 40px;
+  display: block;
+}
+
+.admin-input {
+  background: var(--white);
+  border: 2px solid var(--black);
+  padding: 18px;
+  color: var(--black);
+  font-family: var(--font-body);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.admin-input:focus {
+  outline: none;
+  border-color: var(--accent-orange);
+  box-shadow: 4px 4px 0px var(--soft-mint);
+}
+
+.auth-submit-btn {
+  background: var(--black);
+  color: var(--white);
+  font-family: var(--font-cyber);
+  font-weight: 900;
+  padding: 20px;
+  border: none;
+  cursor: pointer;
+  clip-path: polygon(0 0, 100% 0, 94% 100%, 0% 100%);
+  transition: 0.2s ease;
+}
+
+.auth-submit-btn:hover {
+  background: var(--accent-orange);
+  transform: translate(-3px, -3px);
+  box-shadow: 5px 5px 0px var(--brand-teal);
+}
+
+.auth-toggle span {
+  color: var(--accent-orange);
+  font-weight: bold;
+}
