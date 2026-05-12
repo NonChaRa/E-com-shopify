@@ -40,19 +40,19 @@ const Navbar = ({ cartCount, onOpenCart, user, onOpenLogin, onLogout, forceSolid
   };
 
   const loginWithShopify = async () => {
-    // 1. GENERATE PKCE VALUES
-    const codeVerifier = generateRandomString(128);
+    const codeVerifier = generateRandomString(128); // Standard helper
     const codeChallenge = await base64UrlEncode(await sha256(codeVerifier));
 
-    // 2. SAVE VERIFIER TO USE IN YOUR CALLBACK PAGE LATER
+    // 2. Store the verifier so the Callback page can find it later
     localStorage.setItem('shopify_code_verifier', codeVerifier);
 
     const authBase = "https://shopify.com/authentication/87903484066/oauth/authorize";
     const clientId = import.meta.env.VITE_SHOPIFY_CLIENT_ID;
     const redirectUri = encodeURIComponent(import.meta.env.VITE_SHOPIFY_REDIRECT_URI);
 
-    // 3. ADD PKCE PARAMS TO THE URL
-    const authUrl = `${authBase}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=openid%20email%20customer-account-api:full&response_type=code&code_challenge=${codeChallenge}&code_challenge_method=S256&state=random&nonce=random`;
+    // 3. Construct the URL with state and nonce for extra security
+    const scope = encodeURIComponent("openid email customer-account-api:full");
+    const authUrl = `${authBase}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}&response_type=code&code_challenge=${codeChallenge}&code_challenge_method=S256&state=random123&nonce=random456`;
 
     window.location.href = authUrl;
   };

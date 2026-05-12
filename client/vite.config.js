@@ -8,12 +8,4 @@ export default defineConfig({
     react(),
     basicSsl()
   ],
-  server: {
-    https: false,
-    host: '127.0.0.1',
-    port: 5173,
-    allowedHosts: [
-        'fiscally-omen-unglue.ngrok-free.dev'
-    ]
-  }
 });
