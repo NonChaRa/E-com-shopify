@@ -42,18 +42,24 @@ const Navbar = ({ cartCount, onOpenCart, user, onOpenLogin, onLogout, forceSolid
   const loginWithShopify = async () => {
     const codeVerifier = generateRandomString(128);
     const codeChallenge = await base64UrlEncode(await sha256(codeVerifier));
-    localStorage.setItem('shopify_code_verifier', codeVerifier);
+    sessionStorage.setItem('shopify_code_verifier', codeVerifier);
 
-    // Use the branded domain you bought for the auth page
-    const authBase = `https://${import.meta.env.VITE_SHOPIFY_ACCOUNT_DOMAIN}/auth/oauth/authorize`;
+    const state = Math.random().toString(36).substring(2);
+    sessionStorage.setItem('shopify_auth_state', state);
 
-    const clientId = import.meta.env.VITE_SHOPIFY_CLIENT_ID;
-    const redirectUri = encodeURIComponent(import.meta.env.VITE_SHOPIFY_REDIRECT_URI);
-    const scope = encodeURIComponent("openid email customer-account-api:full");
+    const params = new URLSearchParams({
+      client_id: import.meta.env.VITE_SHOPIFY_CLIENT_ID,
+      redirect_uri: import.meta.env.VITE_SHOPIFY_REDIRECT_URI, // Pass the RAW variable here
+      scope: "openid email customer-account-api:full",
+      response_type: "code",
+      code_challenge: codeChallenge,
+      code_challenge_method: "S256",
+      state: state,
+      nonce: "random456",
+    });
 
-    const authUrl = `${authBase}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}&response_type=code&code_challenge=${codeChallenge}&code_challenge_method=S256&state=random123&nonce=random456`;
-
-    window.location.href = authUrl;
+    const authBase = `https://account.asteri2kstudio.com/auth/oauth/authorize`;
+    window.location.href = `${authBase}?${params.toString()}`;
   };
 
   return (
