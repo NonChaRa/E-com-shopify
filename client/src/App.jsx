@@ -170,14 +170,17 @@ function App() {
     }
   };
   const SSOHandler = () => {
+    const navigate = useNavigate();
     useEffect(() => {
       const params = new URLSearchParams(window.location.search);
-      if (params.get('sso') === 'silent') {
-        window.history.replaceState({}, document.title, "/");
-        console.log("Shopify session established silently.");
+      const returnTo = params.get('return_to');
+      if (returnTo) {
+        window.location.href = returnTo;
+      } else {
+        navigate('/');
       }
-    }, []);
-    return <div className="loading-screen">Authenticating with Astéri Studio...</div>;
+    }, [navigate]);
+    return <div className="loading">Authenticating with Astéri Studio...</div>;
   };
 
   useEffect(() => { fetchProducts(); }, []);
