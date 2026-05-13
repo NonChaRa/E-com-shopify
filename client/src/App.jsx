@@ -187,6 +187,16 @@ function App() {
       </div>
     );
   };
+  const SSOHandler = () => {
+    useEffect(() => {
+      const params = new URLSearchParams(window.location.search);
+      const returnTo = params.get('return_to');
+      if (returnTo) {
+        window.location.href = returnTo;
+      }
+    }, []);
+    return null;
+  };
 
   useEffect(() => { fetchProducts(); }, []);
 
@@ -233,6 +243,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/about" element={<About />} />
           <Route path="/callback" element={<Callback onLoginSuccess={handleLoginSuccess} />} />
+          <Route path="/customer_authentication/sso_hint" element={<SSOHandler />} />
           <Route path="/services/login_with_shop/buyer/start" element={<ShopifySSOHandler />} />
         </Routes>
       </LayoutWrapper>
