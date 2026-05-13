@@ -172,9 +172,9 @@ function App() {
   const SSOHandler = () => {
     useEffect(() => {
       const params = new URLSearchParams(window.location.search);
-      const returnTo = params.get('return_to');
-      if (returnTo) {
-        window.location.href = returnTo;
+      if (params.get('sso') === 'silent') {
+        window.history.replaceState({}, document.title, "/");
+        console.log("Shopify session established silently.");
       }
     }, []);
     return <div className="loading-screen">Authenticating with Astéri Studio...</div>;
