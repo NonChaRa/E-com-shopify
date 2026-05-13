@@ -169,6 +169,16 @@ function App() {
       setLoading(false);
     }
   };
+  const SSOHandler = () => {
+    useEffect(() => {
+      const params = new URLSearchParams(window.location.search);
+      const returnTo = params.get('return_to');
+      if (returnTo) {
+        window.location.href = returnTo;
+      }
+    }, []);
+    return <div className="loading-screen">Authenticating with Astéri Studio...</div>;
+  };
 
   useEffect(() => { fetchProducts(); }, []);
 
@@ -215,6 +225,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/about" element={<About />} />
           <Route path="/callback" element={<Callback onLoginSuccess={handleLoginSuccess} />} />
+          <Route path="/customer_authentication/sso_hint" element={<SSOHandler />} />
         </Routes>
       </LayoutWrapper>
 
