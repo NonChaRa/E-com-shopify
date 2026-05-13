@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import './styles/Global.css';
+import { useNavigate } from 'react-router-dom';
 
 
 // Layout Components
@@ -169,18 +170,22 @@ function App() {
       setLoading(false);
     }
   };
-  const SSOHandler = () => {
-    const navigate = useNavigate();
+  const ShopifySSOHandler = () => {
     useEffect(() => {
       const params = new URLSearchParams(window.location.search);
       const returnTo = params.get('return_to');
+
       if (returnTo) {
         window.location.href = returnTo;
-      } else {
-        navigate('/');
       }
-    }, [navigate]);
-    return <div className="loading">Authenticating with Astéri Studio...</div>;
+    }, []);
+
+    return (
+      <div style={{ textAlign: 'center', padding: '100px' }}>
+        <h2>SECURE SYNC...</h2>
+        <p>Connecting your studio profile.</p>
+      </div>
+    );
   };
 
   useEffect(() => { fetchProducts(); }, []);
@@ -228,7 +233,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/about" element={<About />} />
           <Route path="/callback" element={<Callback onLoginSuccess={handleLoginSuccess} />} />
-          <Route path="/customer_authentication/sso_hint" element={<SSOHandler />} />
+          <Route path="/services/login_with_shop/buyer/start" element={<ShopifySSOHandler />} />
         </Routes>
       </LayoutWrapper>
 
