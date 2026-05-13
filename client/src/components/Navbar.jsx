@@ -40,18 +40,17 @@ const Navbar = ({ cartCount, onOpenCart, user, onOpenLogin, onLogout, forceSolid
   };
 
   const loginWithShopify = async () => {
-    const codeVerifier = generateRandomString(128); // Standard helper
+    const codeVerifier = generateRandomString(128);
     const codeChallenge = await base64UrlEncode(await sha256(codeVerifier));
-
-    // 2. Store the verifier so the Callback page can find it later
     localStorage.setItem('shopify_code_verifier', codeVerifier);
 
-    const authBase = "https://shopify.com/authentication/87903484066/oauth/authorize";
+    // Use the branded domain you bought for the auth page
+    const authBase = `https://${import.meta.env.VITE_SHOPIFY_ACCOUNT_DOMAIN}/auth/oauth/authorize`;
+
     const clientId = import.meta.env.VITE_SHOPIFY_CLIENT_ID;
     const redirectUri = encodeURIComponent(import.meta.env.VITE_SHOPIFY_REDIRECT_URI);
-
-    // 3. Construct the URL with state and nonce for extra security
     const scope = encodeURIComponent("openid email customer-account-api:full");
+
     const authUrl = `${authBase}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}&response_type=code&code_challenge=${codeChallenge}&code_challenge_method=S256&state=random123&nonce=random456`;
 
     window.location.href = authUrl;
