@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Navbar.css';
-import logo from '../assets/etoile-logo.gif';
+import logo from '../assets/Asteri2k.gif';
 import { useNavigate } from 'react-router-dom';
 
 // Added onLogout to the props destructured here
@@ -22,45 +22,6 @@ const Navbar = ({ cartCount, onOpenCart, user, onOpenLogin, onLogout, forceSolid
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, [prevScrollPos]);
-  const generateRandomString = (length) => {
-    const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    const values = window.crypto.getRandomValues(new Uint8Array(length));
-    return Array.from(values).map((x) => possible[x % possible.length]).join('');
-  };
-
-  const sha256 = async (plain) => {
-    const encoder = new TextEncoder();
-    const data = encoder.encode(plain);
-    return window.crypto.subtle.digest('SHA-256', data);
-  };
-
-  const base64UrlEncode = (a) => {
-    return btoa(String.fromCharCode.apply(null, new Uint8Array(a)))
-      .replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
-  };
-
-  const loginWithShopify = async () => {
-    const codeVerifier = generateRandomString(128);
-    const codeChallenge = await base64UrlEncode(await sha256(codeVerifier));
-    sessionStorage.setItem('shopify_code_verifier', codeVerifier);
-
-    const state = Math.random().toString(36).substring(2);
-    sessionStorage.setItem('shopify_auth_state', state);
-
-    const params = new URLSearchParams({
-      client_id: import.meta.env.VITE_SHOPIFY_CLIENT_ID,
-      redirect_uri: import.meta.env.VITE_SHOPIFY_REDIRECT_URI, // Pass the RAW variable here
-      scope: "openid email customer-account-api:full",
-      response_type: "code",
-      code_challenge: codeChallenge,
-      code_challenge_method: "S256",
-      state: state,
-      nonce: "random456",
-    });
-
-    const authBase = `https://account.asteri2kstudio.com/auth/oauth/authorize`;
-    window.location.href = `${authBase}?${params.toString()}`;
-  };
 
   return (
     <>
@@ -96,7 +57,7 @@ const Navbar = ({ cartCount, onOpenCart, user, onOpenLogin, onLogout, forceSolid
                 <span className="nav-link">PROFILE</span>
               </div>
             )}
-            <div className="nav-item-wrapper" onClick={user ? onLogout : loginWithShopify}>
+            <div className="nav-item-wrapper" onClick={user ? onLogout : onOpenLogin}>
               <span className="nav-link">
                 {user ? 'LOGOUT' : 'LOGIN'}
               </span>

@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import './styles/Global.css';
-import { useNavigate } from 'react-router-dom';
 
 
 // Layout Components
@@ -19,7 +18,7 @@ import ProductPage from './components/ProductPage';
 import AllProducts from './pages/AllProducts';
 import Contact from './pages/Contact';
 import About from './pages/About';
-import Callback from './pages/Callback';
+
 
 // Logic
 import { useCart } from './store/useCart';
@@ -82,23 +81,10 @@ function App() {
         window.location.href = "/";
       }
   };
-  const handleLoginSuccess = (token) => {
-    localStorage.setItem('shopify_customer_token', token);
-    setUser({ loggedIn: true });
-  };
-  useEffect(() => {
-    const token = localStorage.getItem('shopify_customer_token');
-    if (token) {
-      setUser({ loggedIn: true });
-      // TODO: Fetch real name/email from Shopify here later
-    }
-  }, []);
-  const fetchByCollection = async (handle) => {
+  const fetchByCollection = useCallback(async (handle) => {
     setLoading(true);
     try {
       const response = await shopifyFetch(GET_COLLECTION_PRODUCTS, { handle });
-
-      // If Shopify returns null for this handle, don't update the state
       if (!response?.data?.collection) {
         console.warn(`Shopify could not find collection: ${handle}. Check handle & Sales Channel publishing.`);
         return;
@@ -115,15 +101,13 @@ function App() {
           available: v.node.availableForSale
         }))
       }));
-
       setProducts(formatted);
     } catch (err) {
       console.error(err);
     } finally {
       setLoading(false);
     }
-  };
-
+  }, []);
   // --- IDENTITY LOGIC ---
   useEffect(() => {
       supabase.auth.getSession().then(({ data: { session } }) => {
@@ -143,60 +127,33 @@ function App() {
     }, []);
 
   // --- DATA FETCHING ---
-  const fetchProducts = async () => {
+  const fetchProducts = useCallback(async () => {
     try {
       setLoading(true);
       const response = await shopifyFetch(GET_PRODUCTS_QUERY, { first: 20 });
       if (response?.data?.products) {
-        const formatted = response.data.products.edges.map(({ node }) => ({
-          id: node.id,
-          name: node.title,
-          description: node.description,
-          price: node.priceRange.minVariantPrice.amount,
-          image_url: node.images.edges[0]?.node.url,
-          images: node.images.edges.map(img => img.node.url),
-          variants: node.variants.edges.map(v => ({
-            id: v.node.id,
-            title: v.node.title,
-            available: v.node.availableForSale,
-            stock: v.node.quantityAvailable || 0
-          }))
-        }));
-        setProducts(formatted);
+          const formatted = response.data.products.edges.map(({ node }) => ({
+            id: node.id,
+            name: node.title,
+            description: node.description,
+            price: node.priceRange.minVariantPrice.amount,
+            image_url: node.images.edges[0]?.node.url,
+            images: node.images.edges.map(img => img.node.url),
+            variants: node.variants.edges.map(v => ({
+              id: v.node.id,
+              title: v.node.title,
+              available: v.node.availableForSale,
+              stock: v.node.quantityAvailable || 0
+            }))
+          }));
+          setProducts(formatted);
       }
     } catch (err) {
       console.error("Shopify Fetch Error:", err);
     } finally {
       setLoading(false);
     }
-  };
-  const ShopifySSOHandler = () => {
-    useEffect(() => {
-      const params = new URLSearchParams(window.location.search);
-      const returnTo = params.get('return_to');
-
-      if (returnTo) {
-        window.location.href = returnTo;
-      }
-    }, []);
-
-    return (
-      <div style={{ textAlign: 'center', padding: '100px' }}>
-        <h2>SECURE SYNC...</h2>
-        <p>Connecting your studio profile.</p>
-      </div>
-    );
-  };
-  const SSOHandler = () => {
-    useEffect(() => {
-      const params = new URLSearchParams(window.location.search);
-      const returnTo = params.get('return_to');
-      if (returnTo) {
-        window.location.href = returnTo;
-      }
-    }, []);
-    return null;
-  };
+  }, []);
 
   useEffect(() => { fetchProducts(); }, []);
 
@@ -224,7 +181,14 @@ function App() {
           />
           <Route
             path="/shop"
-            element={<AllProducts allProducts={products} loading={loading} />}
+            element={
+              <AllProducts
+                allProducts={products}
+                loading={loading}
+                fetchByCollection={fetchByCollection}
+                fetchAllProducts={fetchProducts}
+              />
+            }
           />
           <Route
             path="/account"
@@ -242,9 +206,6 @@ function App() {
           />
           <Route path="/contact" element={<Contact />} />
           <Route path="/about" element={<About />} />
-          <Route path="/callback" element={<Callback onLoginSuccess={handleLoginSuccess} />} />
-          <Route path="/customer_authentication/sso_hint" element={<SSOHandler />} />
-          <Route path="/services/login_with_shop/buyer/start" element={<ShopifySSOHandler />} />
         </Routes>
       </LayoutWrapper>
 
@@ -273,7 +234,6 @@ function App() {
         updateQuantity={updateQuantity}
         onOpenCart={() => setIsCartOpen(true)}
       />
-
     </Router>
   );
 }

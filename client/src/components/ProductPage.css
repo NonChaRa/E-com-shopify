@@ -1,261 +1,286 @@
-/* --- MINIMAL PRODUCT PAGE SYSTEM --- */
+/* --- PDP THEME: ANTON & LATO EDITORIAL --- */
 
 .product-page-wrapper {
-  padding-top: 100px;
-  background-color: #ffffff;
+  padding-top: 80px;
+  background-color: var(--bg-white);
   min-height: 100vh;
-  color: #000;
+  color: var(--black);
 }
 
 .product-page-container {
-  max-width: 1400px;
+  max-width: 1500px;
   margin: 0 auto;
-  padding: 40px;
+  padding: 40px 5%;
 }
 
-.pdp-global-back {
+.pdp-navigation {
+  margin-bottom: 40px;
+}
+
+.pdp-back-btn {
   background: none;
   border: none;
+  font-family: var(--font-body); /* Lato */
   font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 1.5px;
-  color: #888;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #999;
   cursor: pointer;
-  margin-bottom: 30px;
-  text-transform: uppercase;
   transition: color 0.3s ease;
 }
 
-.pdp-global-back:hover {
-  color: #000;
+.pdp-back-btn:hover {
+  color: var(--black);
 }
 
-/* The Main 2-Column Grid */
-.pdp-main-grid {
+/* --- THE GRID --- */
+.pdp-main-layout {
   display: grid;
-  grid-template-columns: 1fr 480px; /* Balanced for clarity */
-  gap: 60px;
+  grid-template-columns: 1fr 480px;
+  gap: 80px;
   align-items: start;
 }
 
-/* Vertical Image Gallery */
-.pdp-images-stack {
+.pdp-gallery-stack {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 30px;
 }
 
-.pdp-images-stack img {
+.pdp-image-container img {
   width: 100%;
   height: auto;
   display: block;
-  object-fit: cover;
-  border-radius: 4px;
+  border-radius: 2px; /* Very sharp editorial edges */
+  border: 1px solid rgba(0,0,0,0.05);
 }
 
-/* Professional Sticky Info Sidebar */
-.pdp-info-sticky {
+/* --- STICKY SIDEBAR --- */
+.pdp-sidebar-sticky {
   position: sticky;
   top: 120px;
 }
 
-.pdp-name-title {
-  font-size: 32px;
-  font-weight: 600;
-  margin-bottom: 8px;
-  letter-spacing: -0.5px;
-  color: #000;
-}
-
-.pdp-price-label {
-  font-size: 18px;
-  color: #444;
-  margin-bottom: 24px;
-}
-
-.stock-status-badge {
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  margin-bottom: 32px;
-  text-transform: uppercase;
-}
-
-.in-stock { color: #2ecc71; }
-.preorder-label { color: #f39c12; }
-.sold-out { color: #e74c3c; }
-
-.section-label {
+.pdp-collection-tag {
   display: block;
+  font-family: var(--font-body);
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: #999;
+  margin-bottom: 10px;
+}
+
+.pdp-title-main {
+  font-family: var(--font-anton);
+  font-size: clamp(2.5rem, 4vw, 4rem);
+  text-transform: uppercase;
+  line-height: 1;
+  margin-bottom: 15px;
+}
+
+.pdp-price-tag {
+  font-family: var(--font-body);
+  font-size: 22px;
+  font-weight: 300;
+  color: var(--black);
+  margin-bottom: 30px;
+}
+
+.pdp-status-indicator {
+  font-family: var(--font-body);
   font-size: 11px;
   font-weight: 700;
-  margin-bottom: 12px;
-  color: #888;
-}
-
-/* Minimalist Size Pills */
-.size-pill-grid {
-  display: flex;
-  gap: 8px;
+  letter-spacing: 1px;
   margin-bottom: 40px;
 }
 
-.size-pill-item {
-  padding: 10px 20px;
-  border: 1px solid #e0e0e0;
+.pdp-stock-msg { color: #2ecc71; }
+.pdp-preorder-msg { color: var(--accent-orange); }
+.pdp-soldout-msg { color: #999; }
+
+/* --- SELECTION AREA --- */
+.pdp-label-mini {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  margin-bottom: 15px;
+  color: #999;
+}
+
+.pdp-size-grid {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 50px;
+}
+
+.pdp-size-btn {
+  padding: 12px 25px;
+  border: 1px solid #ddd;
   background: transparent;
-  font-size: 12px;
+  font-family: var(--font-body);
+  font-size: 13px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
-  min-width: 60px;
-  color: #000;
+  min-width: 70px;
+  color: black;
 }
 
-.size-pill-item.active {
-  background: #000 !important;
-  color: #fff !important;
-  border-color: #000 !important;
-  opacity: 1 !important; /* THE FIX: Overrides the 0.3 opacity */
+.pdp-size-btn:hover:not(.is-disabled) {
+  border-color: var(--black);
 }
 
-/* Faint Logic for Unavailable Sizes */
-.size-pill-item.faint-pill {
-  opacity: 0.3;
-  background-color: #fafafa;
-  border-style: dashed;
-  cursor: default;
+.pdp-size-btn.is-active {
+  background: var(--black) !important;
+  color: var(--white) !important;
+  border-color: var(--black) !important;
 }
 
-/* Focal Point Buttons (Professional) */
-.pdp-cta-group {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-bottom: 40px;
+.pdp-size-btn.is-disabled {
+  opacity: 0.2;
+  cursor: not-allowed;
+  text-decoration: line-through;
 }
 
-.add-to-cart-primary {
+/* --- PRIMARY ACTION BUTTON --- */
+.pdp-btn-primary {
   width: 100%;
-  padding: 18px;
-  background: #000;
-  color: #fff;
-  border: 1px solid #000;
-  border-radius: 40px;
-  font-size: 12px;
-  font-weight: 700;
+  padding: 20px;
+  background: var(--black);
+  color: var(--white);
+  border: 1px solid var(--black);
+  font-family: var(--font-anton);
+  font-size: 16px;
+  letter-spacing: 2px;
   text-transform: uppercase;
   cursor: pointer;
   transition: all 0.3s ease;
+  margin-bottom: 15px;
 }
 
-.add-to-cart-primary:hover {
-  background: #333;
+.pdp-btn-primary:hover {
+  background: transparent;
+  color: var(--black);
 }
 
-.add-to-cart-primary.preorder-mode {
-  background: #fff;
-  color: #000;
+.pdp-btn-primary.preorder {
+  background: var(--white);
+  color: var(--black);
 }
 
-.add-to-cart-primary.preorder-mode:hover {
-  background: #f5f5f5;
+.pdp-btn-primary.preorder:hover {
+  background: var(--black);
+  color: var(--white);
 }
 
-/* Content Typography */
-.pdp-description-content {
-  font-size: 14px;
-  line-height: 1.6;
+.pdp-preorder-disclaimer {
+  font-family: var(--font-body);
+  font-size: 11px;
+  color: #666;
+  font-style: italic;
+  text-align: center;
+}
+
+/* --- TEXT CONTENT --- */
+.pdp-description-box {
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.7;
   color: #444;
-  margin-bottom: 40px;
-}
-
-.preorder-notice {
-  margin-top: 16px;
-  font-weight: 600;
-  color: #000;
-  font-size: 13px;
-}
-
-/* Clean Accordions */
-.pdp-accordion-minimal details {
+  margin: 50px 0;
+  padding: 30px 0;
   border-top: 1px solid #eee;
-  padding: 16px 0;
+  border-bottom: 1px solid #eee;
 }
 
-.pdp-accordion-minimal summary {
+/* --- ACCORDIONS --- */
+.pdp-utility-accordion details {
+  padding: 20px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.pdp-utility-accordion summary {
   list-style: none;
+  font-family: var(--font-body);
   font-size: 11px;
   font-weight: 700;
+  letter-spacing: 1px;
   cursor: pointer;
   display: flex;
   justify-content: space-between;
   text-transform: uppercase;
 }
 
-.pdp-accordion-minimal .details-body {
-  padding-top: 12px;
+.pdp-details-inner {
+  padding-top: 15px;
+  font-family: var(--font-body);
   font-size: 13px;
   color: #666;
+  line-height: 1.6;
 }
 
-/* Similar Products Section */
-.similar-products-footer {
-  margin-top: 80px;
-  border-top: 1px solid #eee;
-  padding-top: 60px;
+/* --- SIMILAR PRODUCTS --- */
+.pdp-similar-section {
+  margin-top: 120px;
+  padding-top: 80px;
+  border-top: 1px solid var(--black);
 }
 
-.similar-section-title {
-  font-size: 24px;
-  font-weight: 600;
-  margin-bottom: 32px;
-  color: #000;
+.pdp-section-heading {
+  font-family: var(--font-anton);
+  font-size: 2rem;
+  text-transform: uppercase;
+  margin-bottom: 40px;
 }
 
-.similar-products-grid {
+.pdp-similar-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
+  gap: 25px;
 }
 
-.similar-image-wrap img {
+.pdp-similar-card {
+  cursor: pointer;
+}
+
+.pdp-similar-img-wrapper img {
   width: 100%;
   aspect-ratio: 4/5;
   object-fit: cover;
-  border-radius: 4px;
-  margin-bottom: 12px;
+  transition: transform 0.6s ease;
 }
 
-.similar-name {
-  font-size: 14px;
-  margin: 0 0 5px 0;
+.pdp-similar-card:hover img {
+  transform: scale(1.05);
+}
+
+.pdp-similar-name {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 700;
   text-transform: uppercase;
-  font-weight: 600;
+  margin: 15px 0 5px 0;
 }
 
-.similar-price {
+.pdp-similar-price {
+  font-family: var(--font-body);
   font-size: 13px;
-  color: #666;
+  color: #999;
 }
 
-/* Modal Overlay Optimization */
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(255, 255, 255, 0.95);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-  backdrop-filter: blur(8px);
-}
-
-.inquiry-modal-content {
-  background: white;
-  padding: 60px;
-  width: 90%;
-  max-width: 500px;
-  border: 1px solid #000;
-  box-shadow: 0 30px 60px rgba(0,0,0,0.1);
+/* --- RESPONSIVE --- */
+@media (max-width: 1024px) {
+  .pdp-main-layout {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .pdp-sidebar-sticky {
+    position: relative;
+    top: 0;
+  }
+  .pdp-similar-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }

@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Hero from '../components/Hero';
 import SplitFeature from '../components/SplitFeature';
 import VideoLoopSection from '../components/VideoLoopSection';
+import EditorialHero from '../components/EditorialHero';
 import "./Home.css"
 
 // --- THIS COMPONENT HANDLES THE BUTTONS FOR EACH CARD ---
@@ -122,6 +123,10 @@ const Home = ({ allProducts, fetchByCollection, fetchAllProducts, loading, addTo
         fetchByCollection(handle);
       }
   };
+  useEffect(() => {
+      fetchAllProducts();
+      setActiveCollection('ALL');
+    }, []);
 
   const scrollSlider = (direction) => {
     const slider = document.getElementById('product-slider');
@@ -131,6 +136,7 @@ const Home = ({ allProducts, fetchByCollection, fetchAllProducts, loading, addTo
   return (
     <>
       <Hero />
+
       <main className="store-container">
         <div className="collection-header">
           <h1 className="collection-title">SHOP BY COLLECTION</h1>
@@ -140,7 +146,7 @@ const Home = ({ allProducts, fetchByCollection, fetchAllProducts, loading, addTo
                 className={`category-link ${activeCollection === 'blue-imperial' ? 'active' : ''}`}
                 onClick={() => handleCollectionChange('blue-imperial', 'BLUE IMPERIAL')}
               >
-                IMPERIAL BLUE
+                BLUE IMPERIAL
               </span>
 
               <span
@@ -177,7 +183,6 @@ const Home = ({ allProducts, fetchByCollection, fetchAllProducts, loading, addTo
           <button
             className="editorial-explore-btn"
             onClick={() => {
-              // 1. Tell Shopify to fetch EVERYTHING again
               fetchAllProducts();
 
               // 2. Reset the UI underline to "VIEW ALL"
@@ -193,7 +198,11 @@ const Home = ({ allProducts, fetchByCollection, fetchAllProducts, loading, addTo
 
         <SplitFeature />
         <VideoLoopSection />
+
+
+
       </main>
+      <EditorialHero />
     </>
   );
 };

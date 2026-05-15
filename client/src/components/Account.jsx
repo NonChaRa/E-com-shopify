@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { shopifyFetch, GET_CUSTOMER_ORDERS } from './lib/shopify';
+import { supabase } from '../supabaseClient';
 import './Account.css';
 
 const Account = ({ user }) => {
@@ -8,17 +8,23 @@ const Account = ({ user }) => {
 
   useEffect(() => {
     const fetchOrders = async () => {
-      if (!user?.shopify_token) return;
+      if (!user?.id) return;
 
       try {
-        const response = await shopifyFetch(GET_CUSTOMER_ORDERS, {
-          customerAccessToken: user.shopify_token
-        });
+        // Fetching from your local Supabase sync instead of Shopify API
+        const { data, error } = await supabase
+          .from('orders')
+          .select(`
+            *,
+            order_items (*)
+          `)
+          .eq('user_id', user.id)
+          .order('order_date', { ascending: false });
 
-        const orderData = response?.data?.customer?.orders?.edges || [];
-        setOrders(orderData.map(edge => edge.node));
+        if (error) throw error;
+        setOrders(data || []);
       } catch (err) {
-        console.error("Error fetching orders:", err);
+        console.error("Studio Sync Error:", err.message);
       } finally {
         setLoading(false);
       }
@@ -27,52 +33,78 @@ const Account = ({ user }) => {
     fetchOrders();
   }, [user]);
 
-  if (!user) return <div className="account-empty">Please login to view your orders.</div>;
+  if (!user) {
+    return (
+      <div className="account-empty-state">
+        <h1 className="anton-title">ACCESS DENIED</h1>
+        <p>PLEASE LOGIN TO VIEW YOUR STUDIO HISTORY.</p>
+      </div>
+    );
+  }
 
   return (
-    <div className="account-container">
-      <header className="account-header">
-        <h1>MY STUDIO ACCOUNT</h1>
-        <p className="user-email">{user.email}</p>
-      </header>
+    <div className="account-wrapper">
+      <div className="account-container">
+        <header className="account-header">
+          <span className="pdp-collection-tag">CLIENT PORTAL // 2026</span>
+          <h1 className="pdp-title-main">MY STUDIO ACCOUNT</h1>
+          <p className="user-email-sub">{user.email}</p>
+        </header>
 
-      <section className="order-history">
-        <h3>ORDER HISTORY</h3>
-        {loading ? (
-          <p>Fetching your records...</p>
-        ) : orders.length === 0 ? (
-          <p className="no-orders">You haven't placed any orders yet.</p>
-        ) : (
-          <div className="orders-list">
-            {orders.map((order) => (
-              <div key={order.id} className="order-card">
-                <div className="order-main-info">
-                  <span className="order-number">ORDER #{order.orderNumber}</span>
-                  <span className="order-date">{new Date(order.processedAt).toLocaleDateString()}</span>
-                </div>
+        <section className="order-history-section">
+          <h2 className="pdp-section-heading">ARCHIVED ORDERS</h2>
 
-                <div className="order-items">
-                  {order.lineItems.edges.map((item, idx) => (
-                    <div key={idx} className="order-item-thumb">
-                      <img src={item.node.variant?.image?.url} alt={item.node.title} />
-                      <span className="item-qty">x{item.node.quantity}</span>
+          {loading ? (
+            <p className="loading-text">RETRIEVING YOUR SETS...</p>
+          ) : orders.length === 0 ? (
+            <div className="no-orders-box">
+              <p>YOUR COLLECTION IS CURRENTLY EMPTY.</p>
+              <button className="pdp-btn-primary" onClick={() => window.location.href='/shop'}>
+                START A COLLECTION
+              </button>
+            </div>
+          ) : (
+            <div className="orders-gallery">
+              {orders.map((order) => (
+                <div key={order.id} className="order-editorial-card">
+                  <div className="order-card-header">
+                    <span className="order-ref">ID: {order.shopify_order_id.split('.').pop()}</span>
+                    <span className="order-timestamp">
+                      {new Date(order.order_date).toLocaleDateString('en-GB', {
+                        day: '2-digit', month: 'short', year: 'numeric'
+                      })}
+                    </span>
+                  </div>
+
+                  <div className="order-items-row">
+                    {order.order_items?.map((item) => (
+                      <div key={item.id} className="order-item-look">
+                        <div className="item-thumb-frame">
+                          <img src={item.image_url} alt={item.name} />
+                          <span className="item-count">{item.quantity}</span>
+                        </div>
+                        <div className="item-mini-meta">
+                          <span className="item-name">{item.name}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="order-status-footer">
+                    <div className="status-group">
+                      <span className={`status-dot ${order.fulfillment_status.toLowerCase()}`}>•</span>
+                      <span className="status-text">{order.fulfillment_status.toUpperCase()}</span>
                     </div>
-                  ))}
+                    <span className="order-value">
+                      THB {Number(order.total_price).toLocaleString()}
+                    </span>
+                  </div>
                 </div>
-
-                <div className="order-status-row">
-                  <span className={`status-pill ${order.fulfillmentStatus.toLowerCase()}`}>
-                    {order.fulfillmentStatus}
-                  </span>
-                  <span className="order-total">
-                    {Number(order.totalPriceV2.amount).toLocaleString()} {order.totalPriceV2.currencyCode}
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </section>
+              ))}
+            </div>
+          )}
+        </section>
+      </div>
     </div>
   );
 };

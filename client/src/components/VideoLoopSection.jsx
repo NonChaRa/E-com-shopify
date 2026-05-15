@@ -1,14 +1,12 @@
 import React, { useEffect, useRef } from 'react';
 import './VideoLoopSection.css';
-// Import assets correctly for the build tool
-import loop1 from '../assets/videos/loop-1.mp4';
+import loop1 from '../assets/videos/loop-2.mp4';
 import loop3 from '../assets/videos/loop-3.mp4';
 
 const VideoLoopSection = () => {
   const videoRefs = useRef([]);
 
   useEffect(() => {
-    // Create an observer to play/pause videos only when visible
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -37,45 +35,39 @@ const VideoLoopSection = () => {
     }
   };
 
-  return (
-    <section className="video-loop-section">
-      <div className="section-header">
-        <h2 className="section-title">THE ART IN MOTION</h2>
-        <p className="section-subtitle">A closer look at the manual craft behind every set.</p>
-      </div>
+    return (
+      <section className="video-loop-section">
 
-      <div className="video-grid">
-        {/* Left Video */}
-        <div className="video-card video-left">
-          <video
-            ref={addToRefs}
-            className="loop-video"
-            src={loop1}
-            muted
-            loop
-            playsInline
-            preload="metadata" // Only loads enough to show the first frame
-          />
+        <div className="video-grid">
+          {/* Left Video */}
+          <div className="video-card">
+            <video
+              ref={addToRefs}
+              className="loop-video"
+              src={loop1}
+              muted
+              loop
+              playsInline
+              preload="metadata"
+            />
+          </div>
+
+          {/* Second Video (Previously Right) */}
+          <div className="video-card">
+            <video
+              ref={addToRefs}
+              className="loop-video"
+              src={loop3}
+              muted
+              loop
+              playsInline
+              preload="metadata"
+            />
+          </div>
+
         </div>
-
-        {/* Middle Spacer - Holds the SVG background */}
-        <div className="video-spacer"></div>
-
-        {/* Right Video */}
-        <div className="video-card video-right">
-          <video
-            ref={addToRefs}
-            className="loop-video"
-            src={loop3}
-            muted
-            loop
-            playsInline
-            preload="metadata"
-          />
-        </div>
-      </div>
-    </section>
-  );
+      </section>
+    );
 };
 
 export default VideoLoopSection;

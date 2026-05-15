@@ -1,62 +1,146 @@
-/* --- THE WRAPPER & IMAGE --- */
+/* --- 1. COLLECTION HEADER & NAV --- */
+.collection-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 60px 5% 20px 5%;
+  width: 100%;
+}
+
+.collection-title {
+  font-family: var(--font-anton);
+  font-size: clamp(2rem, 5vw, 4rem);
+  text-transform: uppercase;
+  color: var(--black); /* Changed to black for your cream background */
+  margin: 0;
+}
+
+.collection-categories {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+}
+
+.category-link {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #999;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.3s ease;
+  position: relative;
+  text-transform: uppercase;
+}
+
+.category-link:hover, .category-link.active {
+  color: var(--black);
+}
+
+/* --- 2. THE EDITORIAL SLIDER --- */
+.slider-wrapper {
+  position: relative;
+  width: 100%;
+  padding: 0 5%;
+}
+
+.slider-row {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: 15px;
+  padding-bottom: 40px;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+}
+
+.slider-row::-webkit-scrollbar {
+  display: none;
+}
+
+/* --- 3. PRODUCT CARDS --- */
+.editorial-card {
+  flex: 0 0 21.5%;
+  min-width: 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  cursor: pointer;
+}
+
 .editorial-image-wrapper {
   position: relative;
-  overflow: hidden; /* Clips the sliding size menu */
-  border: 1px solid #000; /* Matching your cartoon-black */
+  width: 100%;
+  aspect-ratio: 4 / 5.5;
+  overflow: hidden;
+  border: 1px solid var(--black);
   border-radius: 24px;
   background: #f9f9f9;
 }
 
-/* --- THE TRIGGER (+) BUTTON --- */
+.editorial-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s cubic-bezier(0.2, 1, 0.3, 1);
+}
+
+.editorial-card:hover img {
+  transform: scale(1.08);
+}
+
+/* --- 4. QUICK ADD & SIZE OVERLAY --- */
 .quick-add-trigger-circle {
-  position: absolute; /* This places it OVER the image */
+  position: absolute;
   bottom: 15px;
   right: 15px;
-  width: 30px;
-  height: 30px;
-  background: #ffffff;
-  border: 1px solid #000;
+  width: 35px;
+  height: 35px;
+  background: var(--white);
+  border: 1px solid var(--black);
   border-radius: 50%;
-  font-size: 20px;
+  font-size: 22px;
   cursor: pointer;
-  z-index: 30; /* High z-index to stay on top */
+  z-index: 30;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: black;
+  color: var(--black);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  transition: all 0.3s ease;
 }
 
 .quick-add-trigger-circle:hover {
   transform: scale(1.1);
-  background: var(--hero-blue); /* Uses your theme blue */
+  background: var(--accent-orange);
+  color: var(--white);
 }
 
 .quick-add-trigger-circle.is-active {
-  background: #000;
-  color: #fff;
+  background: var(--black);
+  color: var(--white);
   transform: rotate(90deg);
 }
 
-/* --- THE SIZE SELECTOR OVERLAY --- */
 .quick-size-overlay {
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(10px);
   padding: 20px 10px;
-  transform: translateY(100%); /* Start hidden below */
+  transform: translateY(100%);
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   display: flex;
   flex-direction: column;
   align-items: center;
   z-index: 15;
-  border-top: 2px solid #000;
+  border-top: 1px solid var(--black);
 }
 
 .quick-size-overlay.active {
-  transform: translateY(0); /* Slide up */
+  transform: translateY(0);
 }
 
 .quick-add-label {
@@ -64,10 +148,10 @@
   font-weight: 900;
   letter-spacing: 1.5px;
   margin-bottom: 15px;
-  color: #000;
+  color: var(--black);
+  text-transform: uppercase;
 }
 
-/* --- SIZE BUTTONS --- */
 .size-btn-grid {
   display: flex;
   gap: 8px;
@@ -76,8 +160,8 @@
 }
 
 .mini-size-btn {
-  background: #fff;
-  border: 2px solid #000;
+  background: var(--white);
+  border: 1px solid var(--black);
   padding: 6px 12px;
   font-size: 11px;
   font-weight: 800;
@@ -88,10 +172,9 @@
 }
 
 .mini-size-btn:hover:not(:disabled) {
-  background: #000;
-  color: #fff;
+  background: var(--black);
+  color: var(--white);
   transform: translateY(-2px);
-  box-shadow: 2px 2px 0px var(--hero-blue);
 }
 
 .mini-size-btn:disabled {
@@ -100,23 +183,28 @@
   text-decoration: line-through;
 }
 
-/* --- REUSE YOUR EXISTING PRODUCT TEXT STYLES --- */
+/* --- 5. PRODUCT INFO TEXT --- */
+.editorial-info {
+  padding: 0 5px;
+}
+
 .product-name {
+  font-family: var(--font-body);
   font-size: 12px;
   font-weight: 900;
   letter-spacing: 1.5px;
   text-transform: uppercase;
-  margin-top: 15px;
+  margin-top: 5px;
 }
 
 .product-price {
   font-family: var(--font-body);
-  font-size: 14px;
+  font-size: 13px;
   color: #666;
   font-weight: 500;
 }
 
-/* --- PRE-ORDER CONFIRMATION UI --- */
+/* --- 6. PRE-ORDER UI --- */
 .preorder-confirm-ui {
   text-align: center;
   padding: 0 5px;
@@ -127,14 +215,8 @@
   font-size: 11px;
   line-height: 1.4;
   margin-bottom: 15px;
-  color: #000;
+  color: var(--black);
   font-weight: 500;
-  padding: 0 10px;
-}
-
-.confirm-text strong {
-  font-weight: 900;
-  text-decoration: underline;
 }
 
 .confirm-actions {
@@ -145,20 +227,14 @@
 }
 
 .confirm-add-btn {
-  background: #000;
-  color: #fff;
-  border: 2px solid #000;
+  background: var(--black);
+  color: var(--white);
+  border: none;
   padding: 10px;
   font-size: 10px;
   font-weight: 900;
   letter-spacing: 1px;
   cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.confirm-add-btn:hover {
-  background: var(--hero-blue);
-  color: #000;
 }
 
 .confirm-cancel-btn {
@@ -166,70 +242,87 @@
   color: #888;
   border: none;
   font-size: 10px;
-  font-weight: 700;
   cursor: pointer;
   text-decoration: underline;
 }
 
-.confirm-cancel-btn:hover {
-  color: #000;
-}
-
-/* --- CATEGORY LINKS --- */
-.collection-categories {
+/* --- 7. SLIDER NAVIGATION ARROW --- */
+.slider-indicator-arrow {
+  position: absolute;
+  right: 25px;
+  top: 45%;
+  transform: translateY(-50%);
+  width: 50px;
+  height: 50px;
+  background-color: var(--white);
+  border-radius: 50%;
   display: flex;
-  gap: 30px;
+  align-items: center;
   justify-content: center;
-  margin-top: 20px;
-}
-
-.category-link {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  color: #999;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.12);
   cursor: pointer;
-  border-bottom: 2px solid transparent;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  position: relative;
+  z-index: 100;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s ease;
 }
 
-
-.category-link:hover {
-  color: #000;
+.slider-wrapper:hover .slider-indicator-arrow {
+  opacity: 1;
+  visibility: visible;
 }
 
-/* --- CENTERED EXPLORE BUTTON --- */
+.slider-indicator-arrow:hover {
+  transform: translateY(-50%) scale(1.1);
+  background-color: var(--black);
+}
+
+.slider-indicator-arrow:hover span {
+  color: var(--white);
+}
+
+/* --- 8. EXPLORE ALL BUTTON --- */
 .shop-all-cta-centered {
   display: flex;
   justify-content: center;
-  margin: 50px 0;
+  margin: 20px 0 20px 0;
 }
 
 .editorial-explore-btn {
-  background-color: #ffffff;
-  color: #000000;
-  border: none;
+  background-color: var(--white);
+  color: var(--black);
   padding: 14px 40px;
   border-radius: 100px;
-  font-family: 'Instrument Sans', sans-serif;
   font-weight: 700;
   text-transform: uppercase;
   font-size: 11px;
   letter-spacing: 1.5px;
   cursor: pointer;
-  transition: transform 0.3s ease, background-color 0.3s ease;
-  border: 0.5px solid #000;
+  border: 1px solid var(--black);
+  transition: all 0.3s ease;
 }
 
 .editorial-explore-btn:hover {
-  transform: scale(1.1);
-  background-color: #bf3f76; /* Your brand magenta */
+  transform: scale(1.05);
+  background-color: var(--accent-orange);
   color: white;
+  border: none;
 }
 
+/* --- 9. ANIMATIONS & RESPONSIVE --- */
 @keyframes fadeIn {
   from { opacity: 0; transform: scale(0.95); }
   to { opacity: 1; transform: scale(1); }
+}
+
+@media (max-width: 1024px) {
+  .editorial-card {
+    flex: 0 0 45%;
+    min-width: 250px;
+  }
+  .collection-header {
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+  }
 }

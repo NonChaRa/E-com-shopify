@@ -30,7 +30,7 @@ const ProductPage = ({ allProducts, addToCart, onOpenCart }) => {
 
   if (!product) {
     return (
-      <div className="loading-container">
+      <div className="pdp-loading-container">
         <p>Loading your set...</p>
       </div>
     );
@@ -46,47 +46,50 @@ const ProductPage = ({ allProducts, addToCart, onOpenCart }) => {
   };
 
   return (
-    <div className="product-page-wrapper minimal-y2k">
+    <div className="product-page-wrapper">
       <div className="product-page-container">
-        <button className="pdp-global-back" onClick={() => navigate('/')}>
-          ← BACK TO SHOP
-        </button>
+        <nav className="pdp-navigation">
+          <button className="pdp-back-btn" onClick={() => navigate('/')}>
+            ← RETURN TO ARCHIVE
+          </button>
+        </nav>
 
-        <div className="pdp-main-grid">
+        <div className="pdp-main-layout">
           {/* Vertical Image Gallery */}
-          <div className="pdp-images-stack">
-            {product.images.map((url, i) => (
-              <div key={i} className="pdp-image-item">
-                <img src={url} alt={`${product.name} view ${i + 1}`} />
+          <div className="pdp-gallery-stack">
+            {(product.images?.length > 0 ? product.images : [product.image_url]).map((url, i) => (
+              <div key={i} className="pdp-image-container">
+                <img src={url} alt={`${product.name} frame ${i + 1}`} loading="lazy" />
               </div>
             ))}
           </div>
 
           {/* Product Details Sidebar */}
-          <div className="pdp-info-sticky">
-            <div className="pdp-info-content pdp-clean-card">
-              <h1 className="pdp-name-title">{product.name}</h1>
-              <p className="pdp-price-label">THB {Number(product.price).toLocaleString()}</p>
+          <aside className="pdp-sidebar-sticky">
+            <div className="pdp-sidebar-content">
+              <span className="pdp-collection-tag">ASTÉRI STUDIO // 2026</span>
+              <h1 className="pdp-title-main">{product.name}</h1>
+              <p className="pdp-price-tag">THB {Number(product.price).toLocaleString()}</p>
 
-              <div className="stock-status-badge">
+              <div className="pdp-status-indicator">
                 {isInStock ? (
-                  <span className="in-stock">● {selectedVariant.stock} UNITS IN STOCK</span>
+                  <span className="pdp-stock-msg">• {selectedVariant.stock} UNITS READY TO SHIP</span>
                 ) : canPreorder ? (
-                  <span className="preorder-label">◈ AVAILABLE FOR PRE-ORDER</span>
+                  <span className="pdp-preorder-msg">◈ MADE TO ORDER (PRE-ORDER)</span>
                 ) : (
-                  <span className="sold-out">○ OUT OF STOCK</span>
+                  <span className="pdp-soldout-msg">○ ARCHIVED / SOLD OUT</span>
                 )}
               </div>
 
-              <div className="pdp-selection-area">
-                <span className="section-label">WHICH SIZE? {selectedVariant?.title}</span>
-                <div className="size-pill-grid">
+              <div className="pdp-variant-selector">
+                <span className="pdp-label-mini">SELECT SIZE: {selectedVariant?.title}</span>
+                <div className="pdp-size-grid">
                   {product.variants.map((v) => (
                     <button
                       key={v.id}
-                      className={`size-pill-item
-                        ${selectedVariant?.id === v.id ? 'active' : ''}
-                        ${v.stock <= 0 ? 'faint-pill' : ''}`}
+                      className={`pdp-size-btn
+                        ${selectedVariant?.id === v.id ? 'is-active' : ''}
+                        ${v.stock <= 0 && !v.available ? 'is-disabled' : ''}`}
                       onClick={() => setSelectedVariant(v)}
                     >
                       {v.title}
@@ -95,76 +98,70 @@ const ProductPage = ({ allProducts, addToCart, onOpenCart }) => {
                 </div>
               </div>
 
-              <div className="pdp-cta-group">
+              <div className="pdp-action-area">
                 {needsInquiry ? (
-                  <button className="pdp-primary-btn inquiry-mode" onClick={() => setShowInquiryForm(true)}>
-                    CUSTOM SIZE REQUEST
+                  <button className="pdp-btn-primary inquiry" onClick={() => setShowInquiryForm(true)}>
+                    REQUEST CUSTOM SIZE
                   </button>
                 ) : (
                   <>
                     <button
-                      className={`pdp-primary-btn ${canPreorder ? 'preorder-mode' : ''}`}
+                      className={`pdp-btn-primary ${canPreorder ? 'preorder' : ''}`}
                       onClick={handleAddToCart}
                     >
                       {canPreorder ? 'PRE-ORDER NOW' : 'ADD TO BAG'}
                     </button>
 
                     {canPreorder && (
-                      <p className="pdp-preorder-subtext">
-                        * This size is handmade to order. Ready to ship in 3-4 business days.
+                      <p className="pdp-preorder-disclaimer">
+                        * Handmade in Bangkok. Expected dispatch in 3-5 business days.
                       </p>
                     )}
                   </>
                 )}
               </div>
 
-              <div className="pdp-description-content">
-                <p>
-                  This set captures a love for the Y2K aesthetic, utilizing buttons as a primary focal point to tell a playful,
-                  story-driven visual narrative. Each piece is crafted to be a vibrant, colorful addition to your collection.
-                </p>
-                <p className="preorder-notice">
-                  Note: All pre-order pieces require approximately 3-4 days for preparation, excluding the shipping process.
-                </p>
+              <div className="pdp-description-box">
+                <p>{product.description || "This set captures a love for the Y2K aesthetic, utilizing custom art as a primary focal point to tell a playful, story-driven visual narrative."}</p>
               </div>
 
-              <div className="pdp-accordion-minimal">
+              <div className="pdp-utility-accordion">
                 <details>
-                  <summary>DELIVERY TIME</summary>
-                  <div className="details-body">
-                    <p>Standard orders ship within 1-2 business days. Pre-order sets are handmade and require a 3-4 day lead time before dispatch.</p>
+                  <summary>SHIPPING & LEAD TIMES <span>+</span></summary>
+                  <div className="pdp-details-inner">
+                    <p>Standard sets ship within 48 hours. Pre-order sets are handmade and require a short production lead time before dispatch from our Bangkok studio.</p>
                   </div>
                 </details>
                 <details>
-                  <summary>ASSISTANCE</summary>
-                  <div className="details-body">
-                    <p>Our team is available for size consultations and custom inquiries. Contact us via email or DM for personalized support.</p>
+                  <summary>SIZING GUIDE <span>+</span></summary>
+                  <div className="pdp-details-inner">
+                    <p>Need help? Refer to our sizing chart in the Tutorials section or contact us for a custom measurement consultation.</p>
                   </div>
                 </details>
               </div>
             </div>
-          </div>
+          </aside>
         </div>
 
         <TikTokSection videoId="7631174893756894482" />
 
-        <section className="pdp-footer-section">
-          <h2 className="footer-title">Similar Products</h2>
-          <div className="similar-products-grid">
+        <section className="pdp-similar-section">
+          <h2 className="pdp-section-heading">MORE FROM THE STUDIO</h2>
+          <div className="pdp-similar-grid">
             {allProducts
               .filter(p => p.id !== product.id)
               .slice(0, 4)
               .map(p => (
                 <div
                   key={p.id}
-                  className="similar-card-minimal"
+                  className="pdp-similar-card"
                   onClick={() => navigate(`/product/${encodeURIComponent(p.id)}`)}
                 >
-                  <div className="similar-image-wrap">
+                  <div className="pdp-similar-img-wrapper">
                     <img src={p.image_url} alt={p.name} />
                   </div>
-                  <h3 className="similar-name">{p.name}</h3>
-                  <p className="similar-price">THB {Number(p.price).toLocaleString()}</p>
+                  <h3 className="pdp-similar-name">{p.name}</h3>
+                  <p className="pdp-similar-price">THB {Number(p.price).toLocaleString()}</p>
                 </div>
               ))}
           </div>

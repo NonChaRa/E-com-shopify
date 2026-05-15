@@ -22,12 +22,9 @@
   height: 130%;
 
   /* Move your background image here */
-  background-image: url('../assets/Bg-hero.png');
+  background: url('../assets/Bg.svg');
   background-size: cover;
-
-  /* ADJUST OPACITY HERE: 0.3 is very soft, 0.7 is more vibrant */
-  opacity: 0.9;
-
+  background-repeat: no-repeat;
   z-index: 1; /* Sits behind the text */
   pointer-events: none; /* Ensures you can still click things through it */
 }
@@ -37,6 +34,7 @@
   z-index: 10; /* Pushes the text block on top of the fade layer */
   max-width: 650px;
   text-align: left;
+  margin-top: 80vh;
 }
 
 .hero-main-title {
@@ -46,6 +44,7 @@
   color: white; /* Or var(--black) depending on your bg.jpg contrast */
   margin-bottom: 20px;
   letter-spacing: -1px;
+  text-shadow: 4px 4px 0px rgba(0, 0, 0, 0.2);
 }
 
 .hero-sub-text {
@@ -55,6 +54,8 @@
   margin-bottom: 40px;
   line-height: 1.6;
   opacity: 0.9;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  font-weight: 500;
 }
 
 /* The White Box Button from Toad&Co reference */

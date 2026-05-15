@@ -19,6 +19,7 @@
   margin-bottom: 20px;
   text-transform: uppercase;
   letter-spacing: -1px;
+  color: black;
 }
 
 .tiktok-subtitle {
@@ -47,7 +48,7 @@
 /* Video Wrapper for 9:16 Ratio */
 .tiktok-video-wrapper {
   width: 100%;
-  aspect-ratio: 9 / 16;
+  aspect-ratio: 10 / 20;
   background: #000;
   border-radius: 12px;
   overflow: hidden;

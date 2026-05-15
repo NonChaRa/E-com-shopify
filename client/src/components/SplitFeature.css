@@ -83,8 +83,9 @@
 
 .feature-btn:hover {
   transform: scale(1.1);
-  background-color: #bf3f76; /* Your brand magenta */
+  background-color: var(--accent-orange);
   color: white;
+  border: none;
 }
 
 /* Mobile Stacking */

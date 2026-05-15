@@ -11,15 +11,6 @@ const Footer = () => {
 
   return (
     <footer className="site-footer">
-      {/* 1. EDITORIAL STORY SECTION */}
-      <section className="footer-story">
-        <div className="story-content">
-          <h2>HANDMADE IN BANGKOK. MADE TO LAST.</h2>
-          <p>LOCALLY PRODUCED NAIL ART CELEBRATING CREATIVITY THROUGH MODERN DESIGN.</p>
-          <button className="story-btn">OUR STORY</button>
-        </div>
-      </section>
-
       {/* 2. DARK NAVIGATION SECTION */}
       <section className="footer-main">
         <div className="footer-container">

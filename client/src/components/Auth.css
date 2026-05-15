@@ -1,20 +1,28 @@
-/* --- Auth.css --- */
+/* --- EDITORIAL AUTH THEME (Minimalist/Professional) --- */
 
+:root {
+  /* Ensuring theme consistency - add these if not in Global.css */
+  --muted-text: #666;
+  --field-border: #e0e0e0;
+  --modal-shadow: 0 20px 60px rgba(0,0,0,0.15);
+}
+
+/* 1. Subtle Dark & Blurry Backdrop */
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(43, 87, 181, 0.2);
-  backdrop-filter: blur(12px);
+  background: rgba(0, 0, 0, 0.4); /* Subdued dark overlay, not white */
+  backdrop-filter: blur(5px);      /* Gentle blur for focus */
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 9999;
+  z-index: 2000;
   opacity: 0;
   visibility: hidden;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: opacity 0.4s ease, visibility 0.4s ease;
 }
 
 .modal-overlay.active {
@@ -22,173 +30,182 @@
   visibility: visible;
 }
 
+/* 2. Professional Modal Container (Clean Card style) */
 .auth-modal {
-  background-color: #fdf6e3 !important; /* Force Hero Cream */
+  background: var(--white);
   padding: 60px;
   width: 100%;
-  max-width: 480px;
+  max-width: 460px;
   position: relative;
-  border: 4px solid #000000 !important;
-  border-radius: 40px;
-  box-shadow: 20px 20px 0px #bf3f76 !important; /* Magenta Shadow */
+  border: 1px solid var(--black); /* Fine, thin border */
+  box-shadow: var(--modal-shadow); /* Soft, professional depth */
+  text-align: center;
+
+  /* Entrance Animation: Slide up and fade in */
   transform: translateY(20px);
-  transition: transform 0.4s ease;
+  opacity: 0;
+  transition: transform 0.4s ease, opacity 0.4s ease;
 }
 
 .modal-overlay.active .auth-modal {
   transform: translateY(0);
+  opacity: 1;
 }
 
-.register-wide {
-  max-width: 550px;
-  box-shadow: 20px 20px 0px #2b57b5 !important; /* Blue Shadow */
-}
-
-/* --- TYPOGRAPHY --- */
-
-.auth-header h2 {
-  font-family: 'Bubblegum Sans', cursive;
-  font-size: 3.5rem;
-  line-height: 0.9;
-  margin-bottom: 5px;
-  letter-spacing: -2px;
-  transform: rotate(-1.5deg);
-  color: #000000 !important;
-}
-
-.auth-subtitle {
-  font-family: "Instrument Sans", sans-serif;
-  font-weight: 600;
-  font-size: 13px;
-  color: #2b57b5 !important;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 40px;
-  display: block;
-}
-
-/* --- FORMS & INPUTS --- */
-
-.auth-form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.input-group label {
-  font-family: "Instrument Sans", sans-serif;
-  font-weight: 800;
-  font-size: 10px;
-  letter-spacing: 2px;
-  margin-bottom: 8px;
-  display: block;
-  color: #000000 !important;
-}
-
-.auth-input {
-  width: 100%;
-  background: #ffffff !important;
-  border: 2px solid #000000 !important;
-  padding: 18px;
-  border-radius: 12px;
-  font-family: "Instrument Sans", sans-serif;
-  font-weight: 400;
-  font-size: 15px;
-  color: #000000 !important; /* FORCE BLACK TEXT */
-  box-sizing: border-box;
-  opacity: 1 !important;
-}
-
-.auth-input::placeholder {
-  color: rgba(0, 0, 0, 0.4) !important;
-}
-
-.auth-input:focus {
-  outline: none;
-  border-color: #2b57b5;
-  box-shadow: 4px 4px 0px #f1a5b8;
-}
-
-/* --- BUTTONS --- */
-
-.auth-submit-btn {
-  background: #000000 !important;
-  color: #ffffff !important;
-  font-family: "Instrument Sans", sans-serif;
-  font-weight: 900;
-  letter-spacing: 2px;
-  padding: 22px;
-  border: none;
-  border-radius: 50px;
-  cursor: pointer;
-  margin-top: 20px;
-  box-shadow: 6px 6px 0px #f1a5b8;
-  transition: all 0.2s ease;
-}
-
-.auth-submit-btn:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 8px 8px 0px #f1a5b8;
-  background: #bf3f76 !important;
-}
-
-.auth-toggle-text {
-  margin-top: 30px;
-  font-family: "Instrument Sans", sans-serif;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 1px;
-  text-align: center;
-  color: #000000 !important;
-}
-
-.toggle-link {
-  color: #bf3f76 !important;
-  margin-left: 8px;
-  cursor: pointer;
-  text-decoration: underline;
-}
-
+/* 3. Close Button refined */
 .close-modal {
   position: absolute;
   top: 25px;
   right: 25px;
-  background: #ffffff;
-  border: 2px solid #000000;
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  font-weight: 900;
+  background: none;
+  border: none;
+  font-size: 18px;
   cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 3px 3px 0px #000000;
+  color: var(--black);
+  opacity: 0.5;
+  transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
+.close-modal:hover {
+  opacity: 1;
+  transform: rotate(90deg); /* Gentle rotation on hover */
+}
+
+/* 4. Editorial Typography */
+.auth-header h2 {
+  font-family: var(--font-body); /* Use clean body font, not cyber */
+  color: var(--black);
+  font-size: 2.2rem;
+  font-weight: 300;
+  letter-spacing: 2px; /* Professional letter spacing */
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.auth-subtitle {
+  font-family: var(--font-body);
+  color: var(--muted-text);
+  font-size: 11px;
+  letter-spacing: 2px;
+  margin-bottom: 50px;
+  display: block;
+  text-transform: uppercase;
+}
+
+/* 5. Clean Input Fields */
+.input-group {
+  margin-bottom: 25px;
+  text-align: left;
+}
+
+.input-group label {
+  font-family: var(--font-body);
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--black);
+  display: block;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.auth-input {
+  background: var(--white);
+  border: 1px solid var(--field-border); /* Thin, light border */
+  padding: 15px;
+  color: var(--black);
+  font-family: var(--font-body);
+  font-size: 14px;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease;
+}
+
+.auth-input:focus {
+  outline: none;
+  border-color: var(--black); /* Focus highlights with thin black border */
+}
+
+/* 6. Professional CTA Button */
+.auth-submit-btn {
+  background: var(--black);
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 12px;
+  letter-spacing: 2px;
+  font-weight: 400;
+  padding: 18px;
+  width: 100%;
+  border: 1px solid var(--black);
+  cursor: pointer;
+  text-transform: uppercase;
+
+  /* Remove clip-path for Rect form */
+  clip-path: none;
+
+  /* Transition for hover/click animations */
+  transition: background 0.3s ease, color 0.3s ease, transform 0.1s ease;
+}
+
+/* Hover Animation */
+.auth-submit-btn:hover:not(:disabled) {
+  background: var(--white);
+  color: var(--black);
+}
+
+/* Click Animation (Click Stuff) */
+.auth-submit-btn:active:not(:disabled) {
+  transform: scale(0.98); /* Slight shrink on click for tactile feel */
+}
+
+/* Disabled/Processing state */
+.auth-submit-btn:disabled {
+  background: #eaeaea;
+  border-color: #eaeaea;
+  color: #999;
+  cursor: not-allowed;
+}
+
+/* 7. Consent Checkbox Styling */
 .checkbox-group {
   display: flex;
   align-items: flex-start;
   gap: 12px;
-  margin-top: 10px;
+  margin-bottom: 35px;
+  text-align: left;
 }
 
 .checkbox-group input[type="checkbox"] {
-  width: 20px;
-  height: 20px;
-  margin-top: 2px;
+  accent-color: var(--black); /* Styles the native checkbox black */
+  margin-top: 3px;
   cursor: pointer;
-  accent-color: #000000; /* Matching your black-and-white theme */
-  border: 2px solid #000000;
 }
 
 .checkbox-group label {
-  font-family: "Instrument Sans", sans-serif;
+  font-family: var(--font-body);
   font-size: 11px;
-  line-height: 1.4;
-  color: #000000 !important;
-  font-weight: 500;
-  text-transform: none !important; /* Keep it as a readable sentence */
-  letter-spacing: 0;
+  line-height: 1.6;
+  color: var(--muted-text);
   cursor: pointer;
+}
+
+/* 8. Bottom Toggle Text refined */
+.auth-toggle-text {
+  font-family: var(--font-body);
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: var(--muted-text);
+  margin-top: 40px;
+  text-transform: uppercase;
+}
+
+.toggle-link {
+  color: var(--black);
+  font-weight: bold;
+  cursor: pointer;
+  margin-left: 8px;
+  transition: opacity 0.2s ease;
+}
+
+.toggle-link:hover {
+  opacity: 0.7; /* Subdued hover, matching product card interactions */
 }

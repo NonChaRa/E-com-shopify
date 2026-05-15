@@ -1,69 +1,56 @@
 .video-loop-section {
-  padding: 100px 40px;
-  background-image: url('../assets/black-white.svg');
-  background-position: center;
+  padding: 110px 5%; /* Increased side padding to match editorial margins */
+  background-image: url('../assets/Video-bg.svg');
   background-repeat: no-repeat;
-  background-size: 30%; /* Adjusted so it sits perfectly in the middle gap */
+  background-size: cover;
+  background-position: top center;
   color: #000;
   overflow: hidden;
-}
-
-.section-header {
-  text-align: center;
-  margin-bottom: 60px;
-}
-
-.section-title {
-  font-family: var(--font-body);
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: 5px;
-  text-transform: uppercase;
-  margin-bottom: 15px;
-}
-
-.section-subtitle {
-  font-size: 14px;
-  color: #666;
-  font-style: italic;
+  margin-top: 0;
+  border: none;
 }
 
 .video-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  display: flex; /* Flex is easier for "Left-aligned" grouping */
+  justify-content: flex-start;
+  gap: 30px; /* Space between the two videos */
   max-width: 1400px;
-  margin: 0 auto;
+  margin-top: 30vh;
 }
 
 .video-card {
   position: relative;
   overflow: hidden;
-  aspect-ratio: 9 / 16;
+
+  /* 1. Make the videos smaller */
+  width: 260px;
+  height: 460px; /* Fixed height for a sleek portrait look */
+
   background: #f3f3f3;
-  border-radius: 20px; /* Rounded corners to match the editorial look */
-  /* GPU Layer Promotion */
+  border-radius: 12px; /* Slightly smaller radius for a more "cutout" feel */
   transform: translateZ(0);
+
+  /* 2. Add a subtle shadow so they look "pasted" onto the background */
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
 }
 
 .loop-video {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* Optimization: prepare the GPU for transformations */
   will-change: transform;
 }
 
-/* Spacer logic for mobile */
+
+/* Responsive fix */
 @media (max-width: 768px) {
   .video-grid {
-    grid-template-columns: 1fr;
+    flex-direction: column;
+    align-items: center;
   }
-  .video-spacer {
-    display: none; /* Hiding the spacer on mobile to avoid empty gaps */
-  }
-  .video-loop-section {
-    background-image: none; /* Removing the middle SVG on mobile for speed */
-    padding: 60px 20px;
+  .video-card {
+    width: 80%;
+    height: auto;
+    aspect-ratio: 9/16;
   }
 }

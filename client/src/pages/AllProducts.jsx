@@ -1,25 +1,29 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import './AllProducts.css';
 
-const AllProducts = ({ allProducts, loading }) => {
+const AllProducts = ({ allProducts, loading, fetchByCollection, fetchAllProducts }) => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
-  // UI States
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState('featured');
 
-  // Multi-Category Filter State
   const [activeFilters, setActiveFilters] = useState({
-    availability: [], // ['in-stock', 'pre-order']
-    size: [],         // ['S', 'M', 'L']
-    shape: [],        // ['Almond', 'Coffin', 'Square']
+    availability: [],
+    size: [],
   });
 
   useEffect(() => {
+    const requestedCollection = searchParams.get('collection');
+    if (requestedCollection) {
+      fetchByCollection(requestedCollection);
+    } else {
+      fetchAllProducts();
+    }
     window.scrollTo(0, 0);
-  }, []);
+  }, [searchParams, fetchByCollection, fetchAllProducts]);
 
   const toggleFilter = (category, value) => {
     setActiveFilters(prev => {
@@ -32,137 +36,117 @@ const AllProducts = ({ allProducts, loading }) => {
   };
 
   const clearAllFilters = () => {
-    setActiveFilters({ availability: [], size: [], shape: [] });
+    setActiveFilters({ availability: [], size: [] });
     setSearchTerm('');
   };
 
-  // Advanced Relevancy & Filter Logic
   const filteredProducts = useMemo(() => {
     let result = (allProducts || []).filter(p => {
-      // 1. Search Relevancy
       const matchesSearch = p.name.toLowerCase().includes(searchTerm.toLowerCase());
-
-      // 2. Availability Check
       const matchesAvailability = activeFilters.availability.length === 0 ||
         activeFilters.availability.some(status => {
           const hasStock = p.variants.some(v => v.stock > 0);
           return status === 'in-stock' ? hasStock : !hasStock;
         });
-
-      // 3. Size Check
       const matchesSize = activeFilters.size.length === 0 ||
         p.variants.some(v => activeFilters.size.includes(v.title));
 
       return matchesSearch && matchesAvailability && matchesSize;
     });
 
-    // 4. Sorting Functionality
     if (sortBy === 'price-low') result.sort((a, b) => a.price - b.price);
     if (sortBy === 'price-high') result.sort((a, b) => b.price - a.price);
     if (sortBy === 'alpha-az') result.sort((a, b) => a.name.localeCompare(b.name));
-    if (sortBy === 'alpha-za') result.sort((a, b) => b.name.localeCompare(a.name));
 
     return result;
   }, [allProducts, searchTerm, sortBy, activeFilters]);
 
   return (
     <div className="all-products-wrapper">
-      {/* Editorial Hero Header */}
-      <header className="shop-all-hero">
-        <h1 className="shop-all-hero-title"></h1>
+      <header className="shop-header-minimal">
+        <h1 className="shop-main-title">THE ARCHIVE</h1>
+        <p className="shop-sub-title">EXPLORE THE FULL RANGE OF ASTÉRI HANDMADE SETS</p>
       </header>
 
-      {/* Horizontal Filter/Sort Bar (Non-Sticky) */}
-      <nav className="shop-filter-bar">
-        <div className="filter-inner">
-
-          {/* 1. Left Section */}
-          <div className="filter-left">
-            <button className="minimal-filter-trigger" onClick={() => setIsSidebarOpen(true)}>
-              Filters
+      <nav className="shop-utility-bar">
+        <div className="utility-inner">
+          <div className="utility-left">
+            <button className="pdp-filter-trigger" onClick={() => setIsSidebarOpen(true)}>
+              FILTERS
             </button>
           </div>
 
-          {/* 2. Center Section */}
-          <div className="filter-center">
+          <div className="utility-center">
             <input
               type="text"
-              className="minimal-search-input"
-              placeholder="Search products..."
+              className="pdp-search-input"
+              placeholder="SEARCH THE STUDIO..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
 
-          {/* 3. Right Section */}
-          <div className="filter-right">
-            <select className="minimal-sort-select" value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
-              <option value="featured">Featured</option>
-              <option value="price-low">Price: Low-High</option>
-              <option value="price-high">Price: High-Low</option>
+          <div className="utility-right">
+            <select className="pdp-sort-select" value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
+              <option value="featured">SORT: FEATURED</option>
+              <option value="price-low">PRICE: LOW-HIGH</option>
+              <option value="price-high">PRICE: HIGH-LOW</option>
             </select>
           </div>
-
         </div>
       </nav>
 
-      {/* Slide-out Sidebar Overlay */}
-      <div className={`filter-sidebar-overlay ${isSidebarOpen ? 'active' : ''}`} onClick={() => setIsSidebarOpen(false)}>
-        <div className="filter-sidebar-content" onClick={e => e.stopPropagation()}>
-
-          <div className="sidebar-header">
-            <h3>Filter by</h3>
-            <button className="close-sidebar" onClick={() => setIsSidebarOpen(false)}>×</button>
+      <div className={`filter-overlay-dark ${isSidebarOpen ? 'active' : ''}`} onClick={() => setIsSidebarOpen(false)}>
+        <div className="filter-panel" onClick={e => e.stopPropagation()}>
+          <div className="panel-header">
+            <h3>REFINE BY</h3>
+            <button className="panel-close" onClick={() => setIsSidebarOpen(false)}>✕</button>
           </div>
 
-          {/* WRAP FILTERS IN A BODY DIV */}
-          <div className="sidebar-body">
-            <div className="filter-group">
-              <h4 className="group-title">Availability</h4>
-              <label>
+          <div className="panel-body">
+            <div className="filter-section">
+              <h4 className="filter-label">AVAILABILITY</h4>
+              <label className="filter-checkbox">
                 <input type="checkbox" checked={activeFilters.availability.includes('in-stock')} onChange={() => toggleFilter('availability', 'in-stock')} />
-                In stock
+                <span>READY TO SHIP</span>
               </label>
-              <label>
+              <label className="filter-checkbox">
                 <input type="checkbox" checked={activeFilters.availability.includes('pre-order')} onChange={() => toggleFilter('availability', 'pre-order')} />
-                Out of stock
+                <span>MADE TO ORDER</span>
               </label>
             </div>
 
-            <div className="filter-group">
-              <h4 className="group-title">Size</h4>
+            <div className="filter-section">
+              <h4 className="filter-label">SIZE</h4>
               {['XS', 'S', 'M', 'L'].map(size => (
-                <label key={size}>
+                <label key={size} className="filter-checkbox">
                   <input type="checkbox" checked={activeFilters.size.includes(size)} onChange={() => toggleFilter('size', size)} />
-                  {size}
+                  <span>{size}</span>
                 </label>
               ))}
             </div>
           </div>
 
-          {/* FOOTER STAYS AT BOTTOM */}
-          <div className="sidebar-footer">
-            <button className="clear-all-btn" onClick={clearAllFilters}>Clear All</button>
-            <button className="apply-filters-btn" onClick={() => setIsSidebarOpen(false)}>Apply Filters</button>
+          <div className="panel-footer">
+            <button className="panel-btn clear" onClick={clearAllFilters}>RESET</button>
+            <button className="panel-btn apply" onClick={() => setIsSidebarOpen(false)}>APPLY</button>
           </div>
-
         </div>
       </div>
 
-      {/* Product Gallery Grid */}
-      <main className="shop-grid-container">
+      <main className="shop-content-area">
         {loading ? (
-          <div className="loading-state">Refreshing the collection...</div>
+          <div className="pdp-loading-state">SYNCHRONIZING STUDIO DATA...</div>
         ) : (
-          <div className="editorial-product-grid">
+          <div className="pdp-product-grid">
             {filteredProducts.map((p) => (
-              <div key={p.id} className="shop-card" onClick={() => navigate(`/product/${encodeURIComponent(p.id)}`)}>
-                <div className="shop-image-frame">
+              <div key={p.id} className="pdp-card" onClick={() => navigate(`/product/${encodeURIComponent(p.id)}`)}>
+                <div className="pdp-card-img-frame">
                   <img src={p.image_url} alt={p.name} loading="lazy" />
                 </div>
-                <div className="shop-card-details">
-                  <h3 className="shop-card-name">{p.name}</h3>
-                  <p className="shop-card-price">THB {Number(p.price).toLocaleString()}</p>
+                <div className="pdp-card-info">
+                  <h3 className="pdp-card-name">{p.name}</h3>
+                  <p className="pdp-card-price">THB {Number(p.price).toLocaleString()}</p>
                 </div>
               </div>
             ))}

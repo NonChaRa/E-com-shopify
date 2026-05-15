@@ -1,175 +1,150 @@
-/* --- ACCOUNT PAGE LAYOUT --- */
+/* --- ACCOUNT PAGE: EDITORIAL THEME --- */
+
+.account-wrapper {
+  padding-top: 100px;
+  background-color: var(--bg-white);
+  min-height: 100vh;
+}
+
 .account-container {
-  max-width: 1000px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 160px 40px 100px; /* Large top padding to clear fixed Navbar */
-  min-height: 80vh;
+  padding: 60px 5%;
 }
 
 .account-header {
   text-align: center;
   margin-bottom: 80px;
-  border-bottom: 1px solid #eee;
-  padding-bottom: 40px;
 }
 
-.account-header h1 {
-  font-family: var(--font-body);
-  font-size: 32px;
-  font-weight: 500;
-  letter-spacing: 2px;
-  margin-bottom: 10px;
-}
-
-.user-email {
-  font-size: 14px;
-  color: #888;
-  text-transform: lowercase;
-}
-
-/* --- ORDER HISTORY SECTION --- */
-.order-history h3 {
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 2px;
-  color: #000;
-  margin-bottom: 30px;
-  text-transform: uppercase;
-}
-
-.no-orders {
-  padding: 60px;
-  text-align: center;
-  border: 1px dashed #ddd;
-  color: #888;
+.user-email-sub {
+  font-family: var(--font-body); /* Lato */
   font-size: 13px;
+  color: #666;
+  letter-spacing: 1px;
 }
 
-/* --- ORDER CARD --- */
-.order-card {
-  background: #fff;
+/* --- THE GALLERY LAYOUT --- */
+.order-history-section {
+  border-top: 1px solid var(--black);
+  padding-top: 40px;
+}
+
+.orders-gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.order-editorial-card {
   border: 1px solid #eee;
+  background: white;
   padding: 30px;
-  margin-bottom: 20px;
   transition: border-color 0.3s ease;
 }
 
-.order-card:hover {
-  border-color: #000;
+.order-editorial-card:hover {
+  border-color: var(--black);
 }
 
-.order-main-info {
+.order-card-header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 25px;
+  border-bottom: 1px solid #f5f5f5;
   padding-bottom: 15px;
-  border-bottom: 1px solid #f9f9f9;
-}
-
-.order-number {
-  font-weight: 700;
-  font-size: 14px;
-  letter-spacing: 1px;
-}
-
-.order-date {
-  font-size: 12px;
-  color: #888;
-}
-
-/* --- ORDER THUMBNAILS --- */
-.order-items {
-  display: flex;
-  gap: 15px;
   margin-bottom: 25px;
-  overflow-x: auto;
-  padding-bottom: 10px;
+  font-family: var(--font-body);
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: #999;
+  text-transform: uppercase;
 }
 
-.order-item-thumb {
+/* --- ITEM THUMBS --- */
+.order-items-row {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+.order-item-look {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.item-thumb-frame {
   position: relative;
-  flex-shrink: 0;
-}
-
-.order-item-thumb img {
   width: 80px;
   height: 100px;
+  background: #f9f9f9;
+  overflow: hidden;
+}
+
+.item-thumb-frame img {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  border-radius: 12px; /* Slightly smaller radius for thumbs */
-  background: #f5f5f5;
 }
 
-.item-qty {
+.item-count {
   position: absolute;
-  top: -5px;
-  right: -5px;
-  background: #000;
-  color: #fff;
-  font-size: 10px;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
+  top: 5px;
+  right: 5px;
+  background: var(--black);
+  color: white;
+  font-size: 9px;
+  padding: 2px 6px;
+  font-family: var(--font-body);
 }
 
-/* --- STATUS PILLS & FOOTER --- */
-.order-status-row {
+.item-name {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+/* --- FOOTER & STATUS --- */
+.order-status-footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding-top: 20px;
+  border-top: 1px solid #f5f5f5;
 }
 
-.status-pill {
-  font-size: 10px;
+.status-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.status-dot {
+  font-size: 18px;
+}
+
+.status-dot.fulfilled { color: #2ecc71; }
+.status-dot.unfulfilled { color: var(--accent-orange); }
+
+.status-text {
+  font-family: var(--font-body);
+  font-size: 11px;
   font-weight: 700;
-  padding: 6px 14px;
-  border-radius: 20px;
-  text-transform: uppercase;
   letter-spacing: 1px;
 }
 
-/* Color coding based on Shopify Fulfillment Status */
-.status-pill.fulfilled {
-  background: #e8f5e9;
-  color: #2e7d32;
+.order-value {
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 300;
 }
 
-.status-pill.unfulfilled {
-  background: #fff3e0;
-  color: #ef6c00;
-}
-
-.status-pill.restocked {
-  background: #f5f5f5;
-  color: #757575;
-}
-
-.order-total {
-  font-weight: 700;
-  font-size: 15px;
-}
-
-/* --- EMPTY STATE --- */
-.account-empty {
-  padding: 200px 40px;
+.loading-text {
+  font-family: var(--font-body);
+  font-size: 11px;
+  letter-spacing: 3px;
   text-align: center;
-  font-size: 14px;
-  letter-spacing: 1px;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .order-main-info {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 5px;
-  }
-
-  .account-container {
-    padding-top: 120px;
-  }
+  padding: 40px 0;
 }
