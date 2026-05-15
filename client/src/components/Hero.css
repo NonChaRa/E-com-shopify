@@ -22,7 +22,7 @@
   height: 130%;
 
   /* Move your background image here */
-  background: url('../assets/Bg.svg');
+  background: url('../assets/Bg.png');
   background-size: cover;
   background-repeat: no-repeat;
   z-index: 1; /* Sits behind the text */
