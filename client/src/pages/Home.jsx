@@ -115,13 +115,13 @@ const ProductCard = ({ p, navigate, addToCart }) => {
 const Home = ({ allProducts, fetchByCollection, fetchAllProducts, loading, addToCart }) => {
   const [activeCollection, setActiveCollection] = useState('ALL');
   const navigate = useNavigate();
-  const handleCollectionChange = (handle, label) => {
-      setActiveCollection(label);
-      if (handle === 'all') {
-        fetchAllProducts();
-      } else {
-        fetchByCollection(handle);
-      }
+  const handleCollectionChange = async (shopifyHandle, displayName) => {
+    setActiveCollection(displayName);
+    if (shopifyHandle === 'all') {
+      await fetchAllProducts();
+    } else {
+      await fetchByCollection(shopifyHandle);
+    }
   };
   useEffect(() => {
       fetchAllProducts();

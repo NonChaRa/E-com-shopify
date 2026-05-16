@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { supabase } from '../supabaseClient';
-import { shopifyFetch, CUSTOMER_CREATE_MUTATION } from './lib/shopify';
+import { shopifyFetch } from './lib/shopify';
+import { CUSTOMER_CREATE_MUTATION } from './lib/queries';
 import './Auth.css';
 
 const Register = ({ isOpen, onClose }) => {
@@ -13,7 +14,7 @@ const Register = ({ isOpen, onClose }) => {
   const handleRegister = async (e) => {
     e.preventDefault();
 
-    // 1. Validation Logic
+    // 1. Structural Validation Checks
     if (password !== confirmPassword) {
       alert("Passwords do not match!");
       return;
@@ -26,59 +27,66 @@ const Register = ({ isOpen, onClose }) => {
 
     setLoading(true);
 
-    // 2. Create Supabase Auth Account
-    // This handles the user's login credentials
-    const { data: sbData, error: sbError } = await supabase.auth.signUp({
-      email,
-      password
-    });
-
-    if (sbError) {
-      alert(`Supabase Error: ${sbError.message}`);
-      setLoading(false);
-      return;
-    }
-
     try {
-      // 3. Create Shopify Customer (The Bridge)
-      // This ensures the user exists in your Shopify Admin for orders/marketing
-      const shopifyResponse = await shopifyFetch(CUSTOMER_CREATE_MUTATION, {
-        input: {
-          email: email,
-          password: password,
-          acceptsMarketing: privacyConsent
-        }
+      // 2. Provision Credentials in Supabase Auth
+      const { data: sbData, error: sbError } = await supabase.auth.signUp({
+        email,
+        password
       });
 
-      const shopifyId = shopifyResponse?.data?.customerCreate?.customer?.id;
-      const shopifyErrors = shopifyResponse?.data?.customerCreate?.customerUserErrors;
+      if (sbError) throw sbError;
+      if (!sbData?.user) throw new Error("Authentication failed to generate user workspace.");
 
-      if (shopifyErrors && shopifyErrors.length > 0) {
-        console.warn("Shopify Sync Warning:", shopifyErrors[0].message);
-        // Note: We don't stop the whole process if Shopify fails,
-        // but we log it so you can fix the record manually if needed.
-      }
+      let shopifyId = null;
 
-      // 4. Insert into the 'profiles' bridge table
-      // This links the Supabase UUID with the Shopify GID
-      const { error: profileError } = await supabase.from('profiles').insert([
-        {
-          id: sbData.user.id,
-          email: email,
-          shopify_customer_id: shopifyId || null,
-          consent_given: true
+      try {
+        // 3. Mirror the Profile Identity to Shopify
+        const shopifyResponse = await shopifyFetch(CUSTOMER_CREATE_MUTATION, {
+          input: {
+            email: email,
+            password: password,
+            acceptsMarketing: privacyConsent
+          }
+        });
+
+        const shopifyErrors = shopifyResponse?.data?.customerCreate?.customerUserErrors;
+
+        if (shopifyErrors && shopifyErrors.length > 0) {
+          console.warn("Shopify Customer Sync Exception:", shopifyErrors[0].message);
+        } else {
+          shopifyId = shopifyResponse?.data?.customerCreate?.customer?.id || null;
         }
-      ]);
-
-      if (profileError) {
-        throw new Error(`Profile Table Error: ${profileError.message}`);
+      } catch (shopErr) {
+        // We log the error but don't crash registration—recovering an unlinked profile row is easy
+        console.error("Shopify Connection Bridge Offline:", shopErr.message);
       }
 
-      alert("Registration successful! Please check your email for a confirmation link.");
+      // 4. Save the Mapped Profile Values inside your Core Database Row
+      const { error: profileError } = await supabase
+        .from('profiles')
+        .insert([
+          {
+            id: sbData.user.id,
+            email: email,
+            shopify_customer_id: shopifyId,
+            consent_given: true
+          }
+        ]);
+
+      if (profileError) throw profileError;
+
+      alert("Registration successful! If required by your settings, please check your email for a confirmation link.");
+
+      // Reset input states on success
+      setEmail('');
+      setPassword('');
+      setConfirmPassword('');
+      setPrivacyConsent(false);
       onClose();
+
     } catch (err) {
-      console.error("Bridge Error:", err.message);
-      alert("Account created, but there was an issue syncing with our studio database. Please contact support.");
+      console.error("Critical Studio Registration Failure:", err.message);
+      alert(`Registration Error: ${err.message}`);
     } finally {
       setLoading(false);
     }
@@ -103,6 +111,7 @@ const Register = ({ isOpen, onClose }) => {
               placeholder="your@email.com"
               required
               autoComplete="email"
+              value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
@@ -115,6 +124,7 @@ const Register = ({ isOpen, onClose }) => {
               placeholder="••••••••"
               required
               autoComplete="new-password"
+              value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
@@ -127,6 +137,7 @@ const Register = ({ isOpen, onClose }) => {
               placeholder="••••••••"
               required
               autoComplete="new-password"
+              value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
           </div>
@@ -136,6 +147,7 @@ const Register = ({ isOpen, onClose }) => {
               type="checkbox"
               id="privacy"
               required
+              checked={privacyConsent}
               onChange={(e) => setPrivacyConsent(e.target.checked)}
             />
             <label htmlFor="privacy">

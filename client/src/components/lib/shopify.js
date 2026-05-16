@@ -1,3 +1,6 @@
+// client/src/lib/shopify.js
+import { GET_COLLECTION_PRODUCTS, GET_PRODUCTS_QUERY } from './queries';
+
 /**
  * Generic fetcher for Shopify Storefront API
  */
@@ -26,167 +29,50 @@ export async function shopifyFetch(query, variables = {}) {
 }
 
 /**
- * IDENTITY MUTATIONS (The "Bridge" logic)
+ * Transforms Shopify nested edges/nodes into clean flat objects
  */
-
-// Mutation to create a new customer account in Shopify
-export const CUSTOMER_CREATE_MUTATION = `
-  mutation customerCreate($input: CustomerCreateInput!) {
-    customerCreate(input: $input) {
-      customer {
-        id
-        email
-      }
-      customerUserErrors {
-        field
-        message
-      }
-    }
-  }
-`;
-
-// Mutation to generate a Shopify Access Token (needed for authenticated checkouts)
-export const CUSTOMER_TOKEN_CREATE_MUTATION = `
-  mutation customerAccessTokenCreate($input: CustomerAccessTokenCreateInput!) {
-    customerAccessTokenCreate(input: $input) {
-      customerAccessToken {
-        accessToken
-        expiresAt
-      }
-      customerUserErrors {
-        field
-        message
-      }
-    }
-  }
-`;
+const transformShopifyProducts = (edges) => {
+  return edges.map(({ node }) => ({
+    id: node.id,
+    name: node.title,
+    handle: node.handle,
+    description: node.description || '',
+    price: node.priceRange?.minVariantPrice?.amount || '0.00',
+    image_url: node.images?.edges[0]?.node?.url || '', 
+    images: node.images?.edges.map(edge => edge.node.url) || [], 
+    variants: node.variants?.edges.map(edge => ({
+      id: edge.node.id,
+      title: edge.node.title,
+      stock: edge.node.quantityAvailable || 0, 
+      available: edge.node.availableForSale
+    })) || []
+  }));
+};
 
 /**
- * PRODUCT QUERIES
+ * Fetch products cleanly by collection handle (e.g., 'blue-imperial', 'gadom')
  */
-export const GET_PRODUCTS_QUERY = `
-  query getProducts($first: Int!) {
-    products(first: $first) {
-      edges {
-        node {
-          id
-          title
-          description
-          handle
-          priceRange {
-            minVariantPrice {
-              amount
-            }
-          }
-          images(first: 5) {
-            edges {
-              node {
-                url
-              }
-            }
-          }
-          variants(first: 10) {
-            edges {
-              node {
-                id
-                title
-                availableForSale
-                quantityAvailable
-              }
-            }
-          }
-        }
-      }
-    }
+export const fetchProductsByCollection = async (collectionHandle) => {
+  try {
+    const response = await shopifyFetch(GET_COLLECTION_PRODUCTS, { handle: collectionHandle });
+    const rawEdges = response?.data?.collection?.products?.edges || [];
+    return transformShopifyProducts(rawEdges);
+  } catch (err) {
+    console.error("Collection Fetch System Error:", err);
+    return [];
   }
-`;
+};
 
-
-
-export const CREATE_CART_MUTATION = `
-  mutation cartCreate($input: CartInput) {
-    cartCreate(input: $input) {
-      cart {
-        id
-        checkoutUrl
-      }
-      userErrors {
-        field
-        message
-      }
-    }
+/**
+ * Fallback: Fetch globally uncategorized catalog lists
+ */
+export const fetchAllGlobalProducts = async (limit = 24) => {
+  try {
+    const response = await shopifyFetch(GET_PRODUCTS_QUERY, { first: limit });
+    const rawEdges = response?.data?.products?.edges || [];
+    return transformShopifyProducts(rawEdges);
+  } catch (err) {
+    console.error("Global Catalog Fetch System Error:", err);
+    return [];
   }
-`;
-
-export const GET_CUSTOMER_ORDERS = `
-  query getCustomerOrders($customerAccessToken: String!) {
-    customer(customerAccessToken: $customerAccessToken) {
-      orders(first: 10, reverse: true) {
-        edges {
-          node {
-            id
-            orderNumber
-            processedAt
-            financialStatus
-            fulfillmentStatus
-            totalPriceV2 {
-              amount
-              currencyCode
-            }
-            lineItems(first: 5) {
-              edges {
-                node {
-                  title
-                  quantity
-                  variant {
-                    image {
-                      url
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`;
-export const GET_COLLECTION_PRODUCTS = `
-  query getCollectionProducts($handle: String!) {
-    collection(handle: $handle) {
-      title
-      products(first: 20) {
-        edges {
-          node {
-            id
-            title
-            handle
-            priceRange {
-              minVariantPrice {
-                amount
-              }
-            }
-            images(first: 1) {
-              edges {
-                node {
-                  url
-                }
-              }
-            }
-            variants(first: 10) {
-              edges {
-                node {
-                  id
-                  title
-                  availableForSale
-                  inventoryQuantity
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`;
+};

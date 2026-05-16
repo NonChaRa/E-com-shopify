@@ -1,6 +1,6 @@
 .video-loop-section {
   padding: 110px 5%; /* Increased side padding to match editorial margins */
-  background-image: url('../assets/Video-bg.svg');
+  background-image: url('../assets/Video-bg.png');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: top center;

@@ -68,7 +68,7 @@ const Account = ({ user }) => {
               {orders.map((order) => (
                 <div key={order.id} className="order-editorial-card">
                   <div className="order-card-header">
-                    <span className="order-ref">ID: {order.shopify_order_id.split('.').pop()}</span>
+                    <span className="order-ref">ID: {(order.shopify_order_id || '0000').split('.').pop()}</span>
                     <span className="order-timestamp">
                       {new Date(order.order_date).toLocaleDateString('en-GB', {
                         day: '2-digit', month: 'short', year: 'numeric'
@@ -92,7 +92,7 @@ const Account = ({ user }) => {
 
                   <div className="order-status-footer">
                     <div className="status-group">
-                      <span className={`status-dot ${order.fulfillment_status.toLowerCase()}`}>•</span>
+                      <span className={`status-dot ${(order.fulfillment_status || 'unfulfilled').toLowerCase()}`}>•</span>
                       <span className="status-text">{order.fulfillment_status.toUpperCase()}</span>
                     </div>
                     <span className="order-value">

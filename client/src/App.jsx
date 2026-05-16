@@ -2,14 +2,12 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import './styles/Global.css';
 
-
 // Layout Components
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import CartSidebar from './components/CartSidebar';
 import Login from './components/Login';
 import Register from './components/Register';
-import AdminPanel from './components/AdminPanel';
 import Account from './components/Account';
 
 // Pages
@@ -19,12 +17,10 @@ import AllProducts from './pages/AllProducts';
 import Contact from './pages/Contact';
 import About from './pages/About';
 
-
-// Logic
+// Logic & API Connections
 import { useCart } from './store/useCart';
 import { supabase } from './supabaseClient';
-import { shopifyFetch } from './components/lib/shopify';
-import { GET_PRODUCTS_QUERY, GET_COLLECTION_PRODUCTS  } from './components/lib/queries';
+import { fetchAllGlobalProducts, fetchProductsByCollection } from './components/lib/shopify';
 
 // Helper component to handle Navbar styling based on Route
 const LayoutWrapper = ({ children, cartCount, onOpenCart, onOpenLogin, onLogout, user }) => {
@@ -40,12 +36,11 @@ const LayoutWrapper = ({ children, cartCount, onOpenCart, onOpenLogin, onLogout,
     <div className="app-wrapper">
       <Navbar
         cartCount={cartCount}
-        onOpenCart={onOpenCart} // <--- MAKE SURE THIS LINE EXISTS
+        onOpenCart={onOpenCart}
         onOpenLogin={onOpenLogin}
         onLogout={onLogout}
         user={user}
-        forceSolid={isProductPage}
-        forceSolid={isSolidPage}
+        forceSolid={isProductPage || isSolidPage}
       />
       {children}
       <Footer />
@@ -62,119 +57,105 @@ function App() {
   const [user, setUser] = useState(null);
 
   const { cart, addToCart, removeFromCart, updateQuantity, clearCart } = useCart();
+
+ // --- AUTO-CLEAR CART AFTER SUCCESSFUL CHECKOUT ---
+   useEffect(() => {
+     const checkCartStatus = async () => {
+       const savedCartId = localStorage.getItem('shopify_cart_id');
+       if (!savedCartId) return;
+
+       try {
+         const query = `query checkCart($id: ID!) { cart(id: $id) { id } }`;
+         const endpoint = `https://${import.meta.env.VITE_SHOPIFY_DOMAIN}/api/2024-04/graphql.json`;
+
+         const response = await fetch(endpoint, {
+           method: 'POST',
+           headers: {
+             'Content-Type': 'application/json',
+             'X-Shopify-Storefront-Access-Token': import.meta.env.VITE_SHOPIFY_ACCESS_TOKEN,
+           },
+           body: JSON.stringify({ query, variables: { id: savedCartId } }),
+         });
+
+         const resJson = await response.json();
+
+         // If data.cart returns null, Shopify has cleared the cart following a successful purchase!
+         if (resJson && resJson.data && resJson.data.cart === null) {
+           console.log("Successful checkout detected. Resetting client cart layout...");
+           clearCart();
+           localStorage.removeItem('shopify_cart_id');
+           localStorage.removeItem('shopify_checkout_url');
+         }
+       } catch (err) {
+         console.error("Error verifying headless cart retention state:", err);
+       }
+     };
+
+     checkCartStatus();
+   }, [clearCart]);
+
+  // --- LOGOUT HANDLER ---
   const handleLogout = async () => {
-      const { error } = await supabase.auth.signOut();
-      if (error) {
-        console.error("Sign out error:", error.message);
-      } else {
-        // 1. CLEAR THE CART UPON LOGOUT
-        clearCart();
-
-        // 2. Clear user state
-        setUser(null);
-
-        // 3. Clear any Shopify specific IDs if you stored them
-        localStorage.removeItem('shopify_cart_id');
-        localStorage.removeItem('shopify_checkout_url');
-
-        // 4. Redirect home to reset the view
-        window.location.href = "/";
-      }
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      console.error("Sign out error:", error.message);
+    } else {
+      clearCart();
+      setUser(null);
+      localStorage.removeItem('shopify_cart_id');
+      localStorage.removeItem('shopify_checkout_url');
+      window.location.href = "/";
+    }
   };
+
+  // --- live SHOP DATA ACTIONS (Using clean wrappers) ---
   const fetchByCollection = useCallback(async (handle) => {
     setLoading(true);
     try {
-      const response = await shopifyFetch(GET_COLLECTION_PRODUCTS, { handle });
-      if (!response?.data?.collection) {
-        console.warn(`Shopify could not find collection: ${handle}. Check handle & Sales Channel publishing.`);
-        return;
-      }
-
-      const formatted = response.data.collection.products.edges.map(edge => ({
-        id: edge.node.id,
-        name: edge.node.title,
-        price: edge.node.priceRange.minVariantPrice.amount,
-        image_url: edge.node.images.edges[0]?.node.url,
-        variants: edge.node.variants.edges.map(v => ({
-          id: v.node.id,
-          title: v.node.title,
-          available: v.node.availableForSale
-        }))
-      }));
-      setProducts(formatted);
+      const collectionData = await fetchProductsByCollection(handle);
+      setProducts(collectionData);
     } catch (err) {
-      console.error(err);
+      console.error("Error fetching collection catalog:", err);
     } finally {
       setLoading(false);
     }
   }, []);
-  // --- IDENTITY LOGIC ---
-  useEffect(() => {
-      supabase.auth.getSession().then(({ data: { session } }) => {
-        setUser(session?.user ?? null);
-      });
 
-      const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-        if (event === 'SIGNED_OUT') {
-          setUser(null);
-        } else if (session) {
-          // Here we ensure the user object has the shopify data we fetched during login
-          setUser(session.user);
-        }
-      });
-
-      return () => subscription.unsubscribe();
-    }, []);
-
-  // --- DATA FETCHING ---
   const fetchProducts = useCallback(async () => {
+    setLoading(true);
     try {
-      setLoading(true);
-      const response = await shopifyFetch(GET_PRODUCTS_QUERY, { first: 20 });
-      if (response?.data?.products) {
-          const formatted = response.data.products.edges.map(({ node }) => ({
-            id: node.id,
-            name: node.title,
-            description: node.description,
-            price: node.priceRange.minVariantPrice.amount,
-            image_url: node.images.edges[0]?.node.url,
-            images: node.images.edges.map(img => img.node.url),
-            variants: node.variants.edges.map(v => ({
-              id: v.node.id,
-              title: v.node.title,
-              available: v.node.availableForSale,
-              stock: v.node.quantityAvailable || 0
-            }))
-          }));
-          setProducts(formatted);
-      }
+      const catalogData = await fetchAllGlobalProducts();
+      setProducts(catalogData);
     } catch (err) {
-      console.error("Shopify Fetch Error:", err);
+      console.error("Global catalog fetch exception:", err);
     } finally {
       setLoading(false);
     }
   }, []);
 
-  useEffect(() => { fetchProducts(); }, []);
+  // Initial catalog mount execution
+  useEffect(() => {
+    fetchProducts();
+  }, [fetchProducts]);
 
   return (
     <Router>
       <LayoutWrapper
         user={user}
         onOpenLogin={() => setIsLoginOpen(true)}
-        onLogout={handleLogout} // Pass this down
+        onLogout={handleLogout}
         cartCount={cart.length}
         onOpenCart={() => setIsCartOpen(true)}
       >
         <Routes>
           <Route
             path="/"
-            element={
+            element = {
               <Home
                 allProducts={products}
                 loading={loading}
                 fetchByCollection={fetchByCollection}
-                fetchAllProducts={fetchProducts} // Using your initial fetch function
+                fetchAllProducts={fetchProducts}
                 addToCart={addToCart}
               />
             }
@@ -196,7 +177,7 @@ function App() {
           />
           <Route
             path="/product/:id"
-            element={
+            element = {
               <ProductPage
                 allProducts={products}
                 addToCart={addToCart}
@@ -209,7 +190,7 @@ function App() {
         </Routes>
       </LayoutWrapper>
 
-      {/* Global Overlays */}
+      {/* Global Modals & Sidebar System Overlays */}
       <Login
          isOpen={isLoginOpen}
          onClose={() => setIsLoginOpen(false)}
@@ -229,7 +210,7 @@ function App() {
         isOpen={isCartOpen}
         onClose={() => setIsCartOpen(false)}
         cart={cart}
-        user={user} // Pass user to allow sync during checkout
+        user={user}
         onRemove={removeFromCart}
         updateQuantity={updateQuantity}
         onOpenCart={() => setIsCartOpen(true)}

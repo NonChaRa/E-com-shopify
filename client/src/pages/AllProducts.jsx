@@ -54,8 +54,8 @@ const AllProducts = ({ allProducts, loading, fetchByCollection, fetchAllProducts
       return matchesSearch && matchesAvailability && matchesSize;
     });
 
-    if (sortBy === 'price-low') result.sort((a, b) => a.price - b.price);
-    if (sortBy === 'price-high') result.sort((a, b) => b.price - a.price);
+    if (sortBy === 'price-low') result.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
+    if (sortBy === 'price-high') result.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
     if (sortBy === 'alpha-az') result.sort((a, b) => a.name.localeCompare(b.name));
 
     return result;
@@ -91,11 +91,13 @@ const AllProducts = ({ allProducts, loading, fetchByCollection, fetchAllProducts
               <option value="featured">SORT: FEATURED</option>
               <option value="price-low">PRICE: LOW-HIGH</option>
               <option value="price-high">PRICE: HIGH-LOW</option>
+              <option value="alpha-az">ALPHABETICAL: A-Z</option>
             </select>
           </div>
         </div>
       </nav>
 
+      {/* Filter Slide-out Drawer */}
       <div className={`filter-overlay-dark ${isSidebarOpen ? 'active' : ''}`} onClick={() => setIsSidebarOpen(false)}>
         <div className="filter-panel" onClick={e => e.stopPropagation()}>
           <div className="panel-header">
@@ -134,13 +136,14 @@ const AllProducts = ({ allProducts, loading, fetchByCollection, fetchAllProducts
         </div>
       </div>
 
+      {/* Main Grid View */}
       <main className="shop-content-area">
         {loading ? (
           <div className="pdp-loading-state">SYNCHRONIZING STUDIO DATA...</div>
         ) : (
           <div className="pdp-product-grid">
             {filteredProducts.map((p) => (
-              <div key={p.id} className="pdp-card" onClick={() => navigate(`/product/${encodeURIComponent(p.id)}`)}>
+              <div key={p.id} className="pdp-card" onClick={() => navigate(`/product/${p.handle}`)}>
                 <div className="pdp-card-img-frame">
                   <img src={p.image_url} alt={p.name} loading="lazy" />
                 </div>
