@@ -1,26 +1,62 @@
 import React, { useState, useEffect } from 'react';
+import { supabase } from '../supabaseClient';
 import './Contact.css';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
     surname: '',
-    contactMethod: [],
     email: '',
     message: ''
   });
+  const [submitting, setSubmitting] = useState(false);
+  const [statusMsg, setStatusMsg] = useState('');
+
   useEffect(() => {
-      window.scrollTo({
-        top: 0,
-        left: 0,
-        behavior: 'instant',
-      });
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'instant',
+    });
   }, []);
 
-  const handleSubmit = (e) => {
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Message Sent:", formData);
-    alert("Thank you! Your inquiry has been sent to Astéri Studio.");
+    setSubmitting(true);
+    setStatusMsg('');
+
+    try {
+      const { error } = await supabase
+        .from('contact_submissions')
+        .insert([
+          {
+            name: formData.name,
+            surname: formData.surname,
+            email: formData.email,
+            message: formData.message
+          }
+        ]);
+
+      if (error) throw error;
+
+      setStatusMsg('THANK YOU. YOUR INQUIRY HAS BEEN TRANSMITTED TO THE STUDIO. ✿');
+      setFormData({
+        name: '',
+        surname: '',
+        email: '',
+        message: ''
+      });
+    } catch (err) {
+      console.error("Transmission error:", err);
+      setStatusMsg('TRANSMISSION FAILURE. PLEASE RETRY OR REACH OUT VIA SOCIAL CHANNELS.');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -38,29 +74,23 @@ const Contact = () => {
             <label>NAME</label>
             <input
               type="text"
+              name="name"
               required
-              onChange={(e) => setFormData({...formData, name: e.target.value})}
+              value={formData.name}
+              onChange={handleInputChange}
+              disabled={submitting}
             />
           </div>
           <div className="input-group">
             <label>SURNAME</label>
             <input
               type="text"
+              name="surname"
               required
-              onChange={(e) => setFormData({...formData, surname: e.target.value})}
-            />
-          </div>
-        </div>
-
-        <div className="input-group method-group">
-          <label>HOW WOULD YOU LIKE US TO CONTACT YOU?</label>
-          <div className="checkbox-row">
-            {['EMAIL', 'TELEPHONE', 'SMS'].map((method) => (
-              <label key={method} className="custom-checkbox">
-                <input type="checkbox" name="contactMethod" value={method} />
-                <span className="checkbox-label">{method}</span>
-              </label>
-            ))}
+              value={formData.surname}
+              onChange={handleInputChange}
+              disabled={submitting}
+                />
           </div>
         </div>
 
@@ -68,24 +98,33 @@ const Contact = () => {
           <label>EMAIL *</label>
           <input
             type="email"
+            name="email"
             placeholder="Enter your email"
             required
-            onChange={(e) => setFormData({...formData, email: e.target.value})}
+            value={formData.email}
+            onChange={handleInputChange}
+            disabled={submitting}
           />
         </div>
 
         <div className="input-group">
           <label>MESSAGE</label>
           <textarea
+            name="message"
             placeholder="Your message"
             rows="6"
-            onChange={(e) => setFormData({...formData, message: e.target.value})}
+            required
+            value={formData.message}
+            onChange={handleInputChange}
+            disabled={submitting}
           ></textarea>
         </div>
 
-        <button type="submit" className="contact-send-btn">
-          SEND MESSAGE
+        <button type="submit" className="contact-send-btn" disabled={submitting}>
+          {submitting ? 'TRANSMITTING...' : 'SEND MESSAGE'}
         </button>
+
+        {statusMsg && <p className="contact-status-alert-text">{statusMsg}</p>}
       </form>
     </div>
   );

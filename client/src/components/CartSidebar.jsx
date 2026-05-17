@@ -13,14 +13,12 @@ const CartSidebar = ({ isOpen, onClose, cart, onRemove, updateQuantity, user }) 
       setIsSyncing(true);
 
       try {
-        // 1. Format items with PRE-ORDER METADATA (Attributes)
+        // 1. Format items with PRE-ORDER METADATA
         const lines = cart.map(item => {
           const isPreorder = item.stock <= 0 && item.available;
-
           return {
             merchandiseId: item.variantId,
             quantity: item.quantity,
-            // This tells Shopify Admin: "This is a pre-order"
             attributes: isPreorder ? [
               { key: "Status", value: "Pre-order" },
               { key: "Estimate", value: "Ships in 3-4 days" }
@@ -28,6 +26,7 @@ const CartSidebar = ({ isOpen, onClose, cart, onRemove, updateQuantity, user }) 
           };
         });
 
+        // 2. Request Cart Creation from Shopify
         const response = await shopifyFetch(CREATE_CART_MUTATION, {
           input: { lines }
         });
@@ -40,6 +39,8 @@ const CartSidebar = ({ isOpen, onClose, cart, onRemove, updateQuantity, user }) 
             buyerIdentity: { customerAccessToken: user.shopify_token }
           });
         }
+        localStorage.setItem('shopify_cart_id', newCartId);
+        localStorage.setItem('shopify_checkout_url', checkoutUrl);
 
         if (checkoutUrl) {
           window.location.href = checkoutUrl;

@@ -1,7 +1,10 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom'; // 1. ADD THIS IMPORT
 import './EditorialHero.css';
 
 const EditorialHero = () => {
+  const navigate = useNavigate(); // 2. INITIALIZE THE HOOK
+
   return (
     <section className="footer-story">
         <div className="story-content">

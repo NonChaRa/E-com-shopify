@@ -24,3 +24,20 @@
   margin: 20px 0 40px 0;
   opacity: 0.9;
 }
+
+.story-btn {
+  background: transparent;
+  border: 1px solid white;
+  color: white;
+  padding: 15px 40px;
+  border-radius: 30px; /* Pill shape like reference */
+  font-size: 10px;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.story-btn:hover {
+  background: white;
+  color: black;
+}

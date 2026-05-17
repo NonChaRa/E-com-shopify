@@ -78,3 +78,16 @@
   color: white;
   transform: translateY(-2px);
 }
+/* --- MOBILE GRAPHIC OVERRIDES --- */
+@media (max-width: 768px) {
+  .hero-editorial::before {
+    background-image: url('../assets/Bg-mobile.png');
+    background-position: center center;
+    height: 100%;
+  }
+
+  .hero-content-wrapper {
+    /* Tighter spacing for mobile layout balance */
+    margin-top: 50vh;
+  }
+}

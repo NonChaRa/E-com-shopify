@@ -181,3 +181,22 @@ export const CUSTOMER_TOKEN_CREATE_MUTATION = `
     }
   }
 `;
+
+export const GET_SHOP_POLICIES = `
+  query getShopPolicies {
+    shop {
+      privacyPolicy {
+        title
+        body
+      }
+      shippingPolicy {
+        title
+        body
+      }
+      refundPolicy {
+        title
+        body
+      }
+    }
+  }
+`;

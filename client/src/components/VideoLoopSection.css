@@ -1,19 +1,19 @@
 .video-loop-section {
-  padding: 110px 5%; /* Increased side padding to match editorial margins */
+  padding: 100px 8%; /* Synced with your lookbook horizontal padding tracks */
   background-image: url('../assets/Video-bg.png');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: top center;
-  color: #000;
+  color: #000000;
   overflow: hidden;
   margin-top: 0;
   border: none;
 }
 
 .video-grid {
-  display: flex; /* Flex is easier for "Left-aligned" grouping */
+  display: flex;
   justify-content: flex-start;
-  gap: 30px; /* Space between the two videos */
+  gap: 24px;
   max-width: 1400px;
   margin-top: 30vh;
 }
@@ -21,17 +21,12 @@
 .video-card {
   position: relative;
   overflow: hidden;
-
-  /* 1. Make the videos smaller */
-  width: 260px;
-  height: 460px; /* Fixed height for a sleek portrait look */
-
-  background: #f3f3f3;
-  border-radius: 12px; /* Slightly smaller radius for a more "cutout" feel */
+  width: 240px;
+  height: 420px; /* Snug portrait dimension profile scaling */
+  background: #fcfcfc;
+  border-radius: 12px;
   transform: translateZ(0);
-
-  /* 2. Add a subtle shadow so they look "pasted" onto the background */
-  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.06);
 }
 
 .loop-video {
@@ -41,16 +36,27 @@
   will-change: transform;
 }
 
-
-/* Responsive fix */
+/* --- RESPONSIVE MOBILE ADAPTATIONS --- */
 @media (max-width: 768px) {
+  .video-loop-section {
+    padding: 60px 24px;
+    background-image: url('../assets/Bg-video-mobile.png');
+    background-position: center center;
+    height: 100%;
+
+  }
+
   .video-grid {
     flex-direction: column;
     align-items: center;
+    margin-top: 40px; /* Replaced the large vh margin with standard padding on mobile */
+    gap: 30px;
   }
+
   .video-card {
-    width: 80%;
+    width: 85%;
+    max-width: 280px;
     height: auto;
-    aspect-ratio: 9/16;
+    aspect-ratio: 9 / 16; /* Locked fluid media framing safety constraint */
   }
 }

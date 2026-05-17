@@ -166,15 +166,19 @@ const Home = ({ allProducts, fetchByCollection, fetchAllProducts, loading, addTo
         </div>
 
         <div className="slider-wrapper">
-          <div className="editorial-grid slider-row" id="product-slider">
-            {!loading && allProducts?.map((p) => (
-              <ProductCard
-                key={p.id}
-                p={p}
-                navigate={navigate}
-                addToCart={addToCart}
-              />
-            ))}
+          <div className={`editorial-grid slider-row ${loading ? 'products-fading' : ''}`} id="product-slider">
+            {allProducts && allProducts.length > 0 ? (
+              allProducts.map((p) => (
+                <ProductCard
+                  key={p.id}
+                  p={p}
+                  navigate={navigate}
+                  addToCart={addToCart}
+                />
+              ))
+            ) : !loading ? (
+              <p className="no-products-msg">NO PRODUCTS FOUND IN THIS COLLECTION.</p>
+            ) : null}
           </div>
           <div className="slider-indicator-arrow" onClick={() => scrollSlider('right')}><span>→</span></div>
         </div>

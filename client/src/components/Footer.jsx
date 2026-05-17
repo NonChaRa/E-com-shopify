@@ -1,60 +1,114 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import './Footer.css';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { FaInstagram, FaFacebookF, FaYoutube, FaTiktok } from 'react-icons/fa';
+import './Footer.css';
 
 const Footer = () => {
-  const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [statusMsg, setStatusMsg] = useState('');
+  const [submitting, setSubmitting] = useState(false);
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const handleSubscribe = async (e) => {
+    e.preventDefault();
+    if (!email) return;
+    setSubmitting(true);
+    setStatusMsg('');
+
+    try {
+      const response = await fetch('https://jhproyifnoxcxswkwgci.supabase.co/functions/v1/newsletter-subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      });
+
+      if (!response.ok) throw new Error("Sync failure.");
+
+      setStatusMsg('WELCOME TO THE ARCHIVE LIST. ✿');
+      setEmail('');
+    } catch (err) {
+      console.error(err);
+      setStatusMsg('Subscription failed. Please verify formatting.');
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   return (
-    <footer className="site-footer">
-      {/* 2. DARK NAVIGATION SECTION */}
-      <section className="footer-main">
-        <div className="footer-container">
-          <div className="footer-column newsletter">
-            <p className="column-title">BE THE FIRST TO KNOW ABOUT NEW COLLECTIONS AND DROPS.</p>
-            <div className="newsletter-input">
-              <input type="email" placeholder="Email address" />
-              <button>SUBSCRIBE</button>
+    <footer className="studio-site-footer">
+      {/* --- NOTE: UPPER BRAND BANNER REMOVED FROM HERE TO PREVENT OVERRIDING YOUR HERO COMPONENT --- */}
+
+      {/* Main Structural Column Links */}
+      <section className="footer-main-grid-area">
+        <div className="footer-layout-container">
+
+          {/* Newsletter Segment */}
+          <div className="footer-column-block newsletter-block">
+            <h3 className="column-editorial-title">BE THE FIRST TO KNOW ABOUT NEW COLLECTIONS AND DROPS.</h3>
+            <form onSubmit={handleSubscribe} className="footer-minimal-form">
+              <input
+                type="email"
+                placeholder="ENTER YOUR EMAIL..."
+                className="footer-minimal-input"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                disabled={submitting}
+              />
+              <button type="submit" className="footer-minimal-submit-btn" disabled={submitting}>
+                {submitting ? 'PROCESSING...' : 'SUBSCRIBE'}
+              </button>
+            </form>
+            {statusMsg && <p className="footer-status-alert-msg">{statusMsg}</p>}
+
+            <div className="studio-social-row">
+              <a href="https://instagram.com" target="_blank" rel="noreferrer" aria-label="Instagram"><FaInstagram /></a>
+              <a href="https://facebook.com" target="_blank" rel="noreferrer" aria-label="Facebook"><FaFacebookF /></a>
+              <a href="https://youtube.com" target="_blank" rel="noreferrer" aria-label="YouTube"><FaYoutube /></a>
+              <a href="https://tiktok.com" target="_blank" rel="noreferrer" aria-label="TikTok"><FaTiktok /></a>
             </div>
-            <div className="social-links">
-              <FaInstagram /> <FaFacebookF /> <FaYoutube /> <FaTiktok />
-            </div>
           </div>
 
-          <div className="footer-column">
-              <p className="column-title">THE BRAND</p>
-              <ul>
-                <li onClick={() => navigate('/about')}>ABOUT</li>
-                <li onClick={() => navigate('/values')}>VALUES</li>
-                <li onClick={() => navigate('/contact')}>CONTACT</li>
-              </ul>
+          {/* Brand Links Column */}
+          <div className="footer-column-block links-block">
+            <h3 className="column-editorial-title">THE BRAND</h3>
+            <nav className="footer-nav-list">
+              <Link to="/about" onClick={scrollToTop}>ABOUT</Link>
+              <Link to="/values" onClick={scrollToTop}>VALUES</Link>
+              <Link to="/contact" onClick={scrollToTop}>CONTACT</Link>
+            </nav>
           </div>
 
-          <div className="footer-column">
-              <p className="column-title">LEGAL</p>
-              <ul>
-                <li onClick={() => navigate('/shipping')}>SHIPPING POLICY</li>
-                <li onClick={() => navigate('/refund')}>REFUND POLICY</li>
-                <li onClick={() => navigate('/privacy')}>PRIVACY POLICY</li>
-              </ul>
+          {/* Legal Links Column */}
+          <div className="footer-column-block links-block">
+            <h3 className="column-editorial-title">LEGAL</h3>
+            <nav className="footer-nav-list">
+              <Link to="/policy/shipping" onClick={scrollToTop}>SHIPPING POLICY</Link>
+              <Link to="/policy/refund" onClick={scrollToTop}>REFUND POLICY</Link>
+              <Link to="/policy/privacy" onClick={scrollToTop}>PRIVACY POLICY</Link>
+            </nav>
           </div>
 
-          <div className="footer-column">
-              <p className="column-title">SHOP</p>
-              <ul>
-                <li onClick={() => navigate('/shop')}>ENCHANTED GARDEN</li>
-                <li onClick={() => navigate('/shop')}>POLE POLE</li>
-                <li onClick={() => navigate('/shop')}>ACCESSORIES</li>
-              </ul>
+          {/* Automated Collection Links Column */}
+          <div className="footer-column-block links-block">
+            <h3 className="column-editorial-title">SHOP</h3>
+            <nav className="footer-nav-list">
+              <Link to="/shop?collection=enchanted-garden" onClick={scrollToTop}>ENCHANTED GARDEN</Link>
+              <Link to="/shop?collection=pole-pole" onClick={scrollToTop}>POLE POLE</Link>
+              <Link to="/shop?collection=accessories" onClick={scrollToTop}>ACCESSORIES</Link>
+            </nav>
           </div>
         </div>
 
-        <div className="scroll-top" onClick={scrollToTop}>
-          <span className="arrow-up">⌃</span>
+        {/* Footer Base Subtext Metadata */}
+        <div className="footer-bottom-bar-metadata">
+          <p className="copyright-label">© 2026 ASTÉRI STUDIO. ALL RIGHTS RESERVED.</p>
+          <div className="scroll-top-trigger" onClick={scrollToTop}>
+            BACK TO TOP <span className="arrow-glyph">↑</span>
+          </div>
         </div>
       </section>
     </footer>

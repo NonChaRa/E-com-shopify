@@ -1,15 +1,21 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Hero.css';
 
-const Hero = () => (
-  <section className="hero-editorial">
-    {/* The background image is handled in CSS */}
-    <div className="hero-content-wrapper">
-      <div className="hero-actions">
-        <button className="hero-cta-box">START SHOWING OFF</button>
+const Hero = () => {
+  const navigate = useNavigate();
+
+  return (
+    <section className="hero-editorial">
+      <div className="hero-content-wrapper">
+        <div className="hero-actions">
+          <button className="hero-cta-box" onClick={() => navigate('/shop')}>
+            START SHOWING OFF
+          </button>
+        </div>
       </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 export default Hero;

@@ -1,0 +1,167 @@
+/* --- LUXURY EDITORIAL VALUES PAGE --- */
+
+.values-page-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 160px 40px 120px 40px; /* Perfectly aligned with your Navbar clearance */
+  min-height: 100vh;
+  background-color: #ffffff;
+}
+
+/* --- HERO HEADER --- */
+.values-header {
+  max-width: 700px;
+  margin-bottom: 120px;
+}
+
+.values-context-tag {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  color: rgba(0, 0, 0, 0.4);
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 16px;
+}
+
+.values-header h1 {
+  font-size: 3.5rem;
+  font-weight: 300;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #000000;
+  margin-bottom: 24px;
+  line-height: 1.1;
+}
+
+.values-subtitle {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #1a1a1a;
+  letter-spacing: 0.01em;
+}
+
+/* --- THE PILLARS STRUCTURE (ASYNCHRONOUS ROW GRID) --- */
+.values-pillars-grid {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid #000000;
+  margin-bottom: 120px;
+}
+
+.pillar-row {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr; /* Striking lookbook imbalance layout */
+  padding: 60px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  gap: 40px;
+}
+
+.pillar-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pillar-number {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: rgba(0, 0, 0, 0.3);
+}
+
+.pillar-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #000000;
+}
+
+.pillar-description p {
+  font-size: 0.95rem;
+  line-height: 1.85;
+  color: #222222;
+  letter-spacing: 0.01em;
+}
+
+/* --- LOWER CTA SEGMENT --- */
+.values-cta-section {
+  width: 100%;
+  padding-top: 40px;
+}
+
+.values-cta-card {
+  background-color: #f4f3ef; /* Signature Matte Studio Cream */
+  padding: 80px 40px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.values-cta-card h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  margin-bottom: 12px;
+  color: #000000;
+}
+
+.values-cta-card p {
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  color: rgba(0, 0, 0, 0.6);
+  text-transform: uppercase;
+  margin-bottom: 35px;
+}
+
+.values-shop-btn {
+  background: #000000;
+  color: #ffffff;
+  border: none;
+  padding: 16px 42px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  border-radius: 40px; /* Keeps footer design parity */
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.values-shop-btn:hover {
+  background-color: #222222;
+  transform: translateY(-2px);
+}
+
+/* --- RESPONSIVE ADAPTATION TRANSLATIONS --- */
+@media (max-width: 768px) {
+  .values-page-container {
+    padding-top: 120px;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .values-header {
+    margin-bottom: 60px;
+  }
+
+  .values-header h1 {
+    font-size: 2.6rem;
+  }
+
+  .pillar-row {
+    grid-template-columns: 1fr;
+    padding: 40px 0;
+    gap: 16px;
+  }
+
+  .pillar-title {
+    font-size: 1.25rem;
+  }
+
+  .values-cta-card {
+    padding: 60px 20px;
+  }
+}

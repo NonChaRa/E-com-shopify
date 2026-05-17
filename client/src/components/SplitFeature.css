@@ -1,20 +1,18 @@
 .split-feature-section {
-  /* Full Width Breakout */
   width: 100vw;
   position: relative;
   left: 50%;
   right: 50%;
   margin-left: -50vw;
   margin-right: -50vw;
-
-  /* Height Increase for "Longer" look */
-  height: 120vh;
-  margin-top: 80px;
+  height: 100vh; /* Scaled down slightly from 120vh to stay inside premium layout constraints */
+  margin-top: 40px;
   display: flex;
   overflow: hidden;
-  background-color: #fdf6e3;
-  transform: translateZ(0); /* GPU acceleration */
+  background-color: #ffffff;
+  transform: translateZ(0);
 }
+
 .feature-panel {
   flex: 1;
   height: 100%;
@@ -23,7 +21,7 @@
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
-  padding-bottom: 120px; /* Increased padding for the longer height */
+  padding-bottom: 80px; /* Condensed breathing zone padding */
   overflow: hidden;
 }
 
@@ -34,18 +32,18 @@
   background-position: center;
   z-index: 1;
   will-change: transform;
-  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .feature-panel:hover .feature-bg {
-  transform: scale(1.1);
+  transform: scale(1.04);
 }
 
 .feature-panel::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0) 60%);
+  background: linear-gradient(to top, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0) 70%);
   z-index: 2;
   pointer-events: none;
 }
@@ -53,48 +51,48 @@
 .feature-content {
   text-align: center;
   z-index: 3;
-  /* Prevents text jitter during background scale */
   backface-visibility: hidden;
 }
 
-.feature-title {
-  font-family: var(--font-body);
-  font-size: 3.5rem;
-  color: #ffffff;
-  margin-bottom: 25px;
-  letter-spacing: -1px;
-}
-
+/* Universal Minimal Action Button Style */
 .feature-btn {
   background-color: #ffffff;
   color: #000000;
   border: none;
-  padding: 14px 40px;
-  border-radius: 100px; /* Pill shape */
-  font-family: 'Instrument Sans', sans-serif; /* Your body font */
+  padding: 14px 44px;
+  border-radius: 100px;
+  font-family: inherit;
   font-weight: 700;
   text-transform: uppercase;
   font-size: 11px;
-  letter-spacing: 1.5px;
+  letter-spacing: 2px;
   cursor: pointer;
-  transition: transform 0.3s ease, background-color 0.3s ease;
-  margin-bottom: 200px;
+  transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  margin-bottom: 40px; /* Reduced from 200px to keep button element naturally visible */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
 }
 
 .feature-btn:hover {
-  transform: scale(1.1);
-  background-color: var(--accent-orange);
-  color: white;
-  border: none;
+  background-color: #000000;
+  color: #ffffff;
+  transform: translateY(-2px);
 }
 
-/* Mobile Stacking */
+/* --- MOBILE & TABLET MEDIA ADAPTATIONS --- */
 @media (max-width: 1024px) {
   .split-feature-section {
     flex-direction: column;
-    height: 160vh; /* Taller on mobile to show both long images */
+    height: 110vh; /* Stacks panels as individual portrait content rows */
+    margin-top: 20px;
   }
-  .feature-title {
-    font-size: 2.8rem;
+
+  .feature-panel {
+    padding-bottom: 50px;
+  }
+
+  .feature-btn {
+    margin-bottom: 20px;
+    padding: 12px 38px;
+    font-size: 10px;
   }
 }

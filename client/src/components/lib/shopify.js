@@ -1,5 +1,5 @@
 // client/src/lib/shopify.js
-import { GET_COLLECTION_PRODUCTS, GET_PRODUCTS_QUERY } from './queries';
+import { GET_PRODUCTS_QUERY, GET_SHOP_POLICIES, GET_COLLECTION_PRODUCTS } from './queries';
 
 /**
  * Generic fetcher for Shopify Storefront API
@@ -74,5 +74,15 @@ export const fetchAllGlobalProducts = async (limit = 24) => {
   } catch (err) {
     console.error("Global Catalog Fetch System Error:", err);
     return [];
+  }
+};
+
+export const fetchShopPolicies = async () => {
+  try {
+    const response = await shopifyFetch(GET_SHOP_POLICIES);
+    return response?.data?.shop || null;
+  } catch (err) {
+    console.error("System Policy Sync Error:", err);
+    return null;
   }
 };

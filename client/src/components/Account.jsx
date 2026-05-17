@@ -46,7 +46,6 @@ const Account = ({ user }) => {
     <div className="account-wrapper">
       <div className="account-container">
         <header className="account-header">
-          <span className="pdp-collection-tag">CLIENT PORTAL // 2026</span>
           <h1 className="pdp-title-main">MY STUDIO ACCOUNT</h1>
           <p className="user-email-sub">{user.email}</p>
         </header>

@@ -16,6 +16,8 @@ import ProductPage from './components/ProductPage';
 import AllProducts from './pages/AllProducts';
 import Contact from './pages/Contact';
 import About from './pages/About';
+import PolicyPage from './pages/PolicyPage';
+import ValuePage from './pages/Values'
 
 // Logic & API Connections
 import { useCart } from './store/useCart';
@@ -30,6 +32,10 @@ const LayoutWrapper = ({ children, cartCount, onOpenCart, onOpenLogin, onLogout,
       location.pathname.startsWith('/product') ||
       location.pathname === '/contact' ||
       location.pathname === '/account' ||
+      location.pathname === '/policy/privacy' ||
+      location.pathname === '/policy/shipping' ||
+      location.pathname === '/policy/refund' ||
+      location.pathname === '/values' ||
       location.pathname === '/about';
 
   return (
@@ -42,7 +48,9 @@ const LayoutWrapper = ({ children, cartCount, onOpenCart, onOpenLogin, onLogout,
         user={user}
         forceSolid={isProductPage || isSolidPage}
       />
-      {children}
+      <main key={location.pathname} className="studio-editorial-fade">
+        {children}
+      </main>
       <Footer />
     </div>
   );
@@ -187,6 +195,8 @@ function App() {
           />
           <Route path="/contact" element={<Contact />} />
           <Route path="/about" element={<About />} />
+          <Route path="/policy/:policyType" element={<PolicyPage />} />
+          <Route path="/values" element={<ValuePage />} />
         </Routes>
       </LayoutWrapper>
 

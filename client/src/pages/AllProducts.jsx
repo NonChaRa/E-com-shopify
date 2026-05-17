@@ -143,7 +143,8 @@ const AllProducts = ({ allProducts, loading, fetchByCollection, fetchAllProducts
         ) : (
           <div className="pdp-product-grid">
             {filteredProducts.map((p) => (
-              <div key={p.id} className="pdp-card" onClick={() => navigate(`/product/${p.handle}`)}>
+              /* --- CRITICAL NAVIGATION ROUTING CORRECTION FIXED HERE --- */
+              <div key={p.id} className="pdp-card" onClick={() => navigate(`/product/${encodeURIComponent(p.id)}`)}>
                 <div className="pdp-card-img-frame">
                   <img src={p.image_url} alt={p.name} loading="lazy" />
                 </div>

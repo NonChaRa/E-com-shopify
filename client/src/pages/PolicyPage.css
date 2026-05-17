@@ -1,0 +1,92 @@
+/* --- EDITORIAL POLICY PAGE SYSTEM --- */
+
+.policy-wrapper {
+  padding: 40px 40px 120px 40px;
+  max-width: 1400px;
+  margin: 0 auto;
+  min-height: 70vh;
+}
+
+/* Typographic Sweet Spot: Long-form text columns shouldn't expand
+   wider than 740px to ensure premium reading comfort. */
+.policy-content-area {
+  max-width: 740px;
+  margin: 80px auto 0 auto;
+}
+
+/* --- SHOPIFY RICH TEXT HOOKS --- */
+
+.policy-editorial-body {
+  font-size: 0.95rem;
+  line-height: 1.85;
+  color: #1a1a1a;
+  letter-spacing: 0.01em;
+}
+
+/* Individual Paragraph Control */
+.policy-editorial-body p {
+  margin-bottom: 2rem;
+}
+
+/* Section Sub-headings from Shopify Editor */
+.policy-editorial-body h2 {
+  font-family: inherit;
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-top: 3.5rem;
+  margin-bottom: 1.2rem;
+  color: #000000;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  padding-bottom: 10px;
+}
+
+.policy-editorial-body h3 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-top: 2.5rem;
+  margin-bottom: 0.8rem;
+  color: #000000;
+}
+
+/* Lists & Bullet points spacing inside terms layout */
+.policy-editorial-body ul,
+.policy-editorial-body ol {
+  margin-bottom: 2rem;
+  padding-left: 24px;
+  list-style-type: square;
+}
+
+.policy-editorial-body li {
+  margin-bottom: 0.6rem;
+  padding-left: 4px;
+}
+
+.policy-editorial-body strong {
+  font-weight: 600;
+  color: #000000;
+}
+
+.shop-main-title {
+  color: black;
+}
+
+
+/* Responsive Scaling for smaller screens */
+@media (max-width: 768px) {
+  .policy-wrapper {
+    padding: 20px 20px 80px 20px;
+  }
+
+  .policy-content-area {
+    margin-top: 50px;
+  }
+
+  .policy-editorial-body {
+    font-size: 0.9rem;
+    line-height: 1.75;
+  }
+}

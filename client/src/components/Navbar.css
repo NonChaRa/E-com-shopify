@@ -5,12 +5,12 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.05);
+  background: rgba(0, 0, 0, 0.15);
   backdrop-filter: blur(15px);
   z-index: 4999;
   opacity: 0;
   visibility: hidden;
-  transition: all 0.5s ease;
+  transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .mega-menu-blur.active {
@@ -33,20 +33,21 @@
   border-radius: 100px;
   z-index: 5000;
   overflow: visible;
-  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .navbar-editorial:hover,
 .navbar-editorial.scrolled,
+.navbar-editorial.mobile-expanded,
 .navbar-editorial.mega-expanded {
   background-color: #ffffff !important;
   border: 1.5px solid #000000 !important;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
 }
 
 .navbar-editorial.mega-expanded {
-  height: 480px; /* Reduced height since feature card is gone */
-  border-radius: 40px;
+  height: 440px;
+  border-radius: 30px;
   overflow: hidden;
 }
 
@@ -61,13 +62,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 50px;
+  padding: 0 45px;
   box-sizing: border-box;
 }
 
 .nav-group {
-  display: flex !important;
-  flex-direction: row !important;
+  display: flex;
+  flex-direction: row;
   flex: 1;
   gap: 30px;
   align-items: center;
@@ -81,23 +82,23 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  width: 160px;
+  width: 140px;
 }
 
 .main-logo {
-  height: 140px;
+  height: 120px;
   width: auto;
   object-fit: contain;
   transition: height 0.4s ease;
 }
 
-.navbar-editorial.mega-expanded .main-logo {
-  height: 90px;
+.navbar-editorial.mega-expanded .main-logo,
+.navbar-editorial.mobile-expanded .main-logo {
+  height: 80px;
 }
 
-/* --- 4. LINKS & ARROWS --- */
+/* --- 4. LINKS TEXT STYLES --- */
 .nav-link {
-  font-family: var(--font-body-family);
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 1.5px;
@@ -109,15 +110,17 @@
   transition: color 0.4s ease;
 }
 
-.bag-count-editorial{
-    margin-left: 3px
+.bag-count-editorial {
+  margin-left: 4px;
+  font-weight: 800;
 }
+
 .nav-arrow {
   color: #ffffff !important;
-  font-size: 10px;
+  font-size: 9px;
   margin-left: 4px;
   display: inline-block;
-  transition: all 0.4s ease;
+  transition: transform 0.4s ease;
 }
 
 .nav-arrow.open { transform: rotate(180deg); }
@@ -125,8 +128,10 @@
 .navbar-editorial:hover .nav-link,
 .navbar-editorial.scrolled .nav-link,
 .navbar-editorial.mega-expanded .nav-link,
+.navbar-editorial.mobile-expanded .nav-link,
 .navbar-editorial:hover .nav-arrow,
 .navbar-editorial.scrolled .nav-arrow,
+.navbar-editorial.mobile-expanded .nav-arrow,
 .navbar-editorial.mega-expanded .nav-arrow {
   color: #000000 !important;
 }
@@ -141,27 +146,23 @@
   background-color: #ffffff;
   transition: all 0.4s ease;
 }
-.nav-item-wrapper {
-  cursor: pointer;
-}
 
-
-
-
+.nav-item-wrapper { cursor: pointer; }
 .nav-item-wrapper:hover .nav-link::after { width: 100%; }
 
 .navbar-editorial:hover .nav-link::after,
 .navbar-editorial.scrolled .nav-link::after,
+.navbar-editorial.mobile-expanded .nav-link::after,
 .navbar-editorial.mega-expanded .nav-link::after {
   background-color: #000000;
 }
 
-/* --- 5. MEGA MENU GRID --- */
+/* --- 5. DESKTOP MEGA MENU GRID --- */
 .mega-menu-container {
   width: 100%;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.3s 0.2s;
+  transition: opacity 0.3s ease;
   padding: 20px 60px 40px;
   box-sizing: border-box;
 }
@@ -173,7 +174,7 @@
 
 .mega-menu-content {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* 4 equal columns */
+  grid-template-columns: repeat(3, 1fr);
   gap: 30px;
 }
 
@@ -181,41 +182,158 @@
   font-size: 11px;
   font-weight: 800;
   margin-bottom: 15px;
-  color: #000;
+  color: #000000;
+  letter-spacing: 1px;
 }
 
 .mega-list { list-style: none; padding: 0; margin: 0; }
 .mega-list li {
   font-size: 10px;
   font-weight: 600;
-  color: #666;
+  color: #666666;
   margin-bottom: 8px;
   cursor: pointer;
   transition: color 0.2s;
+  letter-spacing: 0.5px;
 }
 
-.mega-list li:hover { color: #000; }
-
-.collections-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr; /* Split long collections list into two sub-cols */
-  gap: 0 20px;
-}
+.mega-list li:hover { color: #000000; }
 
 .mega-footer-link {
   margin-top: 30px;
-  padding-left: 0;
   font-size: 11px;
   font-weight: 800;
   text-decoration: underline;
   cursor: pointer;
-  color: #000;
+  color: #000000;
+  letter-spacing: 1px;
 }
 
-/* --- 6. RESPONSIVE --- */
+/* --- 6. MOBILE BUTTON CONTROLS --- */
+.mobile-menu-toggle {
+  display: none;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px;
+  z-index: 5100;
+}
+
+.hamburger-line {
+  display: block;
+  width: 22px;
+  height: 1.5px;
+  background-color: #ffffff;
+  transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.navbar-editorial:hover .hamburger-line,
+.navbar-editorial.scrolled .hamburger-line,
+.navbar-editorial.mobile-expanded .hamburger-line {
+  background-color: #000000;
+}
+
+/* Hamburger state transition transformations */
+.mobile-menu-toggle.is-active .hamburger-line:nth-child(1) {
+  transform: translateY(4px) rotate(45deg);
+  background-color: #000000;
+}
+.mobile-menu-toggle.is-active .hamburger-line:nth-child(2) {
+  transform: translateY(-3px) rotate(-45deg);
+  background-color: #000000;
+}
+
+/* --- 7. MOBILE FULLSCREEN OVERLAY DRAWER --- */
+.mobile-nav-drawer {
+  display: none;
+  position: absolute;
+  top: 80px;
+  left: -1.5px;
+  width: calc(100% + 3px);
+  background-color: #ffffff;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  border-bottom-left-radius: 24px;
+  border-bottom-right-radius: 24px;
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.mobile-nav-drawer.drawer-active {
+  max-height: 80vh;
+}
+
+.mobile-drawer-inner-scroller {
+  max-height: 80vh;
+  overflow-y: auto;
+  padding: 30px 40px 50px 40px;
+}
+
+.mobile-drawer-links-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.mobile-drawer-root-item {
+  font-size: 1.25rem;
+  font-weight: 400;
+  letter-spacing: 1px;
+  color: #000000;
+  margin-bottom: 25px;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.mobile-drawer-header-tag {
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: rgba(0, 0, 0, 0.3);
+  margin-top: 15px;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+
+.mobile-drawer-child-item {
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: #333333;
+  padding: 8px 0;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.mobile-drawer-child-item:hover {
+  color: #000000;
+}
+
+/* --- 8. RESPONSIVE BREAKPOINT INTERPOLATIONS --- */
 @media (max-width: 1024px) {
-  .navbar-editorial { height: 70px; }
-  .nav-top-row { min-height: 70px; height: 70px; }
-  .main-logo { height: 90px; }
-  .nav-group { gap: 15px; }
+  .desktop-only { display: none !important; }
+  .mobile-menu-toggle, .mobile-nav-drawer { display: flex; }
+
+  .navbar-editorial {
+    height: 70px;
+    top: 15px;
+    width: 92%;
+  }
+  .navbar-editorial.mobile-expanded {
+    height: auto;
+    border-radius: 24px;
+  }
+  .nav-top-row {
+    height: 70px;
+    min-height: 70px;
+    padding: 0 25px;
+  }
+  .mobile-nav-drawer { top: 70px; }
+  .main-logo { height: 75px; }
+  .navbar-editorial:hover .nav-link,
+  .navbar-editorial.scrolled .nav-link,
+  .navbar-editorial.mobile-expanded .nav-link {
+    color: #000000 !important;
+  }
 }

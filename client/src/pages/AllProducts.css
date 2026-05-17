@@ -1,84 +1,92 @@
-/* --- ALL PRODUCTS: DARK EDITORIAL THEME --- */
+/* --- ALL PRODUCTS: LUXURY ARCHIVE MATRIX THEME --- */
 
 .all-products-wrapper {
   padding-top: 100px;
-  background-color: var(--black); /* Matching the dark home background */
+  background-color: var(--black);
   min-height: 100vh;
   color: var(--white);
 }
 
 .shop-header-minimal {
   text-align: center;
-  padding: 80px 5%;
+  /* Expanded horizontal padding track limits */
+  padding: 100px 8% 60px 8%;
 }
 
 .shop-main-title {
   font-family: var(--font-anton);
-  font-size: clamp(3rem, 10vw, 8rem);
-  letter-spacing: -2px;
-  margin-bottom: 10px;
+  font-size: clamp(2.5rem, 7vw, 5.5rem); /* Proportional headline scaling */
+  letter-spacing: 0.02em;
+  margin-bottom: 16px;
   text-transform: uppercase;
-
 }
 
 .shop-sub-title {
-  font-family: var(--font-body); /* Lato */
-  font-size: 11px;
-  letter-spacing: 4px;
-  color: rgba(255, 255, 255, 0.5);
+  font-family: var(--font-body);
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: rgba(255, 255, 255, 0.4);
+  text-transform: uppercase;
 }
 
-/* --- UTILITY BAR (Fixed Widths & Lines) --- */
+/* --- ADAPTIVE UTILITY FILTER BAR ARCHITECTURE --- */
 .shop-utility-bar {
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 20px 5%;
-  margin-bottom: 60px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 20px 8%;
+  margin-bottom: 80px;
 }
 
 .utility-inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  max-width: 1600px;
+  max-width: 1400px;
   margin: 0 auto;
+  gap: 20px;
 }
 
-.pdp-filter-trigger, .pdp-sort-select {
+.pdp-filter-trigger,
+.pdp-sort-select {
   background: transparent;
-  border: 1px solid var(--white);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   color: var(--white);
-  font-family: var(--font-anton);
-  font-size: 13px;
+  font-size: 11px;
   letter-spacing: 1.5px;
-  padding: 10px 25px;
+  padding: 10px 24px;
   cursor: pointer;
   text-transform: uppercase;
   transition: all 0.3s ease;
 }
 
-.pdp-filter-trigger:hover, .pdp-sort-select:hover {
+.pdp-filter-trigger:hover,
+.pdp-sort-select:hover {
   background: var(--white);
   color: var(--black);
+  border-color: var(--white);
 }
 
 .pdp-sort-select {
   appearance: none;
   -webkit-appearance: none;
+  border-radius: 0;
   text-align: center;
 }
 
+/* Fluid Lookbook Search Line Input */
 .pdp-search-input {
   background: transparent;
   border: none;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   font-family: var(--font-body);
   color: var(--white);
-  font-size: 13px;
+  font-size: 12px;
   text-align: center;
-  width: 300px;
+  width: 100%;
+  max-width: 320px; /* Switched out hard 300px to scalable constraints */
   padding: 8px 0;
   letter-spacing: 1px;
+  transition: border-color 0.3s ease;
 }
 
 .pdp-search-input:focus {
@@ -86,16 +94,16 @@
   border-color: var(--white);
 }
 
-/* --- DARK SIDEBAR PANEL --- */
+/* --- DARK DRAWER FILTER PANEL --- */
 .filter-overlay-dark {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(10px);
-  z-index: 5000;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(12px);
+  z-index: 7000;
   opacity: 0;
   visibility: hidden;
-  transition: all 0.4s ease;
+  transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .filter-overlay-dark.active {
@@ -107,14 +115,15 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 400px;
+  width: 100%;
+  max-width: 400px;
   height: 100vh;
-  background: var(--black);
-  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  background: #0a0a0a;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
   display: flex;
   flex-direction: column;
   transform: translateX(-100%);
-  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .filter-overlay-dark.active .filter-panel {
@@ -122,151 +131,208 @@
 }
 
 .panel-header {
-  padding: 60px 40px 30px;
+  padding: 50px 40px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .panel-header h3 {
-  font-family: var(--font-anton);
-  font-size: 2rem;
-  letter-spacing: 1px;
+  font-size: 1.25rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin: 0;
 }
 
 .panel-close {
   background: none;
   border: none;
-  color: white;
-  font-size: 24px;
+  color: #ffffff;
+  font-size: 20px;
   cursor: pointer;
-  position: absolute;
-  top: 30px;
-  right: 30px;
 }
 
 .panel-body {
   flex: 1;
-  padding: 0 40px;
+  padding: 20px 40px;
   overflow-y: auto;
 }
 
+.filter-section {
+  margin-bottom: 40px;
+}
+
 .filter-label {
-  font-family: var(--font-body);
-  font-size: 10px;
+  font-size: 9px;
   letter-spacing: 2px;
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.3);
   margin-bottom: 20px;
   text-transform: uppercase;
+  font-weight: 700;
 }
 
 .filter-checkbox {
   display: flex;
   align-items: center;
-  gap: 15px;
-  margin-bottom: 18px;
-  font-family: var(--font-body);
-  font-size: 14px;
+  gap: 14px;
+  margin-bottom: 16px;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
   cursor: pointer;
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .filter-checkbox input {
-  accent-color: white;
+  accent-color: #ffffff;
+  width: 14px;
+  height: 14px;
 }
 
 .panel-footer {
   padding: 40px;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 12px;
 }
 
 .panel-btn {
   width: 100%;
-  padding: 18px;
-  font-family: var(--font-anton);
-  font-size: 14px;
-  letter-spacing: 2px;
+  padding: 14px;
+  font-size: 11px;
+  letter-spacing: 1.5px;
   cursor: pointer;
   text-transform: uppercase;
+  font-weight: 700;
+  border-radius: 40px;
 }
 
 .panel-btn.apply {
-  background: white;
-  color: black;
-  border: 1px solid white;
+  background: #ffffff;
+  color: #000000;
+  border: 1px solid #ffffff;
 }
 
 .panel-btn.clear {
   background: transparent;
-  color: white;
+  color: #ffffff;
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-/* --- THE GRID --- */
+/* --- THE GALLERY GRID ARCHITECTURE --- */
 .shop-content-area {
-  max-width: 1600px;
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 0 5% 120px;
+  padding: 0 8% 120px 8%; /* Synced alignment track paths */
 }
 
 .pdp-product-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 60px 25px;
+  gap: 50px 24px; /* Sophisticated tight-cell spacing framework */
 }
 
 .pdp-card {
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .pdp-card-img-frame {
-  aspect-ratio: 4/5;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5.2;
   overflow: hidden;
-  border-radius: 4px; /* Matches PDP gallery edges */
-  margin-bottom: 20px;
+  border-radius: 12px; /* Smooth card curvature */
   border: 1px solid rgba(255, 255, 255, 0.05);
+  background: #111111;
 }
 
 .pdp-card-img-frame img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.8s cubic-bezier(0.2, 1, 0.3, 1);
+  transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .pdp-card:hover img {
-  transform: scale(1.05);
+  transform: scale(1.04);
 }
 
 .pdp-card-info {
   text-align: left;
+  padding: 0 2px;
 }
 
 .pdp-card-name {
-  font-family: var(--font-body);
-  font-size: 12px;
-  font-weight: 700;
+  font-size: 11px;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 1.5px;
-  margin-bottom: 5px;
+  letter-spacing: 1.2px;
+  margin: 0 0 4px 0;
+  color: #ffffff;
 }
 
 .pdp-card-price {
-  font-family: var(--font-body);
-  font-size: 13px;
-  font-weight: 300;
-  color: rgba(255, 255, 255, 0.5);
+  font-size: 11px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.4);
 }
 
 .pdp-loading-state {
-  font-family: var(--font-body);
-  font-size: 11px;
-  letter-spacing: 3px;
+  font-size: 10px;
+  letter-spacing: 2px;
   text-align: center;
   padding: 100px 0;
-  color: #555;
+  color: rgba(255, 255, 255, 0.3);
 }
 
+/* --- MOBILE & TABLET RESPONSIVE INTERPOLATIONS --- */
 @media (max-width: 1024px) {
-  .pdp-product-grid { grid-template-columns: repeat(2, 1fr); }
-  .filter-panel { width: 100%; }
+  .pdp-product-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px 20px;
+  }
+  .filter-panel { max-width: 100%; }
+}
+
+@media (max-width: 768px) {
+  .shop-header-minimal {
+    padding: 60px 6% 40px 6%;
+  }
+  .shop-utility-bar {
+    padding: 20px 6%;
+    margin-bottom: 40px;
+  }
+
+  /* Stacks utility bar segments to avoid layout crowding */
+  .utility-inner {
+    flex-direction: column;
+    gap: 16px;
+    align-items: stretch;
+  }
+
+  .utility-center {
+    order: -1; /* Puts search bar at the very top of stack row layout */
+  }
+
+  .pdp-search-input {
+    max-width: 100%;
+  }
+
+  .pdp-filter-trigger,
+  .pdp-sort-select {
+    text-align: center;
+    font-size: 10px;
+    padding: 12px;
+  }
+
+  .shop-content-area {
+    padding: 0 6% 80px 6%;
+  }
+
+  .pdp-product-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 balanced columns on phones */
+    gap: 30px 16px;
+  }
 }
