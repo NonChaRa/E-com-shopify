@@ -174,7 +174,6 @@
 .mega-footer-link { margin-top: 30px; font-size: 11px; font-weight: 800; text-decoration: underline; cursor: pointer; color: #000000; }
 
 /* --- DEFENSIVE MOBILE-ONLY DECK DISMISSALS --- */
-/* These rules guarantee your mobile layout engine stays hidden on laptop displays */
 .mobile-only { display: none !important; }
 .mobile-nav-drawer { display: none !important; }
 
@@ -207,18 +206,27 @@
   .main-logo { height: 50px !important; }
   .nav-logo-centered { width: auto !important; }
 
+  /* Button container target bounds normalized for mobile alignment layout track paths */
   .mobile-action-icon {
     background: transparent;
     border: none;
     padding: 4px;
     color: #000000 !important;
-    width: 22px;
-    height: 22px;
+    width: 24px; /* Locked down hit area footprint boxes safely */
+    height: 24px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
+  }
+
+  /* --- FIXED THE CRITICAL IOS SAFARI VECTOR COLLAPSE PATCH --- */
+  .mobile-action-icon svg {
+    width: 100% !important;
+    height: 100% !important;
+    display: block;
+    stroke: #000000 !important;
   }
 
   .bag-trigger {
@@ -238,7 +246,6 @@
   }
 
   /* --- FULLSCREEN MOBILE OVERLAY TARGET DRAWER --- */
-  /* This layout reactivates exclusively when mobile viewport criteria are met */
   .mobile-nav-drawer {
     display: block !important;
     position: fixed;
