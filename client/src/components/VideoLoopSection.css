@@ -1,5 +1,7 @@
+/* --- EDITORIAL VIDEO LOOP SHOWCASE TRACK --- */
+
 .video-loop-section {
-  padding: 100px 8%; /* Synced with your lookbook horizontal padding tracks */
+  padding: 120px 8%; /* Synced perfectly with lookbook layout gutters */
   background-image: url('../assets/Video-bg.png');
   background-repeat: no-repeat;
   background-size: cover;
@@ -15,18 +17,23 @@
   justify-content: flex-start;
   gap: 24px;
   max-width: 1400px;
-  margin-top: 30vh;
+  margin-top: 25vh; /* Relaxed from 30vh for lookbook balance */
 }
 
 .video-card {
   position: relative;
   overflow: hidden;
   width: 240px;
-  height: 420px; /* Snug portrait dimension profile scaling */
+  height: 420px; /* Snug portrait presentation bounds */
   background: #fcfcfc;
   border-radius: 12px;
-  transform: translateZ(0);
+  transform: translateZ(0); /* GPU Acceleration layer */
   box-shadow: 0 10px 35px rgba(0, 0, 0, 0.06);
+  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.video-card:hover {
+  transform: translateY(-4px);
 }
 
 .loop-video {
@@ -37,26 +44,29 @@
 }
 
 /* --- RESPONSIVE MOBILE ADAPTATIONS --- */
+/* --- RESPONSIVE MOBILE ADAPTATIONS --- */
 @media (max-width: 768px) {
   .video-loop-section {
-    padding: 60px 24px;
-    background-image: url('../assets/Bg-video-mobile.png');
-    background-position: center center;
-    height: 100%;
+    padding: 80px 24px;
 
+    /* CRITICAL LINK CORRECTION FIXED HERE */
+    background-image: url('/src/assets/Bg-video-mobile.png') !important;
+    background-position: center center;
+    background-size: cover;
   }
 
   .video-grid {
     flex-direction: column;
     align-items: center;
-    margin-top: 40px; /* Replaced the large vh margin with standard padding on mobile */
-    gap: 30px;
+    margin-top: 40px; /* Replaces large desktop vh gap calculations */
+    gap: 32px;
+    width: 100%;
   }
 
   .video-card {
-    width: 85%;
-    max-width: 280px;
-    height: auto;
-    aspect-ratio: 9 / 16; /* Locked fluid media framing safety constraint */
+    width: 100%;
+    max-width: 240px;
+    height: 420px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
   }
 }

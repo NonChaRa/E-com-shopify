@@ -239,21 +239,41 @@
   }
 }
 
+/* --- SYSTEM FOOTER MOBILE ADJUSTMENTS --- */
 @media (max-width: 640px) {
-  .studio-brand-banner {
-    padding: 60px 5%;
+  .footer-main-grid-area {
+    padding: 60px 24px 30px 24px;
   }
-  .banner-main-title {
-    font-size: 1.5rem;
-  }
+
   .footer-layout-container {
-    grid-template-columns: 1fr;
-    gap: 35px;
+    gap: 32px; /* Snug vertical alignment */
   }
+
+  .column-editorial-title {
+    margin-bottom: 16px;
+    font-size: 0.65rem;
+    letter-spacing: 1.5px;
+  }
+
+  .footer-nav-list {
+    gap: 10px;
+  }
+
+  .footer-nav-list a {
+    font-size: 0.7rem;
+  }
+
+  .footer-minimal-form {
+    max-width: 100%;
+    margin-bottom: 15px;
+  }
+
+  .studio-social-row {
+    margin-top: 24px;
+  }
+
   .footer-bottom-bar-metadata {
-    flex-direction: column-reverse;
-    gap: 16px;
-    align-items: flex-start;
-    margin-top: 50px;
+    margin-top: 40px;
+    padding-top: 20px;
   }
 }

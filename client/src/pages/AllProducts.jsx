@@ -88,7 +88,7 @@ const AllProducts = ({ allProducts, loading, fetchByCollection, fetchAllProducts
 
           <div className="utility-right">
             <select className="pdp-sort-select" value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
-              <option value="featured">SORT: FEATURED</option>
+              <option value="featured">SORT: FEATURE</option>
               <option value="price-low">PRICE: LOW-HIGH</option>
               <option value="price-high">PRICE: HIGH-LOW</option>
               <option value="alpha-az">ALPHABETICAL: A-Z</option>

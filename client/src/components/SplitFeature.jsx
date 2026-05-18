@@ -13,7 +13,7 @@ const SplitFeature = memo(() => {
         <div className="feature-bg" style={{ backgroundImage: `url(${leftImg})` }} />
         <div className="feature-content">
           {/* Link to the specific handle */}
-          <button className="feature-btn" onClick={() => navigate('/shop?collection=blue-imperial')}>
+          <button className="feature-btn" onClick={() => navigate('/shop?collection=imperial-blue')}>
             Shop
           </button>
         </div>

@@ -96,9 +96,9 @@ const Footer = () => {
           <div className="footer-column-block links-block">
             <h3 className="column-editorial-title">SHOP</h3>
             <nav className="footer-nav-list">
-              <Link to="/shop?collection=enchanted-garden" onClick={scrollToTop}>ENCHANTED GARDEN</Link>
-              <Link to="/shop?collection=pole-pole" onClick={scrollToTop}>POLE POLE</Link>
-              <Link to="/shop?collection=accessories" onClick={scrollToTop}>ACCESSORIES</Link>
+              <Link to="/shop" onClick={scrollToTop}>SHOP ALL</Link>
+              <Link to="/shop?collection=gadom" onClick={scrollToTop}>GADOM</Link>
+              <Link to="/shop?collection=imperial-blue" onClick={scrollToTop}>IMPERIAL BLUE</Link>
             </nav>
           </div>
         </div>

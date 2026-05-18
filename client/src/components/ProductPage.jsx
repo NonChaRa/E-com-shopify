@@ -47,15 +47,20 @@ const ProductPage = ({ allProducts, addToCart, onOpenCart }) => {
 
   return (
     <div className="product-page-wrapper">
+      {/* Universal Page Container Tracking Column Alignment */}
       <div className="product-page-container">
+
+        {/* Back Navigation Bar Block */}
         <nav className="pdp-navigation">
           <button className="pdp-back-btn" onClick={() => navigate('/')}>
             ← RETURN TO ARCHIVE
           </button>
         </nav>
 
+        {/* Main Spread Presentation Layout */}
         <div className="pdp-main-layout">
-          {/* Vertical Image Gallery */}
+
+          {/* Left Column Track: Image Gallery Scroller */}
           <div className="pdp-gallery-stack">
             {(product.images?.length > 0 ? product.images : [product.image_url]).map((url, i) => (
               <div key={i} className="pdp-image-container">
@@ -64,7 +69,7 @@ const ProductPage = ({ allProducts, addToCart, onOpenCart }) => {
             ))}
           </div>
 
-          {/* Product Details Sidebar */}
+          {/* Right Column Track: Sticky Details Information Drawer */}
           <aside className="pdp-sidebar-sticky">
             <div className="pdp-sidebar-content">
               <span className="pdp-collection-tag">ASTÉRI STUDIO // 2026</span>
@@ -122,7 +127,16 @@ const ProductPage = ({ allProducts, addToCart, onOpenCart }) => {
               </div>
 
               <div className="pdp-description-box">
-                <p>{product.description || "This set captures a love for the Y2K aesthetic, utilizing custom art as a primary focal point to tell a playful, story-driven visual narrative."}</p>
+                {product.descriptionHtml ? (
+                  <div
+                    className="pdp-description-rich-text"
+                    dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}
+                  />
+                ) : (
+                  <p>
+                    {product.description || "This set captures a love for the Y2K aesthetic, utilizing custom art as a primary focal point to tell a playful, story-driven visual narrative."}
+                  </p>
+                )}
               </div>
 
               <div className="pdp-utility-accordion">
@@ -143,29 +157,33 @@ const ProductPage = ({ allProducts, addToCart, onOpenCart }) => {
           </aside>
         </div>
 
-        <TikTokSection videoId="7631174893756894482" />
+        {/* Unified Sub-sections Alignment Wrappers */}
+        <div className="pdp-extended-sections-wrapper">
+          <TikTokSection videoId="7631174893756894482" />
 
-        <section className="pdp-similar-section">
-          <h2 className="pdp-section-heading">MORE FROM THE STUDIO</h2>
-          <div className="pdp-similar-grid">
-            {allProducts
-              .filter(p => p.id !== product.id)
-              .slice(0, 4)
-              .map(p => (
-                <div
-                  key={p.id}
-                  className="pdp-similar-card"
-                  onClick={() => navigate(`/product/${encodeURIComponent(p.id)}`)}
-                >
-                  <div className="pdp-similar-img-wrapper">
-                    <img src={p.image_url} alt={p.name} />
+          <section className="pdp-similar-section">
+            <h2 className="pdp-section-heading">MORE FROM THE STUDIO</h2>
+            <div className="pdp-similar-grid">
+              {allProducts
+                .filter(p => p.id !== product.id)
+                .slice(0, 4)
+                .map(p => (
+                  <div
+                    key={p.id}
+                    className="pdp-similar-card"
+                    onClick={() => navigate(`/product/${encodeURIComponent(p.id)}`)}
+                  >
+                    <div className="pdp-similar-img-wrapper">
+                      <img src={p.image_url} alt={p.name} />
+                    </div>
+                    <h3 className="pdp-similar-name">{p.name}</h3>
+                    <p className="pdp-similar-price">THB {Number(p.price).toLocaleString()}</p>
                   </div>
-                  <h3 className="pdp-similar-name">{p.name}</h3>
-                  <p className="pdp-similar-price">THB {Number(p.price).toLocaleString()}</p>
-                </div>
-              ))}
-          </div>
-        </section>
+                ))}
+            </div>
+          </section>
+        </div>
+
       </div>
 
       {showInquiryForm && (

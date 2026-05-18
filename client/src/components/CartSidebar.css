@@ -78,7 +78,7 @@
 
 /* --- ITEM CHANNEL SCROLLER --- */
 .cart-items-list {
-  flex: 0.88;
+  flex: 0.95;
   overflow-y: auto; /* Keeps item loops perfectly scrollable within the center frame */
   padding: 10px 30px;
   scrollbar-width: none;

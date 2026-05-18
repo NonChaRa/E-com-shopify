@@ -2,39 +2,40 @@
 
 .all-products-wrapper {
   padding-top: 100px;
-  background-color: var(--black);
+  background-color: #fdfbf7; /* Signature soft gallery eggshell cream background */
   min-height: 100vh;
-  color: var(--white);
+  color: #000000; /* Swapped out white text for deep crisp black */
 }
 
 .shop-header-minimal {
   text-align: center;
-  /* Expanded horizontal padding track limits */
-  padding: 100px 8% 60px 8%;
+  padding: 100px 8% 45px 8%;
 }
 
 .shop-main-title {
   font-family: var(--font-anton);
-  font-size: clamp(2.5rem, 7vw, 5.5rem); /* Proportional headline scaling */
+  font-size: clamp(2.5rem, 6.5vw, 4.5rem); /* Refined fluid typographic scale */
   letter-spacing: 0.02em;
   margin-bottom: 16px;
   text-transform: uppercase;
+  color: #000000;
 }
 
 .shop-sub-title {
   font-family: var(--font-body);
   font-size: 10px;
   letter-spacing: 3px;
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(0, 0, 0, 0.4); /* Dark translucent sub-header text tracking */
   text-transform: uppercase;
 }
 
 /* --- ADAPTIVE UTILITY FILTER BAR ARCHITECTURE --- */
 .shop-utility-bar {
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 20px 8%;
-  margin-bottom: 80px;
+  /* Translucent charcoal baseline breaks the background container gracefully */
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  padding: 18px 8%;
+  margin-bottom: 60px;
 }
 
 .utility-inner {
@@ -49,21 +50,21 @@
 .pdp-filter-trigger,
 .pdp-sort-select {
   background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: var(--white);
+  border: 1px solid rgba(0, 0, 0, 0.15); /* Clean dark structural borders */
+  color: #000000;
   font-size: 11px;
   letter-spacing: 1.5px;
   padding: 10px 24px;
   cursor: pointer;
   text-transform: uppercase;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .pdp-filter-trigger:hover,
 .pdp-sort-select:hover {
-  background: var(--white);
-  color: var(--black);
-  border-color: var(--white);
+  background: #000000;
+  color: #ffffff;
+  border-color: #000000;
 }
 
 .pdp-sort-select {
@@ -73,17 +74,17 @@
   text-align: center;
 }
 
-/* Fluid Lookbook Search Line Input */
+/* Minimalist Search Input Line */
 .pdp-search-input {
   background: transparent;
   border: none;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
   font-family: var(--font-body);
-  color: var(--white);
+  color: #000000;
   font-size: 12px;
   text-align: center;
   width: 100%;
-  max-width: 320px; /* Switched out hard 300px to scalable constraints */
+  max-width: 320px;
   padding: 8px 0;
   letter-spacing: 1px;
   transition: border-color 0.3s ease;
@@ -91,15 +92,15 @@
 
 .pdp-search-input:focus {
   outline: none;
-  border-color: var(--white);
+  border-color: #000000;
 }
 
-/* --- DARK DRAWER FILTER PANEL --- */
+/* --- LIGHT DRAWER FILTER PANEL --- */
 .filter-overlay-dark {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(12px);
+  background: rgba(0, 0, 0, 0.3); /* Soft modal shadow overlay backdrop mask */
+  backdrop-filter: blur(8px);
   z-index: 7000;
   opacity: 0;
   visibility: hidden;
@@ -118,8 +119,8 @@
   width: 100%;
   max-width: 400px;
   height: 100vh;
-  background: #0a0a0a;
-  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  background: #ffffff; /* Swapped from dark gray to solid white canvas */
+  border-right: 1px solid rgba(0, 0, 0, 0.05);
   display: flex;
   flex-direction: column;
   transform: translateX(-100%);
@@ -138,17 +139,18 @@
 }
 
 .panel-header h3 {
-  font-size: 1.25rem;
+  font-size: 1.15rem;
   letter-spacing: 1.5px;
   text-transform: uppercase;
   margin: 0;
+  color: #000000;
 }
 
 .panel-close {
   background: none;
   border: none;
-  color: #ffffff;
-  font-size: 20px;
+  color: #000000;
+  font-size: 18px;
   cursor: pointer;
 }
 
@@ -165,7 +167,7 @@
 .filter-label {
   font-size: 9px;
   letter-spacing: 2px;
-  color: rgba(255, 255, 255, 0.3);
+  color: rgba(0, 0, 0, 0.4);
   margin-bottom: 20px;
   text-transform: uppercase;
   font-weight: 700;
@@ -179,11 +181,11 @@
   font-size: 0.85rem;
   letter-spacing: 0.5px;
   cursor: pointer;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(0, 0, 0, 0.7);
 }
 
 .filter-checkbox input {
-  accent-color: #ffffff;
+  accent-color: #000000;
   width: 14px;
   height: 14px;
 }
@@ -207,28 +209,37 @@
 }
 
 .panel-btn.apply {
-  background: #ffffff;
-  color: #000000;
-  border: 1px solid #ffffff;
+  background: #000000;
+  color: #ffffff;
+  border: 1px solid #000000;
+}
+
+.panel-btn.apply:hover {
+  background: #222222;
+  border-color: #222222;
 }
 
 .panel-btn.clear {
   background: transparent;
-  color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #000000;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.panel-btn.clear:hover {
+  border-color: #000000;
 }
 
 /* --- THE GALLERY GRID ARCHITECTURE --- */
 .shop-content-area {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 0 8% 120px 8%; /* Synced alignment track paths */
+  padding: 0 8% 120px 8%;
 }
 
 .pdp-product-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 50px 24px; /* Sophisticated tight-cell spacing framework */
+  gap: 45px 24px;
 }
 
 .pdp-card {
@@ -241,11 +252,11 @@
 .pdp-card-img-frame {
   position: relative;
   width: 100%;
-  aspect-ratio: 4 / 5.2;
+  aspect-ratio: 1 / 1; /* Locked squares match home framework layout exactly */
   overflow: hidden;
-  border-radius: 12px; /* Smooth card curvature */
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  background: #111111;
+  border-radius: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.03);
+  background: #ffffff; /* Changed dark tile boxes to soft clean backdrops */
 }
 
 .pdp-card-img-frame img {
@@ -256,27 +267,30 @@
 }
 
 .pdp-card:hover img {
-  transform: scale(1.04);
+  transform: scale(1.03);
 }
 
 .pdp-card-info {
   text-align: left;
   padding: 0 2px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 }
 
 .pdp-card-name {
   font-size: 11px;
-  font-weight: 600;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 1.2px;
-  margin: 0 0 4px 0;
-  color: #ffffff;
+  letter-spacing: 1px;
+  margin: 0;
+  color: #000000;
 }
 
 .pdp-card-price {
   font-size: 11px;
-  font-weight: 400;
-  color: rgba(255, 255, 255, 0.4);
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.5);
 }
 
 .pdp-loading-state {
@@ -284,7 +298,7 @@
   letter-spacing: 2px;
   text-align: center;
   padding: 100px 0;
-  color: rgba(255, 255, 255, 0.3);
+  color: rgba(0, 0, 0, 0.4);
 }
 
 /* --- MOBILE & TABLET RESPONSIVE INTERPOLATIONS --- */
@@ -297,42 +311,12 @@
 }
 
 @media (max-width: 768px) {
-  .shop-header-minimal {
-    padding: 60px 6% 40px 6%;
-  }
-  .shop-utility-bar {
-    padding: 20px 6%;
-    margin-bottom: 40px;
-  }
-
-  /* Stacks utility bar segments to avoid layout crowding */
-  .utility-inner {
-    flex-direction: column;
-    gap: 16px;
-    align-items: stretch;
-  }
-
-  .utility-center {
-    order: -1; /* Puts search bar at the very top of stack row layout */
-  }
-
-  .pdp-search-input {
-    max-width: 100%;
-  }
-
-  .pdp-filter-trigger,
-  .pdp-sort-select {
-    text-align: center;
-    font-size: 10px;
-    padding: 12px;
-  }
-
-  .shop-content-area {
-    padding: 0 6% 80px 6%;
-  }
-
-  .pdp-product-grid {
-    grid-template-columns: repeat(2, 1fr); /* 2 balanced columns on phones */
-    gap: 30px 16px;
-  }
+  .shop-header-minimal { padding: 60px 6% 30px 6%; }
+  .shop-utility-bar { padding: 16px 6%; margin-bottom: 35px; }
+  .utility-inner { flex-direction: column; gap: 14px; align-items: stretch; }
+  .utility-center { order: -1; }
+  .pdp-search-input { max-width: 100%; }
+  .pdp-filter-trigger, .pdp-sort-select { text-align: center; font-size: 10px; padding: 12px; }
+  .shop-content-area { padding: 0 6% 80px 6%; }
+  .pdp-product-grid { grid-template-columns: repeat(2, 1fr); gap: 24px 12px; }
 }

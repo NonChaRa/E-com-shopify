@@ -11,6 +11,7 @@ export const GET_PRODUCTS_QUERY = `
           id
           title
           description
+          descriptionHtml
           handle
           priceRange {
             minVariantPrice {
@@ -52,6 +53,7 @@ export const GET_COLLECTION_PRODUCTS = `
             title
             handle
             description
+            descriptionHtml
             priceRange {
               minVariantPrice {
                 amount

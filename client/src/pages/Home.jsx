@@ -11,20 +11,13 @@ const ProductCard = ({ p, navigate, addToCart }) => {
   const [showSizes, setShowSizes] = useState(false);
   const [pendingPreorder, setPendingPreorder] = useState(null);
 
-  const handleQuickAdd = (e, variant) => {
-    e.stopPropagation();
-    addToCart(p, variant.title, variant.id);
-    setShowSizes(false);
-  };
   const handleSizeClick = (e, variant) => {
       e.stopPropagation();
       const isPreorder = variant.stock <= 0 && variant.available;
 
       if (isPreorder) {
-        // Show the confirmation popup instead of adding immediately
         setPendingPreorder(variant);
       } else {
-        // In stock? Add immediately
         addToCart(p, variant.title, variant.id);
         setShowSizes(false);
       }
@@ -36,7 +29,7 @@ const ProductCard = ({ p, navigate, addToCart }) => {
       setShowSizes(false);
   };
 
-    const cancelPreorder = (e) => {
+  const cancelPreorder = (e) => {
       e.stopPropagation();
       setPendingPreorder(null);
   };
@@ -52,7 +45,6 @@ const ProductCard = ({ p, navigate, addToCart }) => {
 
         <div className={`quick-size-overlay ${showSizes ? 'active' : ''}`}>
           {!pendingPreorder ? (
-            // --- REGULAR SIZE GRID ---
             <>
               <span className="quick-add-label">SELECT SIZE</span>
               <div className="size-btn-grid">
@@ -73,7 +65,6 @@ const ProductCard = ({ p, navigate, addToCart }) => {
               </div>
             </>
           ) : (
-            // --- NEW: PRE-ORDER CONFIRMATION POPUP ---
             <div className="preorder-confirm-ui">
               <p className="confirm-text">
                 This size (<strong>{pendingPreorder.title}</strong>) is handmade to order.
@@ -105,7 +96,6 @@ const ProductCard = ({ p, navigate, addToCart }) => {
 
       <div className="editorial-info">
         <h3 className="product-name">{p.name}</h3>
-        {/* Added .toLocaleString() to match professional pricing */}
         <p className="product-price">THB {Number(p.price).toLocaleString()}</p>
       </div>
     </div>
@@ -115,6 +105,7 @@ const ProductCard = ({ p, navigate, addToCart }) => {
 const Home = ({ allProducts, fetchByCollection, fetchAllProducts, loading, addToCart }) => {
   const [activeCollection, setActiveCollection] = useState('ALL');
   const navigate = useNavigate();
+
   const handleCollectionChange = async (shopifyHandle, displayName) => {
     setActiveCollection(displayName);
     if (shopifyHandle === 'all') {
@@ -123,10 +114,11 @@ const Home = ({ allProducts, fetchByCollection, fetchAllProducts, loading, addTo
       await fetchByCollection(shopifyHandle);
     }
   };
+
   useEffect(() => {
-      fetchAllProducts();
-      setActiveCollection('ALL');
-    }, []);
+    fetchAllProducts();
+    setActiveCollection('ALL');
+  }, []);
 
   const scrollSlider = (direction) => {
     const slider = document.getElementById('product-slider');
@@ -141,12 +133,12 @@ const Home = ({ allProducts, fetchByCollection, fetchAllProducts, loading, addTo
         <div className="collection-header">
           <h1 className="collection-title">SHOP BY COLLECTION</h1>
           <div className="collection-categories">
-              {/* 1. IMPERIAL BLUE FIX: Check for 'IMPERIAL BLUE' */}
+              {/* FIXED: Conditional check now matches the exact 'IMPERIAL BLUE' state value string */}
               <span
-                className={`category-link ${activeCollection === 'blue-imperial' ? 'active' : ''}`}
-                onClick={() => handleCollectionChange('blue-imperial', 'BLUE IMPERIAL')}
+                className={`category-link ${activeCollection === 'IMPERIAL BLUE' ? 'active' : ''}`}
+                onClick={() => handleCollectionChange('imperial-blue', 'IMPERIAL BLUE')}
               >
-                BLUE IMPERIAL
+                IMPERIAL BLUE
               </span>
 
               <span
@@ -188,11 +180,7 @@ const Home = ({ allProducts, fetchByCollection, fetchAllProducts, loading, addTo
             className="editorial-explore-btn"
             onClick={() => {
               fetchAllProducts();
-
-              // 2. Reset the UI underline to "VIEW ALL"
               handleCollectionChange('all', 'ALL');
-
-              // 3. Navigate to the shop page
               navigate('/shop');
             }}
           >
@@ -202,9 +190,6 @@ const Home = ({ allProducts, fetchByCollection, fetchAllProducts, loading, addTo
 
         <SplitFeature />
         <VideoLoopSection />
-
-
-
       </main>
       <EditorialHero />
     </>

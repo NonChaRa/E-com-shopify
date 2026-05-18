@@ -353,21 +353,115 @@
   }
 }
 
+/* --- RESPONSIVE LOOKBOOK OVERHAUL --- */
 @media (max-width: 768px) {
   .collection-header {
     flex-direction: column;
-    gap: 24px;
-    align-items: flex-start;
-    padding-top: 40px;
+    align-items: center;
+    text-align: center;
+    padding: 50px 24px 0 24px;
+    width: 100%;
   }
+
+  .collection-title {
+    font-size: 1.4rem;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+  }
+
+  /* Horizontal swipe track navigation bar matching reference layout */
   .collection-categories {
     width: 100%;
+    display: flex;
     justify-content: flex-start;
+    gap: 28px;
     overflow-x: auto;
-    padding-bottom: 8px;
-    gap: 24px;
+    padding: 8px 4px 14px 4px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    scrollbar-width: none; /* Hide default scrollbars */
   }
+  .collection-categories::-webkit-scrollbar {
+    display: none;
+  }
+
+  .category-link {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    padding-bottom: 12px;
+    white-space: nowrap;
+    color: rgba(0, 0, 0, 0.3);
+    border: none;
+  }
+
+  /* Pinned bottom accent underline trace */
+  .category-link:hover,
+  .category-link.active {
+    color: #000000;
+  }
+  .category-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    height: 1.5px;
+    background-color: #000000;
+  }
+
+  .slider-wrapper {
+    padding: 24px 16px 40px 16px;
+  }
+
+  /* Converts horizontal scroll row to a 2-column store grid matrix */
+  .slider-row {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 24px 12px !important;
+    overflow-x: visible !important;
+    min-height: auto !important;
+    padding-bottom: 0;
+  }
+
   .editorial-card {
-    flex: 0 0 45%;
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: none !important;
+    min-width: 0 !important;
+    gap: 8px;
+  }
+
+  .editorial-image-wrapper {
+    border-radius: 4px !important; /* Elegant sharp frame boundaries */
+    border: 1px solid rgba(0, 0, 0, 0.04);
+  }
+
+  /* Quick action buttons optimized for touch interactions */
+  .quick-add-trigger-circle {
+    width: 28px;
+    height: 28px;
+    bottom: 10px;
+    right: 10px;
+    font-size: 14px;
+  }
+
+  .editorial-info {
+    padding: 0 2px;
+  }
+
+  .product-name {
+    font-size: 10px;
+    letter-spacing: 0.5px;
+    line-height: 1.3;
+    font-weight: 700;
+  }
+
+  .product-price {
+    font-size: 10px;
+    font-weight: 500;
+    color: #000000;
+  }
+
+  .shop-all-cta-centered {
+    margin: 10px 0 40px 0;
   }
 }

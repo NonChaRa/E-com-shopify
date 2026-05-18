@@ -11,16 +11,15 @@ const VideoLoopSection = () => {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.play().catch(() => {}); // Play when visible
+            entry.target.play().catch(() => {}); // Autoplay safely when entering viewport frame bounds
           } else {
-            entry.target.pause(); // Pause when off-screen
+            entry.target.pause(); // Sleep container loop when scrolled past fold line
           }
         });
       },
-      { threshold: 0.2 } // Triggers when 20% of the video is in view
+      { threshold: 0.15 } // Triggers early for smooth execution mapping
     );
 
-    // Observe each video element
     videoRefs.current.forEach((video) => {
       if (video) observer.observe(video);
     });
@@ -28,46 +27,45 @@ const VideoLoopSection = () => {
     return () => observer.disconnect();
   }, []);
 
-  // Helper to add videos to the ref array
   const addToRefs = (el) => {
     if (el && !videoRefs.current.includes(el)) {
       videoRefs.current.push(el);
     }
   };
 
-    return (
-      <section className="video-loop-section">
+  return (
+    <section className="video-loop-section">
+      <div className="video-grid">
 
-        <div className="video-grid">
-          {/* Left Video */}
-          <div className="video-card">
-            <video
-              ref={addToRefs}
-              className="loop-video"
-              src={loop1}
-              muted
-              loop
-              playsInline
-              preload="metadata"
-            />
-          </div>
-
-          {/* Second Video (Previously Right) */}
-          <div className="video-card">
-            <video
-              ref={addToRefs}
-              className="loop-video"
-              src={loop3}
-              muted
-              loop
-              playsInline
-              preload="metadata"
-            />
-          </div>
-
+        {/* Left Loop Frame */}
+        <div className="video-card">
+          <video
+            ref={addToRefs}
+            className="loop-video"
+            src={loop1}
+            muted
+            loop
+            playsInline
+            preload="metadata"
+          />
         </div>
-      </section>
-    );
+
+        {/* Right Loop Frame */}
+        <div className="video-card">
+          <video
+            ref={addToRefs}
+            className="loop-video"
+            src={loop3}
+            muted
+            loop
+            playsInline
+            preload="metadata"
+          />
+        </div>
+
+      </div>
+    </section>
+  );
 };
 
 export default VideoLoopSection;

@@ -32,6 +32,7 @@ const LayoutWrapper = ({ children, cartCount, onOpenCart, onOpenLogin, onLogout,
       location.pathname.startsWith('/product') ||
       location.pathname === '/contact' ||
       location.pathname === '/account' ||
+      location.pathname === '/shop' ||
       location.pathname === '/policy/privacy' ||
       location.pathname === '/policy/shipping' ||
       location.pathname === '/policy/refund' ||

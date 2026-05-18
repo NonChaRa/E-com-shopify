@@ -1,211 +1,244 @@
-/* --- PDP THEME: ANTON & LATO EDITORIAL --- */
+/* --- PDP THEME: BALANCED ASYMMETRIC EDITORIAL SPREAD --- */
 
 .product-page-wrapper {
-  padding-top: 80px;
-  background-color: var(--bg-white);
+  padding-top: 100px; /* Aligned safely with your custom full-bleed navbar height */
+  background-color: #fdfbf7; /* Switched to a soft gallery eggshell cream to elevate image presentation */
   min-height: 100vh;
   color: var(--black);
+  box-sizing: border-box;
 }
 
 .product-page-container {
-  max-width: 1500px;
+  max-width: 1260px; /* Holds a clean lookbook frame boundary across wide displays */
   margin: 0 auto;
-  padding: 40px 5%;
+  padding: 30px 40px 100px 40px;
 }
 
+/* --- BACK BUTTON ALIGNMENT LINK --- */
 .pdp-navigation {
-  margin-bottom: 40px;
+  width: 100%;
+  margin-bottom: 35px;
+  display: flex;
+  justify-content: flex-start;
 }
 
 .pdp-back-btn {
   background: none;
   border: none;
-  font-family: var(--font-body); /* Lato */
-  font-size: 11px;
+  font-family: var(--font-body);
+  font-size: 10px;
   font-weight: 700;
-  letter-spacing: 2px;
-  color: #999;
+  letter-spacing: 2.5px;
+  color: rgba(0, 0, 0, 0.3);
   cursor: pointer;
-  transition: color 0.3s ease;
+  padding: 0;
+  transition: color 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  text-transform: uppercase;
 }
 
 .pdp-back-btn:hover {
-  color: var(--black);
+  color: #000000;
 }
 
-/* --- THE GRID --- */
+/* --- THE PERSISTENT VIEWPORT INTERACTION GRID --- */
 .pdp-main-layout {
   display: grid;
-  grid-template-columns: 1fr 480px;
-  gap: 80px;
+  /* Uses explicit flexible proportions to avoid horizontal empty space pooling */
+  grid-template-columns: 1.15fr 1fr;
+  gap: 64px;
   align-items: start;
+  width: 100%;
+  margin-bottom: 100px;
 }
 
+/* --- THE LEFT GALLERY TRACK SCROLLER --- */
 .pdp-gallery-stack {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 20px;
+  max-height: 72vh; /* Keeps imagery locked tightly above laptop screen fold line */
+  overflow-y: auto;
+  scrollbar-width: none; /* Hide scroll track lines on Firefox */
+}
+.pdp-gallery-stack::-webkit-scrollbar {
+  display: none; /* Hide scroll track lines on Chrome/Safari */
+}
+
+.pdp-image-container {
+  width: 100%;
+  aspect-ratio: 1 / 1; /* Crisp square lookbook layout framing */
+  overflow: hidden;
+  border-radius: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  background-color: #ffffff;
+  flex-shrink: 0;
 }
 
 .pdp-image-container img {
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
   display: block;
-  border-radius: 2px; /* Very sharp editorial edges */
-  border: 1px solid rgba(0,0,0,0.05);
 }
 
-/* --- STICKY SIDEBAR --- */
+/* --- THE RIGHT SIDEBAR DETAILS FRAME --- */
 .pdp-sidebar-sticky {
-  position: sticky;
-  top: 120px;
+  position: relative;
+  top: 0;
+  width: 100%;
+}
+
+.pdp-sidebar-content {
+  display: flex;
+  flex-direction: column;
 }
 
 .pdp-collection-tag {
   display: block;
   font-family: var(--font-body);
-  font-size: 10px;
+  font-size: 9px;
   letter-spacing: 3px;
-  color: #999;
-  margin-bottom: 10px;
+  color: rgba(0, 0, 0, 0.4);
+  margin-bottom: 8px;
 }
 
 .pdp-title-main {
   font-family: var(--font-anton);
-  font-size: clamp(2.5rem, 4vw, 4rem);
+  font-size: clamp(1.8rem, 2.8vw, 2.5rem); /* Scaled down slightly to stay elegant and readable */
   text-transform: uppercase;
-  line-height: 1;
-  margin-bottom: 15px;
-  color: black;
+  line-height: 1.1;
+  margin: 0 0 12px 0;
+  color: #000000;
+  letter-spacing: 0.5px;
 }
 
 .pdp-price-tag {
   font-family: var(--font-body);
-  font-size: 22px;
-  font-weight: 300;
-  color: var(--black);
-  margin-bottom: 30px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #000000;
+  margin: 0 0 20px 0;
 }
 
 .pdp-status-indicator {
   font-family: var(--font-body);
-  font-size: 11px;
+  font-size: 9px;
   font-weight: 700;
-  letter-spacing: 1px;
-  margin-bottom: 40px;
+  letter-spacing: 1.5px;
+  margin-bottom: 30px;
+}
+.pdp-stock-msg { color: #2ecc71; }
+.pdp-preorder-msg { color: #e67e22; }
+.pdp-soldout-msg { color: #999999; }
+
+/* --- COMPACT CONTROL BLOCKS --- */
+.pdp-variant-selector {
+  margin-bottom: 30px;
 }
 
-.pdp-stock-msg { color: #2ecc71; }
-.pdp-preorder-msg { color: var(--accent-orange); }
-.pdp-soldout-msg { color: #999; }
-
-/* --- SELECTION AREA --- */
 .pdp-label-mini {
   display: block;
   font-family: var(--font-body);
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 700;
   letter-spacing: 1.5px;
-  margin-bottom: 15px;
-  color: #999;
+  margin-bottom: 12px;
+  color: rgba(0, 0, 0, 0.4);
 }
 
 .pdp-size-grid {
   display: flex;
-  gap: 10px;
-  margin-bottom: 50px;
+  gap: 8px;
 }
 
 .pdp-size-btn {
-  padding: 12px 25px;
-  border: 1px solid #ddd;
+  flex: 1;
+  padding: 10px 0;
+  border: 1px solid rgba(0, 0, 0, 0.15);
   background: transparent;
   font-family: var(--font-body);
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
-  min-width: 70px;
-  color: black;
+  color: #000000;
+  transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
 }
-
 .pdp-size-btn:hover:not(.is-disabled) {
-  border-color: var(--black);
+  border-color: #000000;
 }
-
 .pdp-size-btn.is-active {
-  background: var(--black) !important;
-  color: var(--white) !important;
-  border-color: var(--black) !important;
+  background: #000000 !important;
+  color: #ffffff !important;
+  border-color: #000000 !important;
 }
-
 .pdp-size-btn.is-disabled {
-  opacity: 0.2;
+  opacity: 0.15;
   cursor: not-allowed;
   text-decoration: line-through;
 }
 
-/* --- PRIMARY ACTION BUTTON --- */
+/* --- PRIMARY CART CONFIGURATIONS --- */
+.pdp-action-area {
+  margin-bottom: 30px;
+}
+
 .pdp-btn-primary {
   width: 100%;
-  padding: 20px;
-  background: var(--black);
-  color: var(--white);
-  border: 1px solid var(--black);
+  padding: 14px;
+  background: #000000;
+  color: #ffffff;
+  border: 1px solid #000000;
   font-family: var(--font-anton);
-  font-size: 16px;
+  font-size: 13px;
   letter-spacing: 2px;
   text-transform: uppercase;
   cursor: pointer;
-  transition: all 0.3s ease;
-  margin-bottom: 15px;
+  transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  margin-bottom: 10px;
 }
-
 .pdp-btn-primary:hover {
   background: transparent;
-  color: var(--black);
+  color: #000000;
 }
-
 .pdp-btn-primary.preorder {
-  background: var(--white);
-  color: var(--black);
+  background: #ffffff;
+  color: #000000;
 }
-
 .pdp-btn-primary.preorder:hover {
-  background: var(--black);
-  color: var(--white);
+  background: #000000;
+  color: #ffffff;
 }
 
 .pdp-preorder-disclaimer {
   font-family: var(--font-body);
-  font-size: 11px;
-  color: #666;
+  font-size: 9.5px;
+  color: #666666;
   font-style: italic;
   text-align: center;
 }
 
-/* --- TEXT CONTENT --- */
+/* --- DYNAMIC PRODUCT DESCRIPTION CONTAINER --- */
 .pdp-description-box {
   font-family: var(--font-body);
-  font-size: 15px;
-  line-height: 1.7;
-  color: #444;
-  margin: 50px 0;
-  padding: 30px 0;
-  border-top: 1px solid #eee;
-  border-bottom: 1px solid #eee;
+  font-size: 13px;
+  line-height: 1.65;
+  color: #222222;
+  margin-bottom: 30px;
+  padding: 20px 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 }
+.pdp-description-box p { margin: 0; }
 
 /* --- ACCORDIONS --- */
 .pdp-utility-accordion details {
-  padding: 20px 0;
-  border-bottom: 1px solid #eee;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 }
-
 .pdp-utility-accordion summary {
   list-style: none;
   font-family: var(--font-body);
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 700;
   letter-spacing: 1px;
   cursor: pointer;
@@ -213,73 +246,103 @@
   justify-content: space-between;
   text-transform: uppercase;
 }
+.pdp-utility-accordion summary::-webkit-details-marker { display: none; }
 
 .pdp-details-inner {
-  padding-top: 15px;
+  padding-top: 12px;
   font-family: var(--font-body);
-  font-size: 13px;
-  color: #666;
-  line-height: 1.6;
+  font-size: 12px;
+  color: #666666;
+  line-height: 1.55;
 }
 
-/* --- SIMILAR PRODUCTS --- */
+/* --- LOWER SECTIONS TRACK ALIGNMENT MAPS --- */
+.pdp-extended-sections-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 100px; /* Balanced section blocks separation */
+}
+
+/* Fixed TikTok layout drift */
+.pdp-extended-sections-wrapper .tiktok-section-container {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* --- SIMILAR ARCHIVE PRODUCTS GRID --- */
 .pdp-similar-section {
-  margin-top: 120px;
-  padding-top: 80px;
-  border-top: 1px solid var(--black);
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  padding-top: 60px;
 }
 
 .pdp-section-heading {
   font-family: var(--font-anton);
-  font-size: 2rem;
+  font-size: 1.5rem;
   text-transform: uppercase;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
+  letter-spacing: 0.5px;
 }
 
 .pdp-similar-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 25px;
+  gap: 20px;
 }
 
 .pdp-similar-card {
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.pdp-similar-img-wrapper {
+  width: 100%;
+  aspect-ratio: 1 / 1; /* Uniform lookbook cards matches header grid */
+  overflow: hidden;
+  border-radius: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.03);
+  background: #ffffff;
 }
 
 .pdp-similar-img-wrapper img {
   width: 100%;
-  aspect-ratio: 4/5;
+  height: 100%;
   object-fit: cover;
-  transition: transform 0.6s ease;
+  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
 }
-
 .pdp-similar-card:hover img {
-  transform: scale(1.05);
+  transform: scale(1.03);
 }
 
 .pdp-similar-name {
   font-family: var(--font-body);
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
-  margin: 15px 0 5px 0;
+  margin: 0;
+  letter-spacing: 0.5px;
+  color: #000000;
 }
 
 .pdp-similar-price {
   font-family: var(--font-body);
-  font-size: 13px;
-  color: #999;
+  font-size: 11px;
+  color: rgba(0, 0, 0, 0.4);
+  margin: 0;
 }
 
-/* --- RESPONSIVE --- */
+/* --- RESPONSIVE TABLET CALIBRATIONS --- */
 @media (max-width: 1024px) {
   .pdp-main-layout {
     grid-template-columns: 1fr;
     gap: 40px;
   }
-  .pdp-sidebar-sticky {
-    position: relative;
-    top: 0;
+  .pdp-gallery-stack {
+    max-height: none; /* Return to natural page stack on tablet surfaces */
   }
   .pdp-similar-grid {
     grid-template-columns: repeat(2, 1fr);
