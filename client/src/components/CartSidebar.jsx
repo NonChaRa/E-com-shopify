@@ -13,7 +13,6 @@ const CartSidebar = ({ isOpen, onClose, cart, onRemove, updateQuantity, user }) 
       setIsSyncing(true);
 
       try {
-        // 1. Format items with PRE-ORDER METADATA
         const lines = cart.map(item => {
           const isPreorder = item.stock <= 0 && item.available;
           return {
@@ -26,7 +25,6 @@ const CartSidebar = ({ isOpen, onClose, cart, onRemove, updateQuantity, user }) 
           };
         });
 
-        // 2. Request Cart Creation from Shopify
         const response = await shopifyFetch(CREATE_CART_MUTATION, {
           input: { lines }
         });
@@ -78,7 +76,6 @@ const CartSidebar = ({ isOpen, onClose, cart, onRemove, updateQuantity, user }) 
                     <div className="item-header-row">
                       <div>
                         <h3 className="item-name">{item.name}</h3>
-                        {/* Display Pre-order tag if applicable */}
                         {isPreorder && <span className="cart-preorder-tag">PRE-ORDER</span>}
                       </div>
                       <span className="item-price">THB {Number(item.price * item.quantity).toLocaleString()}</span>
@@ -92,7 +89,7 @@ const CartSidebar = ({ isOpen, onClose, cart, onRemove, updateQuantity, user }) 
                         <input type="text" value={item.quantity} readOnly />
                         <button
                           onClick={() => updateQuantity(item.cartId, 1)}
-                          disabled={item.stock <= 0 && item.quantity >= 5} // Disable if pre-order cap hit
+                          disabled={item.stock <= 0 && item.quantity >= 5}
                         >
                           +
                         </button>

@@ -1,12 +1,10 @@
 .about-page-wrapper {
   padding-top: 100px;
-  /* Ensure the whole page defaults to a clean base */
   background-color: #fff;
   color: #000;
 }
 
 .editorial-title {
-  /* Simple, clean sans-serif */
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   font-size: 42px;
   font-weight: 700; /* Bold but clean */
@@ -32,28 +30,27 @@
 /* --- SECTION 1: THE DARK YEARS --- */
 .story-section.monochrome-bg {
   background-color: #1a1a1a;
-  color: #ffffff; /* Forces all text inside to be white */
+  color: #ffffff;
   padding: 120px 20px;
   text-align: center;
   margin-top: 50px;
 }
 
 .monochrome-bg .serif-title {
-  color: #ffffff; /* Explicitly make this title white */
+  color: #ffffff;
 }
 
 .monochrome-bg .narrative-text p {
-  color: #cccccc; /* Slightly softer white for the body text */
+  color: #cccccc;
 }
 
 /* --- SECTION 2: THE TURNING POINT (LIGHT) --- */
 .bg-off-white {
   background-color: #fcfcfc;
   padding: 100px 40px;
-  color: #000000; /* Forces all text inside to be black */
+  color: #000000;
 }
 
-/* Fix for the invisible text in your screenshot */
 .bg-off-white .caps-title {
   color: #000000 !important;
 }
@@ -207,7 +204,6 @@
 }
 
 
-/* Mobile Fix */
 @media (max-width: 768px) {
   .editorial-three-grid {
     grid-template-columns: 1fr;

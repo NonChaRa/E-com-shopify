@@ -11,13 +11,13 @@ const VideoLoopSection = () => {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.play().catch(() => {}); // Autoplay safely when entering viewport frame bounds
+            entry.target.play().catch(() => {});
           } else {
-            entry.target.pause(); // Sleep container loop when scrolled past fold line
+            entry.target.pause();
           }
         });
       },
-      { threshold: 0.15 } // Triggers early for smooth execution mapping
+      { threshold: 0.15 }
     );
 
     videoRefs.current.forEach((video) => {

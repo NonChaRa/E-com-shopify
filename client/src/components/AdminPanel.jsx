@@ -16,25 +16,22 @@ const AdminPanel = ({ onRefresh }) => {
     setLoading(true);
 
     try {
-      // 1. Upload Image to Supabase Storage
       const fileExt = file.name.split('.').pop();
       const fileName = `${Math.random()}.${fileExt}`;
       const filePath = `product-images/${fileName}`;
 
       let { error: uploadError } = await supabase.storage
-        .from('product-images') // Make sure this bucket exists in Supabase!
+        .from('product-images')
         .upload(filePath, file);
 
       if (uploadError) throw uploadError;
 
-      // 2. Get Public URL
       const { data: urlData } = supabase.storage
         .from('product-images')
         .getPublicUrl(filePath);
 
       const imageUrl = urlData.publicUrl;
 
-      // 3. Send data to your Node server
       const response = await fetch('http://localhost:5000/api/products', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

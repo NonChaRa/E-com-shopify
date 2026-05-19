@@ -79,7 +79,7 @@
 /* --- ITEM CHANNEL SCROLLER --- */
 .cart-items-list {
   flex: 0.95;
-  overflow-y: auto; /* Keeps item loops perfectly scrollable within the center frame */
+  overflow-y: auto;
   padding: 10px 30px;
   scrollbar-width: none;
 }
@@ -202,7 +202,7 @@
   padding: 24px 30px;
   border-top: 1px solid rgba(0, 0, 0, 0.05);
   background: #ffffff;
-  flex-shrink: 0; /* Stops the footer actions from dropping out of the window viewport */
+  flex-shrink: 0;
 }
 
 .subtotal-row {
@@ -267,7 +267,6 @@
   border-radius: 6px;
 }
 
-/* --- ULTRA MOBILE VIEWPORTS SAFETY TIGHTENING --- */
 @media (max-width: 480px) {
   .cart-header, .cart-footer { padding: 20px 24px; }
   .cart-items-list { padding: 5px 24px; }

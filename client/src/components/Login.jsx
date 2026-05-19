@@ -12,7 +12,6 @@ const Login = ({ isOpen, onClose, onLoginSuccess, onOpenRegister }) => {
     setLoading(true);
 
     try {
-      // STEP 1: Authenticate directly with Supabase
       const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
         email,
         password
@@ -20,7 +19,6 @@ const Login = ({ isOpen, onClose, onLoginSuccess, onOpenRegister }) => {
 
       if (authError) throw authError;
 
-      // STEP 2: Grab the matching profile row to get the shopify_customer_id
       const { data: profile, error: profileError } = await supabase
         .from('profiles')
         .select('shopify_customer_id')
@@ -31,7 +29,6 @@ const Login = ({ isOpen, onClose, onLoginSuccess, onOpenRegister }) => {
         console.warn("Profile mapping row not found during login setup:", profileError.message);
       }
 
-      // STEP 3: Pass the clean user session data straight up to App state
       onLoginSuccess({
         ...authData.user,
         shopify_id: profile?.shopify_customer_id || null

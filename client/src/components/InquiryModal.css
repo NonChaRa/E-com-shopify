@@ -2,11 +2,11 @@
 .inquiry-portal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.4); /* Professional dim */
+  background: rgba(0, 0, 0, 0.4);
   display: flex !important;
   justify-content: center;
   align-items: center;
-  z-index: 10000; /* Higher than Navbar (5000) */
+  z-index: 10000;
   backdrop-filter: blur(8px);
   pointer-events: all;
   opacity: 1;
@@ -21,7 +21,7 @@
   max-width: 480px;
   position: relative;
   box-shadow: 0 40px 100px rgba(0, 0, 0, 0.15);
-  border-radius: 4px; /* Minimalist sharp edges */
+  border-radius: 4px;
   color: #000;
   animation: modalFadeUp 0.4s ease;
 }
@@ -82,7 +82,6 @@
   align-items: center;
 }
 
-/* Inherit button styles from ProductPage.css or define here */
 .modal-footer-actions .add-to-cart-primary {
   width: 100%;
   padding: 18px;

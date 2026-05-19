@@ -6,10 +6,8 @@ export const useCart = create(
     (set) => ({
       cart: [],
 
-      // CHANGE: Pass variantId instead of just size
       addToCart: (product, selectedSize, variantId) =>
         set((state) => {
-          // Identify items by variantId instead of product.id
           const existingItem = state.cart.find(
                 (item) => item.variantId === variantId
           );
@@ -62,7 +60,7 @@ export const useCart = create(
 
       clearCart: () => {
         set({ cart: [] });
-        localStorage.removeItem('nail-cart-storage'); // Force wipe the persisted storage
+        localStorage.removeItem('nail-cart-storage');
       },
     }),
     { name: 'nail-cart-storage' }

@@ -1,20 +1,16 @@
-/* --- EDITORIAL AUTH THEME (Minimalist/Professional) --- */
-
 :root {
-  /* Ensuring theme consistency - add these if not in Global.css */
   --muted-text: #666;
   --field-border: #e0e0e0;
   --modal-shadow: 0 20px 60px rgba(0,0,0,0.15);
 }
 
-/* 1. Subtle Dark & Blurry Backdrop */
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.4); /* Subdued dark overlay, not white */
+  background: rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(5px);      /* Gentle blur for focus */
   display: flex;
   justify-content: center;
@@ -41,7 +37,6 @@
   box-shadow: var(--modal-shadow); /* Soft, professional depth */
   text-align: center;
 
-  /* Entrance Animation: Slide up and fade in */
   transform: translateY(20px);
   opacity: 0;
   transition: transform 0.4s ease, opacity 0.4s ease;
@@ -139,10 +134,8 @@
   cursor: pointer;
   text-transform: uppercase;
 
-  /* Remove clip-path for Rect form */
   clip-path: none;
 
-  /* Transition for hover/click animations */
   transition: background 0.3s ease, color 0.3s ease, transform 0.1s ease;
 }
 

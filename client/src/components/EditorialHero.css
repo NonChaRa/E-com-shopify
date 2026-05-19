@@ -30,7 +30,7 @@
   border: 1px solid white;
   color: white;
   padding: 15px 40px;
-  border-radius: 30px; /* Pill shape like reference */
+  border-radius: 30px;
   font-size: 10px;
   letter-spacing: 2px;
   cursor: pointer;

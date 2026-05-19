@@ -14,7 +14,6 @@ const Register = ({ isOpen, onClose }) => {
   const handleRegister = async (e) => {
     e.preventDefault();
 
-    // 1. Structural Validation Checks
     if (password !== confirmPassword) {
       alert("Passwords do not match!");
       return;
@@ -28,7 +27,6 @@ const Register = ({ isOpen, onClose }) => {
     setLoading(true);
 
     try {
-      // 2. Provision Credentials in Supabase Auth
       const { data: sbData, error: sbError } = await supabase.auth.signUp({
         email,
         password
@@ -40,7 +38,7 @@ const Register = ({ isOpen, onClose }) => {
       let shopifyId = null;
 
       try {
-        // 3. Mirror the Profile Identity to Shopify
+        // Mirror the Profile Identity to Shopify
         const shopifyResponse = await shopifyFetch(CUSTOMER_CREATE_MUTATION, {
           input: {
             email: email,
@@ -57,11 +55,9 @@ const Register = ({ isOpen, onClose }) => {
           shopifyId = shopifyResponse?.data?.customerCreate?.customer?.id || null;
         }
       } catch (shopErr) {
-        // We log the error but don't crash registration—recovering an unlinked profile row is easy
         console.error("Shopify Connection Bridge Offline:", shopErr.message);
       }
 
-      // 4. Save the Mapped Profile Values inside your Core Database Row
       const { error: profileError } = await supabase
         .from('profiles')
         .insert([

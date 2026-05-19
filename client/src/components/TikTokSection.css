@@ -8,7 +8,7 @@
   max-width: 1200px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1fr 400px; /* Text left, vertical video right */
+  grid-template-columns: 1fr 400px;
   gap: 60px;
   align-items: center;
 }

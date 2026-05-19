@@ -11,7 +11,6 @@ const Account = ({ user }) => {
       if (!user?.id) return;
 
       try {
-        // Fetching from your local Supabase sync instead of Shopify API
         const { data, error } = await supabase
           .from('orders')
           .select(`

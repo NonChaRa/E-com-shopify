@@ -3,7 +3,7 @@
 .values-page-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 160px 40px 120px 40px; /* Perfectly aligned with your Navbar clearance */
+  padding: 160px 40px 120px 40px;
   min-height: 100vh;
   background-color: #ffffff;
 }
@@ -51,7 +51,7 @@
 
 .pillar-row {
   display: grid;
-  grid-template-columns: 1fr 1.2fr; /* Striking lookbook imbalance layout */
+  grid-template-columns: 1fr 1.2fr;
   padding: 60px 0;
   border-bottom: 1px solid rgba(0, 0, 0, 0.08);
   gap: 40px;

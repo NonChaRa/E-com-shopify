@@ -7,8 +7,6 @@
   min-height: 70vh;
 }
 
-/* Typographic Sweet Spot: Long-form text columns shouldn't expand
-   wider than 740px to ensure premium reading comfort. */
 .policy-content-area {
   max-width: 740px;
   margin: 80px auto 0 auto;

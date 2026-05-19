@@ -5,7 +5,7 @@
   right: 50%;
   margin-left: -50vw;
   margin-right: -50vw;
-  height: 100vh; /* Scaled down slightly from 120vh to stay inside premium layout constraints */
+  height: 100vh;
   margin-top: 40px;
   display: flex;
   overflow: hidden;
@@ -68,7 +68,7 @@
   letter-spacing: 2px;
   cursor: pointer;
   transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-  margin-bottom: 40px; /* Reduced from 200px to keep button element naturally visible */
+  margin-bottom: 40px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
 }
 
@@ -82,7 +82,7 @@
 @media (max-width: 1024px) {
   .split-feature-section {
     flex-direction: column;
-    height: 110vh; /* Stacks panels as individual portrait content rows */
+    height: 110vh;
     margin-top: 20px;
   }
 

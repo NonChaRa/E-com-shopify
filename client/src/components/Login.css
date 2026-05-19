@@ -1,12 +1,10 @@
-/* --- LOGIN MODAL: VINTAGE THEME --- */
-
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(75, 157, 169, 0.3); /* Transparent Brand Teal backdrop */
+  background: rgba(75, 157, 169, 0.3);
   backdrop-filter: blur(8px);
   display: flex;
   justify-content: center;

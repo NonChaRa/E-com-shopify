@@ -2,9 +2,9 @@
 
 .all-products-wrapper {
   padding-top: 100px;
-  background-color: #fdfbf7; /* Signature soft gallery eggshell cream background */
+  background-color: #fdfbf7;
   min-height: 100vh;
-  color: #000000; /* Swapped out white text for deep crisp black */
+  color: #000000;
 }
 
 .shop-header-minimal {
@@ -14,7 +14,7 @@
 
 .shop-main-title {
   font-family: var(--font-anton);
-  font-size: clamp(2.5rem, 6.5vw, 4.5rem); /* Refined fluid typographic scale */
+  font-size: clamp(2.5rem, 6.5vw, 4.5rem);
   letter-spacing: 0.02em;
   margin-bottom: 16px;
   text-transform: uppercase;
@@ -25,13 +25,12 @@
   font-family: var(--font-body);
   font-size: 10px;
   letter-spacing: 3px;
-  color: rgba(0, 0, 0, 0.4); /* Dark translucent sub-header text tracking */
+  color: rgba(0, 0, 0, 0.4);
   text-transform: uppercase;
 }
 
 /* --- ADAPTIVE UTILITY FILTER BAR ARCHITECTURE --- */
 .shop-utility-bar {
-  /* Translucent charcoal baseline breaks the background container gracefully */
   border-top: 1px solid rgba(0, 0, 0, 0.06);
   border-bottom: 1px solid rgba(0, 0, 0, 0.06);
   padding: 18px 8%;
@@ -119,7 +118,7 @@
   width: 100%;
   max-width: 400px;
   height: 100vh;
-  background: #ffffff; /* Swapped from dark gray to solid white canvas */
+  background: #ffffff;
   border-right: 1px solid rgba(0, 0, 0, 0.05);
   display: flex;
   flex-direction: column;
@@ -252,11 +251,11 @@
 .pdp-card-img-frame {
   position: relative;
   width: 100%;
-  aspect-ratio: 1 / 1; /* Locked squares match home framework layout exactly */
+  aspect-ratio: 1 / 1;
   overflow: hidden;
   border-radius: 4px;
   border: 1px solid rgba(0, 0, 0, 0.03);
-  background: #ffffff; /* Changed dark tile boxes to soft clean backdrops */
+  background: #ffffff;
 }
 
 .pdp-card-img-frame img {

@@ -6,7 +6,6 @@ import VideoLoopSection from '../components/VideoLoopSection';
 import EditorialHero from '../components/EditorialHero';
 import "./Home.css"
 
-// --- THIS COMPONENT HANDLES THE BUTTONS FOR EACH CARD ---
 const ProductCard = ({ p, navigate, addToCart }) => {
   const [showSizes, setShowSizes] = useState(false);
   const [pendingPreorder, setPendingPreorder] = useState(null);
@@ -133,7 +132,6 @@ const Home = ({ allProducts, fetchByCollection, fetchAllProducts, loading, addTo
         <div className="collection-header">
           <h1 className="collection-title">SHOP BY COLLECTION</h1>
           <div className="collection-categories">
-              {/* FIXED: Conditional check now matches the exact 'IMPERIAL BLUE' state value string */}
               <span
                 className={`category-link ${activeCollection === 'IMPERIAL BLUE' ? 'active' : ''}`}
                 onClick={() => handleCollectionChange('imperial-blue', 'IMPERIAL BLUE')}

@@ -73,7 +73,6 @@ serve(async (req) => {
 
             const resJson = await shopifyRes.json();
 
-            // DIAGNOSTIC LOGS: These show up in your Supabase dashboard
             console.log(`[Diagnostic] Querying Shopify for Product ID: ${item.product_id}`);
             console.log(`[Diagnostic] Shopify Response:`, JSON.stringify(resJson));
 

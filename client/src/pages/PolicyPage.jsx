@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchShopPolicies } from '../components/lib/shopify';
-import './PolicyPage.css'; // Create this file for your typographic choices
+import './PolicyPage.css';
 
 const PolicyPage = () => {
-  const { policyType } = useParams(); // Catches 'shipping', 'refund', or 'privacy'
+  const { policyType } = useParams();
   const [policyData, setPolicyData] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -14,7 +14,6 @@ const PolicyPage = () => {
       const shopData = await fetchShopPolicies();
 
       if (shopData) {
-        // Match the URL param to the specific Shopify policy node
         if (policyType === 'privacy') setPolicyData(shopData.privacyPolicy);
         if (policyType === 'shipping') setPolicyData(shopData.shippingPolicy);
         if (policyType === 'refund') setPolicyData(shopData.refundPolicy);
@@ -48,9 +47,6 @@ const PolicyPage = () => {
       </header>
 
       <main className="policy-content-area">
-        {/* Shopify delivers legal bodies as formatting-safe HTML strings.
-          Using dangerouslySetInnerHTML ensures structural paragraphs render flawlessly.
-        */}
         <div
           className="policy-editorial-body"
           dangerouslySetInnerHTML={{ __html: policyData.body }}

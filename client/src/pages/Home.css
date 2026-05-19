@@ -3,14 +3,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* Expanded gutters pull the content inward, creating a zoomed-out frame */
   padding: 80px 8% 30px 8%;
   width: 100%;
 }
 
 .collection-title {
   font-family: var(--font-anton);
-  /* Scaled down maximum size to keep it elegant on ultra-wide screens */
   font-size: clamp(1.8rem, 3.5vw, 2.8rem);
   text-transform: uppercase;
   color: var(--black);
@@ -25,7 +23,7 @@
 }
 
 .category-link {
-  font-size: 10px; /* Precise, high-end metadata sizing */
+  font-size: 10px;
   font-weight: 700;
   letter-spacing: 2.5px;
   color: rgba(0, 0, 0, 0.3);
@@ -65,8 +63,8 @@
   display: none;
 }
 .slider-row.products-fading {
-  opacity: 0.1; /* Softly dims the collection layout grid */
-  pointer-events: none; /* Prevents button clicks during network changes */
+  opacity: 0.1;
+  pointer-events: none;
 }
 .no-products-msg {
   font-size: 11px;
@@ -95,7 +93,6 @@
   aspect-ratio: 4 / 5.5;
   overflow: hidden;
   border: 1px solid rgba(0, 0, 0, 0.1);
-  /* Reduced from 24px to 12px for a cleaner, modern lookbook edge */
   border-radius: 12px;
   background: #fdfdfd;
 }

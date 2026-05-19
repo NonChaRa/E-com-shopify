@@ -7,8 +7,7 @@
 
 /* --- UPPER BRAND STORY BANNER CONTAINER --- */
 .studio-brand-banner {
-  background-color: #f4f3ef; /* Signature Matte Studio Cream */
-  /* Pulled padding down to keep banner sizing tight and proportional */
+  background-color: #f4f3ef;
   padding: 100px 8%;
   text-align: center;
   display: flex;
@@ -72,7 +71,7 @@
 .footer-main-grid-area {
   background-color: #0a0a0a; /* Premium Slate Core Black */
   color: #ffffff;
-  padding: 90px 8% 40px 8%; /* Synchronized horizontal gutter paths */
+  padding: 90px 8% 40px 8%;
 }
 
 .footer-layout-container {
@@ -80,7 +79,7 @@
   margin: 0 auto;
   display: grid;
   grid-template-columns: 2fr 1fr 1fr 1fr;
-  gap: 50px; /* Snugger gaps stop column drifting */
+  gap: 50px;
 }
 
 .column-editorial-title {
