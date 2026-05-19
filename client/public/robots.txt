@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Allow: /shop
+
+Disallow: /checkout
+Disallow: /account
+
+Sitemap: https://asteri2kstudio.com/sitemap.xml
