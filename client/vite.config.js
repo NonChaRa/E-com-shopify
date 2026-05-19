@@ -8,4 +8,8 @@ export default defineConfig({
     react(),
     basicSsl()
   ],
+  test: {
+      environment: 'jsdom',
+      globals: true,
+  },
 });

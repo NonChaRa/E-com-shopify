@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import DOMPurify from 'dompurify';
 import './ProductPage.css';
 import InquiryModal from './InquiryModal';
 import TikTokSection from './TikTokSection';
@@ -47,20 +48,14 @@ const ProductPage = ({ allProducts, addToCart, onOpenCart }) => {
 
   return (
     <div className="product-page-wrapper">
-      {/* Universal Page Container Tracking Column Alignment */}
       <div className="product-page-container">
-
-        {/* Back Navigation Bar Block */}
         <nav className="pdp-navigation">
           <button className="pdp-back-btn" onClick={() => navigate('/')}>
             ← RETURN TO ARCHIVE
           </button>
         </nav>
 
-        {/* Main Spread Presentation Layout */}
         <div className="pdp-main-layout">
-
-          {/* Left Column Track: Image Gallery Scroller */}
           <div className="pdp-gallery-stack">
             {(product.images?.length > 0 ? product.images : [product.image_url]).map((url, i) => (
               <div key={i} className="pdp-image-container">
@@ -69,7 +64,6 @@ const ProductPage = ({ allProducts, addToCart, onOpenCart }) => {
             ))}
           </div>
 
-          {/* Right Column Track: Sticky Details Information Drawer */}
           <aside className="pdp-sidebar-sticky">
             <div className="pdp-sidebar-content">
               <span className="pdp-collection-tag">ASTÉRI STUDIO // 2026</span>
@@ -130,7 +124,7 @@ const ProductPage = ({ allProducts, addToCart, onOpenCart }) => {
                 {product.descriptionHtml ? (
                   <div
                     className="pdp-description-rich-text"
-                    dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}
+                    dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(product.descriptionHtml) }}
                   />
                 ) : (
                   <p>
@@ -157,7 +151,6 @@ const ProductPage = ({ allProducts, addToCart, onOpenCart }) => {
           </aside>
         </div>
 
-        {/* Unified Sub-sections Alignment Wrappers */}
         <div className="pdp-extended-sections-wrapper">
           <TikTokSection videoId="7631174893756894482" />
 
@@ -183,7 +176,6 @@ const ProductPage = ({ allProducts, addToCart, onOpenCart }) => {
             </div>
           </section>
         </div>
-
       </div>
 
       {showInquiryForm && (

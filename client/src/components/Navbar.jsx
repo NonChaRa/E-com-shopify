@@ -16,13 +16,11 @@ const Navbar = ({ cartCount, onOpenCart, user, onOpenLogin, onLogout, forceSolid
       const currentScrollPos = window.pageYOffset;
       setIsScrolled(currentScrollPos > 20);
 
-      // Desktop Only: Hide/Show navbar on scroll direction maps
       if (window.innerWidth > 1024) {
         const scrollingUp = prevScrollPos > currentScrollPos;
         setIsVisible(scrollingUp || currentScrollPos < 10);
       } else {
-        // Mobile Only: Always keep visible all the time
-        setIsVisible(true);
+        setIsVisible(true); // Persistent on mobile screens
       }
       setPrevScrollPos(currentScrollPos);
     };
@@ -37,7 +35,6 @@ const Navbar = ({ cartCount, onOpenCart, user, onOpenLogin, onLogout, forceSolid
 
   return (
     <>
-      {/* Dimmed Background Overlay */}
       <div
         className={`mega-menu-blur ${openMenu || mobileMenuOpen ? 'active' : ''}`}
         onClick={() => { setOpenMenu(null); setMobileMenuOpen(false); }}
@@ -53,7 +50,6 @@ const Navbar = ({ cartCount, onOpenCart, user, onOpenLogin, onLogout, forceSolid
 
           {/* --- LEFT NAVIGATION BLOCK --- */}
           <div className="nav-group left">
-            {/* Desktop Link Channels */}
             <div className="nav-item-wrapper desktop-only" onClick={() => navigate('/')}>
               <span className="nav-link">Home</span>
             </div>
@@ -66,7 +62,6 @@ const Navbar = ({ cartCount, onOpenCart, user, onOpenLogin, onLogout, forceSolid
               <span className={`nav-arrow ${openMenu === 'tutorials' ? 'open' : ''}`}>▾</span>
             </div>
 
-            {/* Mobile Only: Hamburger Toggle Icon */}
             <button
               className={`mobile-action-icon mobile-only hamburger-btn ${mobileMenuOpen ? 'is-active' : ''}`}
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -81,7 +76,6 @@ const Navbar = ({ cartCount, onOpenCart, user, onOpenLogin, onLogout, forceSolid
               </svg>
             </button>
 
-            {/* Mobile Only: Search Icon */}
             <button className="mobile-action-icon mobile-only" onClick={() => navigate('/shop')} aria-label="Search">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
@@ -94,42 +88,37 @@ const Navbar = ({ cartCount, onOpenCart, user, onOpenLogin, onLogout, forceSolid
             <img src={logo} alt="ASTÉRI STUDIO" className="main-logo" />
           </div>
 
-          {/* --- RIGHT NAVIGATION BLOCK --- */}
+          {/* --- RIGHT NAVIGATION BLOCK (WEB AUTH SECTIONS) --- */}
           <div className="nav-group right">
-            {/* Desktop Profile Link Channels */}
             {user && (
               <div className="nav-item-wrapper desktop-only" onClick={() => navigate('/account')}>
                 <span className="nav-link">PROFILE</span>
               </div>
             )}
+            {/* Persistent Desktop Login / Logout Button */}
             <div className="nav-item-wrapper desktop-only" onClick={user ? onLogout : onOpenLogin}>
               <span className="nav-link">{user ? 'LOGOUT' : 'LOGIN'}</span>
             </div>
 
-            {/* Mobile Only: Profile Avatar Action Icon */}
             <button className="mobile-action-icon mobile-only" onClick={user ? () => navigate('/account') : onOpenLogin} aria-label="Account">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
               </svg>
             </button>
 
-            {/* Unified Bag Trigger Action Component */}
             <div className="nav-item-wrapper bag-trigger" onClick={() => { onOpenCart(); setMobileMenuOpen(false); }}>
               <span className="desktop-only nav-link">BAG</span>
-
-              {/* Mobile Shopping Bag Vector Icon */}
               <button className="mobile-action-icon mobile-only" aria-label="Open Shopping Bag">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007z" />
                 </svg>
               </button>
-
               <span className="bag-count-editorial">{cartCount}</span>
             </div>
           </div>
         </div>
 
-        {/* Desktop Only: Dropdown Mega Panel Blocks */}
+        {/* Desktop Only Dropdowns */}
         <div className={`mega-menu-container desktop-only ${openMenu ? 'active' : ''}`} onMouseLeave={() => setOpenMenu(null)}>
           {openMenu === 'shop' && (
             <div className="mega-menu-content">
@@ -151,7 +140,7 @@ const Navbar = ({ cartCount, onOpenCart, user, onOpenLogin, onLogout, forceSolid
               <div className="mega-column">
                 <h4 className="mega-col-title">COLLECTIONS</h4>
                 <ul className="mega-list">
-                  <li onClick={() => {navigate('/shop?collection=imperial-blue'); setOpenMenu(null);}}>BLUE IMPERIAL</li>
+                  <li onClick={() => {navigate('/shop?collection=blue-imperial'); setOpenMenu(null);}}>BLUE IMPERIAL</li>
                   <li onClick={() => {navigate('/shop?collection=gadom'); setOpenMenu(null);}}>GADOM</li>
                 </ul>
               </div>
@@ -162,7 +151,7 @@ const Navbar = ({ cartCount, onOpenCart, user, onOpenLogin, onLogout, forceSolid
           </div>
         </div>
 
-        {/* Mobile Fullscreen Navigation Drawer */}
+        {/* --- MOBILE FULLSCREEN NAVIGATION DRAWER W/ INTEGRATED LOGOUT --- */}
         <div className={`mobile-nav-drawer ${mobileMenuOpen ? 'drawer-active' : ''}`}>
           <div className="mobile-drawer-inner-scroller">
             <nav className="mobile-drawer-links-wrapper">
@@ -175,8 +164,36 @@ const Navbar = ({ cartCount, onOpenCart, user, onOpenLogin, onLogout, forceSolid
 
               <div className="mobile-drawer-header-tag">THE MANIFESTO</div>
               <div className="mobile-drawer-child-item" onClick={() => handleMobileNav('/about')}>ABOUT THE STUDIO</div>
-              <div className="mobile-drawer-child-item" onClick={() => handleMobileNav('/values')}>OUR VALUES</div>
               <div className="mobile-drawer-child-item" onClick={() => handleMobileNav('/contact')}>CONTACT</div>
+
+              {/* NEW: DYNAMIC MOBILE STUDIO ACCOUNT PORTAL CONTROLS */}
+              <div className="mobile-drawer-header-tag">STUDIO ACCOUNT</div>
+              {user ? (
+                <>
+                  <div className="mobile-drawer-child-item" onClick={() => handleMobileNav('/account')}>
+                    MY PROFILE
+                  </div>
+                  <div
+                    className="mobile-drawer-child-item mobile-logout-link"
+                    onClick={() => {
+                      onLogout();
+                      setMobileMenuOpen(false);
+                    }}
+                  >
+                    LOGOUT FROM SITE
+                  </div>
+                </>
+              ) : (
+                <div
+                  className="mobile-drawer-child-item"
+                  onClick={() => {
+                    onOpenLogin();
+                    setMobileMenuOpen(false);
+                  }}
+                >
+                  LOGIN / REGISTER
+                </div>
+              )}
             </nav>
           </div>
         </div>

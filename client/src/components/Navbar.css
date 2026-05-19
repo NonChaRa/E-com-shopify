@@ -173,6 +173,11 @@
 .mega-list li:hover { color: #000000; }
 .mega-footer-link { margin-top: 30px; font-size: 11px; font-weight: 800; text-decoration: underline; cursor: pointer; color: #000000; }
 
+.mobile-drawer-child-item.mobile-logout-link {
+  color: rgba(230, 126, 34, 0.9) !important; /* Matches your studio's custom accent orange */
+  font-weight: 700;
+  margin-top: 4px;
+}
 /* --- DEFENSIVE MOBILE-ONLY DECK DISMISSALS --- */
 .mobile-only { display: none !important; }
 .mobile-nav-drawer { display: none !important; }
