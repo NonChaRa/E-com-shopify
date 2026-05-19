@@ -59,7 +59,7 @@ const ProductPage = ({ allProducts, addToCart, onOpenCart }) => {
           <div className="pdp-gallery-stack">
             {(product.images?.length > 0 ? product.images : [product.image_url]).map((url, i) => (
               <div key={i} className="pdp-image-container">
-                <img src={url} alt={`${product.name} frame ${i + 1}`} loading="lazy" />
+                <img src={url} alt={`${product.name} frame ${i + 1} - Handmade 3D Press-On Nails by ASTÉRI2kStudio`} loading="lazy" />
               </div>
             ))}
           </div>
