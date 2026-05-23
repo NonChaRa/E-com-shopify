@@ -50,41 +50,34 @@
   margin-bottom: 100px;
 }
 
-/* --- THE LEFT GALLERY TRACK SCROLLER --- */
+/* --- FIXED: THE LEFT GALLERY TRACK CONTINUOUS FLOW --- */
 .pdp-gallery-stack {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  max-height: 72vh;
-  overflow-y: auto;
-  scrollbar-width: none;
-}
-.pdp-gallery-stack::-webkit-scrollbar {
-  display: none; /* Hide scroll track lines on Chrome/Safari */
+  gap: 24px; /* Proportional vertical gap between editorial lookbook images */
+  width: 100%;
 }
 
+/* --- FIXED: UNRESTRICTED FULL FLOW CONTAINERS --- */
 .pdp-image-container {
   width: 100%;
-  aspect-ratio: 1 / 1;
   overflow: hidden;
   border-radius: 4px;
   border: 1px solid rgba(0, 0, 0, 0.04);
   background-color: #ffffff;
-  flex-shrink: 0;
 }
 
 .pdp-image-container img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto; /* Allow layout to size naturally based on high-resolution ratios */
   display: block;
 }
 
-/* --- THE RIGHT SIDEBAR DETAILS FRAME --- */
+/* --- FIXED: THE STICKY DETAILS SIDEBAR FRAME --- */
 .pdp-sidebar-sticky {
-  position: relative;
-  top: 0;
-  width: 100%;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 130px; /* Aligns comfortably relative to your fixed 100px top navigation bar padding */
 }
 
 .pdp-sidebar-content {
@@ -103,7 +96,7 @@
 
 .pdp-title-main {
   font-family: var(--font-anton);
-  font-size: clamp(1.8rem, 2.8vw, 2.5rem); /* Scaled down slightly to stay elegant and readable */
+  font-size: clamp(1.8rem, 2.8vw, 2.5rem);
   text-transform: uppercase;
   line-height: 1.1;
   margin: 0 0 12px 0;
@@ -260,10 +253,9 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 100px; /* Balanced section blocks separation */
+  gap: 100px;
 }
 
-/* Fixed TikTok layout drift */
 .pdp-extended-sections-wrapper .tiktok-section-container {
   width: 100% !important;
   max-width: 100% !important;
@@ -300,7 +292,7 @@
 
 .pdp-similar-img-wrapper {
   width: 100%;
-  aspect-ratio: 1 / 1; /* Uniform lookbook cards matches header grid */
+  aspect-ratio: 1 / 1;
   overflow: hidden;
   border-radius: 4px;
   border: 1px solid rgba(0, 0, 0, 0.03);
@@ -334,15 +326,21 @@
   margin: 0;
 }
 
-/* --- RESPONSIVE TABLET CALIBRATIONS --- */
+/* --- RESPONSIVE TABLET & MOBILE CALIBRATIONS --- */
 @media (max-width: 1024px) {
   .pdp-main-layout {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr; /* Drop to vertical grid stacking across phone screens */
     gap: 40px;
   }
-  .pdp-gallery-stack {
-    max-height: none;
+
+  .pdp-sidebar-sticky {
+    position: static; /* Release sticky anchoring constraints on smaller viewports */
   }
+
+  .pdp-gallery-stack {
+    gap: 16px; /* Slightly tighter image padding layout track for mobile frames */
+  }
+
   .pdp-similar-grid {
     grid-template-columns: repeat(2, 1fr);
   }
