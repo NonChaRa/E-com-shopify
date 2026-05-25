@@ -70,7 +70,6 @@ const ProductPage = ({ allProducts, addToCart, onOpenCart }) => {
 
           <aside className="pdp-sidebar-sticky">
             <div className="pdp-sidebar-content">
-              <span className="pdp-collection-tag">ASTÉRI STUDIO // 2026</span>
               <h1 className="pdp-title-main">{product.name}</h1>
               <p className="pdp-price-tag">THB {Number(product.price).toLocaleString()}</p>
 

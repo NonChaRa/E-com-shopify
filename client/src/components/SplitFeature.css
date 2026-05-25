@@ -9,7 +9,7 @@
   margin-top: 40px;
   display: flex;
   overflow: hidden;
-  background-color: #ffffff;
+  background-color: var(--y2k-paper);
   transform: translateZ(0);
 }
 
@@ -21,9 +21,11 @@
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
-  padding-bottom: 80px; /* Condensed breathing zone padding */
+  padding-bottom: 90px;
   overflow: hidden;
+  border: 3px solid #000;
 }
+.feature-panel:first-child { border-right: none; }
 
 .feature-bg {
   position: absolute;
@@ -48,51 +50,109 @@
   pointer-events: none;
 }
 
+/* Floating charm sticker on each panel */
+.feature-panel::before {
+  content: "";
+  position: absolute;
+  top: 8%;
+  width: 72px;
+  height: 72px;
+  z-index: 4;
+  background: var(--y2k-lemon);
+  filter: drop-shadow(3px 3px 0 #000);
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 2l2.9 6.9 7.4.6-5.6 4.9 1.7 7.3L12 17.8 5.6 21.7l1.7-7.3L1.7 9.5l7.4-.6L12 2z' fill='black'/></svg>");
+          mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 2l2.9 6.9 7.4.6-5.6 4.9 1.7 7.3L12 17.8 5.6 21.7l1.7-7.3L1.7 9.5l7.4-.6L12 2z' fill='black'/></svg>");
+  -webkit-mask-size: contain;
+          mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+          mask-repeat: no-repeat;
+  animation: y2kCharmFloat 4s ease-in-out infinite;
+  --r: -15deg;
+  transform: rotate(-15deg);
+}
+.feature-panel:first-child::before {
+  left: 10%;
+}
+.feature-panel:last-child::before {
+  right: 10%;
+  background: var(--y2k-hot-pink);
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 29'><path d='M16 29s-13-8.35-13-17a8 8 0 0 1 13-6.2A8 8 0 0 1 29 12c0 8.65-13 17-13 17z' fill='black'/></svg>");
+          mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 29'><path d='M16 29s-13-8.35-13-17a8 8 0 0 1 13-6.2A8 8 0 0 1 29 12c0 8.65-13 17-13 17z' fill='black'/></svg>");
+  transform: rotate(15deg);
+  --r: 15deg;
+}
+
 .feature-content {
   text-align: center;
   z-index: 3;
   backface-visibility: hidden;
 }
 
-/* Universal Minimal Action Button Style */
+/* Y2K SHOP BUTTON ON PANELS */
 .feature-btn {
-  background-color: #ffffff;
-  color: #000000;
-  border: none;
+  background-color: white;
+  color: black;
+  border: 2.5px solid #000;
   padding: 14px 44px;
-  border-radius: 100px;
-  font-family: inherit;
-  font-weight: 700;
+  border-radius: 999px;
+  font-family: var(--y2k-sticker);
   text-transform: uppercase;
-  font-size: 11px;
-  letter-spacing: 2px;
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-shadow: 1px 1px 0 rgba(0,0,0,0.3);
   cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
   margin-bottom: 40px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  box-shadow:
+    1px 1px 0 #000,
+    inset 0 -4px 0 rgba(0,0,0,0.15),
+    inset 0 4px 0 rgba(255,255,255,0.4);
+  position: relative;
+  overflow: hidden;
+}
+.feature-btn::before {
+  content: "";
+  position: absolute;
+  top: 0; left: -75%;
+  width: 50%; height: 100%;
+  background: linear-gradient(100deg, transparent 30%, rgba(255,255,255,0.7) 50%, transparent 70%);
+  transform: skewX(-20deg);
+  transition: left 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.feature-panel:last-child .feature-btn {
+  background-color: white;
+  color: black;
+  text-shadow: none;
 }
 
 .feature-btn:hover {
-  background-color: #000000;
-  color: #ffffff;
-  transform: translateY(-2px);
+  transform: translate(-2px, -2px) rotate(-2deg);
+  box-shadow: 7px 7px 0 #000,
+    inset 0 -4px 0 rgba(0,0,0,0.18),
+    inset 0 4px 0 rgba(255,255,255,0.4);
 }
+.feature-btn:hover::before { left: 130%; }
 
-/* --- MOBILE & TABLET MEDIA ADAPTATIONS --- */
 @media (max-width: 1024px) {
   .split-feature-section {
     flex-direction: column;
     height: 110vh;
     margin-top: 20px;
   }
-
   .feature-panel {
     padding-bottom: 50px;
+    border-right: 3px solid #000;
   }
-
+  .feature-panel:first-child {
+    border-right: 3px solid #000;
+    border-bottom: none;
+  }
   .feature-btn {
     margin-bottom: 20px;
     padding: 12px 38px;
-    font-size: 10px;
+    font-size: 11px;
+  }
+  .feature-panel::before {
+    width: 50px; height: 50px; top: 5%;
   }
 }

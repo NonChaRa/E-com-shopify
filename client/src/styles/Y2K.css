@@ -1,0 +1,385 @@
+/* ============================================================
+   Y2K // ASTÉRI 2K SYSTEM
+   A global decorative layer injected on top of the editorial base.
+   - Pure CSS (no JS, no extra requests)
+   - GPU-friendly transforms only
+   - All decorative pieces are pseudo-elements / utility classes
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Bungee&family=Caveat+Brush&family=Rubik+Mono+One&display=swap');
+
+:root {
+  /* --- Y2K CANDY PALETTE --- */
+  --y2k-hot-pink:   #1969ac;
+  --y2k-bubblegum:  #FFB6E1;
+  --y2k-lime:       #C6FF4A;
+  --y2k-cyan:       #4DE3FF;
+  --y2k-magenta:    #C724B1;
+  --y2k-tangerine:  #FF7B2E;
+  --y2k-lemon:      #FFE94B;
+  --y2k-lilac:      #C7A6FF;
+  --y2k-chrome-1:   #f6f8ff;
+  --y2k-chrome-2:   #ffd9f0;
+  --y2k-chrome-3:   #b5e9ff;
+  --y2k-chrome-4:   #fff5b0;
+
+  /* --- PAPER / VINTAGE TONES --- */
+  --y2k-paper:      #f6efde;
+  --y2k-paper-warm: #f0e6cf;
+
+  /* --- SHADOWS & GLOWS --- */
+  --y2k-shadow-pink: 4px 4px 0 var(--y2k-hot-pink);
+  --y2k-shadow-cyan: 4px 4px 0 var(--y2k-cyan);
+  --y2k-glow-pink:   0 0 24px rgba(255, 63, 164, 0.55);
+
+  /* --- DISPLAY FONTS (sticker-style) --- */
+  --y2k-sticker:  'Bungee', 'Anton', sans-serif;
+  --y2k-marker:   'Caveat Brush', cursive;
+  --y2k-block:    'Rubik Mono One', sans-serif;
+}
+
+/* ============================================================
+   PAPER TEXTURE — site-wide subtle vintage paper grain
+   Pure SVG embedded as data-URI (zero extra requests)
+   ============================================================ */
+.y2k-paper-bg {
+  position: relative;
+  isolation: isolate;
+}
+.y2k-paper-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.5;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.55  0 0 0 0 0.45  0 0 0 0 0.28  0 0 0 0.18 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  mix-blend-mode: multiply;
+}
+
+/* Soft paper card surface — used on product cards, CTA cards, etc. */
+.y2k-paper-surface {
+  background-color: var(--y2k-paper);
+  background-image:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.6  0 0 0 0 0.5  0 0 0 0 0.3  0 0 0 0.12 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
+
+/* ============================================================
+   CHROME / HOLOGRAPHIC GRADIENT — used on key surfaces
+   ============================================================ */
+.y2k-chrome {
+  background: linear-gradient(
+    135deg,
+    var(--y2k-chrome-1) 0%,
+    var(--y2k-chrome-2) 25%,
+    var(--y2k-chrome-3) 50%,
+    var(--y2k-chrome-4) 75%,
+    var(--y2k-chrome-2) 100%
+  );
+  background-size: 300% 300%;
+  animation: y2kChromeShift 8s ease-in-out infinite;
+}
+
+@keyframes y2kChromeShift {
+  0%, 100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
+
+
+.y2k-sticker-text {
+  font-family: var(--y2k-sticker) !important;
+  letter-spacing: 0.04em !important;
+  text-shadow:
+    -2px -2px 0 #fff,
+    2px -2px 0 #fff,
+    -2px 2px 0 #fff,
+    2px 2px 0 #fff,
+    5px 5px 0 var(--y2k-hot-pink),
+    6px 6px 0 #000 !important;
+  color: var(--y2k-cyan) !important;
+  transform: rotate(-1.5deg);
+  display: inline-block;
+}
+
+.y2k-sticker-text--candy {
+  background: linear-gradient(180deg, var(--y2k-bubblegum) 0%, var(--y2k-hot-pink) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent !important;
+  text-shadow: 3px 3px 0 rgba(0,0,0,0.85) !important;
+}
+
+.y2k-marker-text {
+  font-family: var(--y2k-marker) !important;
+  color: var(--y2k-hot-pink) !important;
+  letter-spacing: 0.02em !important;
+  text-shadow: 2px 2px 0 #000 !important;
+  transform: rotate(-2deg);
+  display: inline-block;
+}
+
+/* ============================================================
+   VINTAGE COLORFUL BUTTONS — the universal Y2K button
+   Apply class y2k-btn (+ modifier) on top of an existing button.
+   ============================================================ */
+.y2k-btn {
+  position: relative;
+  font-family: var(--y2k-sticker) !important;
+  font-weight: 700;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase;
+  padding: 14px 32px !important;
+  background: var(--y2k-hot-pink) !important;
+  color: #fff !important;
+  border: 2.5px solid #000 !important;
+  border-radius: 999px !important;
+  box-shadow:
+    4px 4px 0 #000,
+    inset 0 -4px 0 rgba(0,0,0,0.18),
+    inset 0 4px 0 rgba(255,255,255,0.35) !important;
+  cursor: pointer;
+  transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.18s ease, filter 0.2s ease;
+  text-shadow: 1px 1px 0 rgba(0,0,0,0.3);
+  overflow: hidden;
+}
+
+.y2k-btn::before {
+  /* shimmer streak */
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    100deg,
+    transparent 30%,
+    rgba(255,255,255,0.7) 50%,
+    transparent 70%
+  );
+  transform: skewX(-20deg);
+  transition: left 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+  pointer-events: none;
+}
+
+.y2k-btn:hover {
+  transform: translate(-2px, -2px) rotate(-1deg);
+  box-shadow:
+    6px 6px 0 #000,
+    inset 0 -4px 0 rgba(0,0,0,0.18),
+    inset 0 4px 0 rgba(255,255,255,0.35) !important;
+}
+.y2k-btn:hover::before {
+  left: 130%;
+}
+.y2k-btn:active {
+  transform: translate(2px, 2px) rotate(0deg);
+  box-shadow: 1px 1px 0 #000 !important;
+}
+
+.y2k-btn--cyan     { background: var(--y2k-cyan) !important;     color: #002233 !important; }
+.y2k-btn--lime     { background: var(--y2k-lime) !important;     color: #1a2900 !important; text-shadow: none; }
+.y2k-btn--lemon    { background: var(--y2k-lemon) !important;    color: #3a2c00 !important; text-shadow: none; }
+.y2k-btn--magenta  { background: var(--y2k-magenta) !important;  color: #fff !important; }
+.y2k-btn--bubblegum{ background: var(--y2k-bubblegum) !important;color: #6b0040 !important; text-shadow: none; }
+.y2k-btn--chrome   {
+  background: linear-gradient(135deg, #fff 0%, #ffd9f0 35%, #b5e9ff 65%, #fff5b0 100%) !important;
+  color: #000 !important;
+  text-shadow: none;
+}
+
+/* ============================================================
+   CHARM STICKERS — pure CSS hearts / stars / bows / sparkles
+   Drop a <span class="y2k-charm y2k-charm--heart"></span> anywhere.
+   ============================================================ */
+.y2k-charm {
+  position: absolute;
+  width: 38px;
+  height: 38px;
+  pointer-events: none;
+  z-index: 5;
+  filter: drop-shadow(2px 2px 0 #000);
+  animation: y2kCharmFloat 4s ease-in-out infinite;
+}
+.y2k-charm--sm { width: 22px; height: 22px; }
+.y2k-charm--lg { width: 56px; height: 56px; }
+
+@keyframes y2kCharmFloat {
+  0%, 100% { transform: translateY(0) rotate(var(--r, -8deg)); }
+  50%      { transform: translateY(-4px) rotate(calc(var(--r, -8deg) + 4deg)); }
+}
+
+/* HEART — pure CSS */
+.y2k-charm--heart {
+  background:
+    radial-gradient(circle at 30% 35%, #fff 6%, transparent 7%),
+    var(--charm-color, var(--y2k-hot-pink));
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 29'><path d='M16 29s-13-8.35-13-17a8 8 0 0 1 13-6.2A8 8 0 0 1 29 12c0 8.65-13 17-13 17z' fill='black'/></svg>");
+          mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 29'><path d='M16 29s-13-8.35-13-17a8 8 0 0 1 13-6.2A8 8 0 0 1 29 12c0 8.65-13 17-13 17z' fill='black'/></svg>");
+  -webkit-mask-size: contain;
+          mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+          mask-repeat: no-repeat;
+}
+
+/* STAR */
+.y2k-charm--star {
+  background:
+    radial-gradient(circle at 35% 30%, #fff 8%, transparent 9%),
+    var(--charm-color, var(--y2k-lemon));
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 2l2.9 6.9 7.4.6-5.6 4.9 1.7 7.3L12 17.8 5.6 21.7l1.7-7.3L1.7 9.5l7.4-.6L12 2z' fill='black'/></svg>");
+          mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 2l2.9 6.9 7.4.6-5.6 4.9 1.7 7.3L12 17.8 5.6 21.7l1.7-7.3L1.7 9.5l7.4-.6L12 2z' fill='black'/></svg>");
+  -webkit-mask-size: contain;
+          mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+          mask-repeat: no-repeat;
+}
+
+/* BOW */
+.y2k-charm--bow {
+  background: var(--charm-color, var(--y2k-bubblegum));
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 24'><path d='M16 12 L4 4 Q0 4 0 8 V16 Q0 20 4 20 L16 12 L28 4 Q32 4 32 8 V16 Q32 20 28 20 Z M13 9 H19 Q21 9 21 11 V13 Q21 15 19 15 H13 Q11 15 11 13 V11 Q11 9 13 9 Z' fill='black'/></svg>");
+          mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 24'><path d='M16 12 L4 4 Q0 4 0 8 V16 Q0 20 4 20 L16 12 L28 4 Q32 4 32 8 V16 Q32 20 28 20 Z M13 9 H19 Q21 9 21 11 V13 Q21 15 19 15 H13 Q11 15 11 13 V11 Q11 9 13 9 Z' fill='black'/></svg>");
+  -webkit-mask-size: contain;
+          mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+          mask-repeat: no-repeat;
+}
+
+/* FLOWER */
+.y2k-charm--flower {
+  background:
+    radial-gradient(circle at 50% 50%, var(--y2k-lemon) 22%, transparent 23%),
+    var(--charm-color, var(--y2k-hot-pink));
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><circle cx='12' cy='5' r='4'/><circle cx='12' cy='19' r='4'/><circle cx='5' cy='12' r='4'/><circle cx='19' cy='12' r='4'/><circle cx='12' cy='12' r='3.5'/></svg>");
+          mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><circle cx='12' cy='5' r='4'/><circle cx='12' cy='19' r='4'/><circle cx='5' cy='12' r='4'/><circle cx='19' cy='12' r='4'/><circle cx='12' cy='12' r='3.5'/></svg>");
+  -webkit-mask-size: contain;
+          mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+          mask-repeat: no-repeat;
+}
+
+/* SPARKLE / 4-POINT STAR — for shimmer trails */
+.y2k-charm--sparkle {
+  background: var(--charm-color, #fff);
+  filter: drop-shadow(0 0 6px var(--y2k-cyan));
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 0 L14 10 L24 12 L14 14 L12 24 L10 14 L0 12 L10 10 Z' fill='black'/></svg>");
+          mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 0 L14 10 L24 12 L14 14 L12 24 L10 14 L0 12 L10 10 Z' fill='black'/></svg>");
+  -webkit-mask-size: contain;
+          mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+          mask-repeat: no-repeat;
+  animation: y2kSparkle 1.8s ease-in-out infinite;
+}
+
+@keyframes y2kSparkle {
+  0%, 100% { transform: scale(0.85) rotate(0deg);    opacity: 0.7; }
+  50%      { transform: scale(1.15) rotate(90deg);   opacity: 1;   }
+}
+
+/* ============================================================
+   GLITTER SHIMMER OVERLAY — hover reveal on cards / surfaces
+   Apply class y2k-shimmer-hover on the wrapper; overlay appears on hover.
+   ============================================================ */
+.y2k-shimmer-hover {
+  position: relative;
+  isolation: isolate;
+}
+.y2k-shimmer-hover::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.45s cubic-bezier(0.25, 1, 0.5, 1);
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(255,255,255,0.9) 0%, transparent 1.2%),
+    radial-gradient(circle at 70% 20%, rgba(255,255,255,0.85) 0%, transparent 1%),
+    radial-gradient(circle at 35% 70%, var(--y2k-cyan) 0%, transparent 1.1%),
+    radial-gradient(circle at 80% 65%, var(--y2k-hot-pink) 0%, transparent 1%),
+    radial-gradient(circle at 50% 50%, var(--y2k-lemon) 0%, transparent 0.8%),
+    radial-gradient(circle at 15% 85%, rgba(255,255,255,0.8) 0%, transparent 1%),
+    radial-gradient(circle at 90% 90%, rgba(255,255,255,0.85) 0%, transparent 1%),
+    linear-gradient(125deg, transparent 40%, rgba(255,255,255,0.18) 50%, transparent 60%);
+  background-size: 100% 100%;
+  mix-blend-mode: screen;
+  animation: y2kShimmerDrift 3s linear infinite;
+  animation-play-state: paused;
+}
+.y2k-shimmer-hover:hover::after {
+  opacity: 1;
+  animation-play-state: running;
+}
+
+@keyframes y2kShimmerDrift {
+  0%   { background-position: 0% 0%,   0% 0%,   0% 0%,   0% 0%,   0% 0%,   0% 0%,   0% 0%, 0% 0%; }
+  100% { background-position: 8% -6%, -7% 5%,   6% 4%,  -5% -7%,  4% -4%,  -6% 7%,   5% -3%, 200% 0%; }
+}
+
+/* ============================================================
+   STICKER BADGE — small floating tag (e.g. "NEW", "HOT")
+   ============================================================ */
+.y2k-sticker-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 6;
+  background: var(--y2k-hot-pink);
+  color: #fff;
+  font-family: var(--y2k-sticker);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  padding: 6px 12px;
+  border: 2px solid #000;
+  border-radius: 999px;
+  box-shadow: 2px 2px 0 #000;
+  transform: rotate(-6deg);
+  text-shadow: 1px 1px 0 rgba(0,0,0,0.25);
+  pointer-events: none;
+}
+.y2k-sticker-badge--cyan { background: var(--y2k-cyan);    color: #002233; text-shadow: none; }
+.y2k-sticker-badge--lime { background: var(--y2k-lime);    color: #1a2900; text-shadow: none; }
+.y2k-sticker-badge--lemon{ background: var(--y2k-lemon);   color: #3a2c00; text-shadow: none; }
+
+/* ============================================================
+   ZIGZAG / SCALLOPED DIVIDER — Y2K section separator
+   ============================================================ */
+.y2k-zigzag-divider {
+  height: 14px;
+  width: 100%;
+  background:
+    linear-gradient(45deg, var(--y2k-hot-pink) 25%, transparent 25%) 0 0,
+    linear-gradient(-45deg, var(--y2k-hot-pink) 25%, transparent 25%) 0 0;
+  background-size: 14px 14px;
+  background-repeat: repeat-x;
+}
+.y2k-zigzag-divider--cyan {
+  background:
+    linear-gradient(45deg, var(--y2k-cyan) 25%, transparent 25%) 0 0,
+    linear-gradient(-45deg, var(--y2k-cyan) 25%, transparent 25%) 0 0;
+  background-size: 14px 14px;
+  background-repeat: repeat-x;
+}
+
+/* ============================================================
+   PERFORMANCE — respect reduced motion
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  .y2k-chrome,
+  .y2k-charm,
+  .y2k-charm--sparkle,
+  .y2k-shimmer-hover::after {
+    animation: none !important;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .y2k-charm        { width: 28px; height: 28px; }
+  .y2k-charm--sm    { width: 16px; height: 16px; }
+  .y2k-charm--lg    { width: 40px; height: 40px; }
+  .y2k-sticker-badge { font-size: 9px; padding: 5px 10px; }
+}

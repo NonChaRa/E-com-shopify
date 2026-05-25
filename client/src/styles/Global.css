@@ -2,8 +2,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Anton&family=Lato:wght@300;400;700&display=swap');
 
+/* --- Y2K SYSTEM (new) --- */
+@import url('./Y2K.css');
+
 :root {
-  /* Vintage Summer Palette */
+  /* Vintage Summer Palette (kept for compatibility) */
   --bg-cream: #F6F3C2;
   --bg-white: #F7F8F0;
   --accent-orange: #E37434;
@@ -21,7 +24,7 @@
   --font-anton: 'Anton', sans-serif;
   --font-body-family: "Instrument Sans", sans-serif;
 
-    /* Brand Colors & Headers */
+  /* Brand Colors & Headers */
   --font-header: 'Bubblegum Sans', cursive;
   --cartoon-black: #000000;
 }
@@ -32,7 +35,9 @@
 }
 
 body {
-  background-color: var(--bg-white);
+  background-color: var(--y2k-paper);
+  background-image:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.6  0 0 0 0 0.5  0 0 0 0 0.3  0 0 0 0.10 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
   color: var(--black);
   font-family: var(--font-body);
   margin: 0;
