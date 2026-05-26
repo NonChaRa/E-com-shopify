@@ -42,53 +42,24 @@
   width: 240px;
   height: 420px;
   background: #fff;
-  border: 2.5px solid #000;
+  border: 2px solid rgba(0,0,0,0.8);
   border-radius: 14px;
-  transform: translateZ(0) rotate(-1.5deg);
-  box-shadow: 6px 6px 0 var(--y2k-hot-pink), 6px 6px 0 1px #000;
+  transform: translateZ(0) rotate(-1deg);
+  box-shadow: 5px 5px 0 var(--y2k-gold), 5px 5px 0 1px rgba(0,0,0,0.7);
   transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s;
 }
 
 .video-card:nth-child(2) {
-  transform: translateZ(0) rotate(1.5deg);
-  box-shadow: 6px 6px 0 var(--y2k-cyan), 6px 6px 0 1px #000;
+  transform: translateZ(0) rotate(1deg);
+  box-shadow: 5px 5px 0 var(--y2k-gold-warm), 5px 5px 0 1px rgba(0,0,0,0.65);
 }
 
 .video-card:hover {
   transform: rotate(0) translate(-3px, -4px);
-  box-shadow: 9px 9px 0 var(--y2k-hot-pink), 9px 9px 0 1.5px #000;
+  box-shadow: 8px 8px 0 var(--y2k-gold), 8px 8px 0 1.5px rgba(0,0,0,0.8);
 }
 .video-card:nth-child(2):hover {
-  box-shadow: 9px 9px 0 var(--y2k-cyan), 9px 9px 0 1.5px #000;
-}
-
-/* Sticker peek on each card */
-.video-card::before {
-  content: "";
-  position: absolute;
-  top: -14px;
-  left: -10px;
-  width: 40px;
-  height: 40px;
-  z-index: 3;
-  background: var(--y2k-lemon);
-  filter: drop-shadow(3px 3px 0 #000);
-  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 2l2.9 6.9 7.4.6-5.6 4.9 1.7 7.3L12 17.8 5.6 21.7l1.7-7.3L1.7 9.5l7.4-.6L12 2z' fill='black'/></svg>");
-          mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 2l2.9 6.9 7.4.6-5.6 4.9 1.7 7.3L12 17.8 5.6 21.7l1.7-7.3L1.7 9.5l7.4-.6L12 2z' fill='black'/></svg>");
-  -webkit-mask-size: contain;
-          mask-size: contain;
-  -webkit-mask-repeat: no-repeat;
-          mask-repeat: no-repeat;
-  transform: rotate(-15deg);
-}
-.video-card:nth-child(2)::before {
-  background: var(--y2k-bubblegum);
-  top: -14px;
-  left: auto;
-  right: -10px;
-  transform: rotate(20deg);
-  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 29'><path d='M16 29s-13-8.35-13-17a8 8 0 0 1 13-6.2A8 8 0 0 1 29 12c0 8.65-13 17-13 17z' fill='black'/></svg>");
-          mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 29'><path d='M16 29s-13-8.35-13-17a8 8 0 0 1 13-6.2A8 8 0 0 1 29 12c0 8.65-13 17-13 17z' fill='black'/></svg>");
+  box-shadow: 8px 8px 0 var(--y2k-gold-warm), 8px 8px 0 1.5px rgba(0,0,0,0.75);
 }
 
 .loop-video {

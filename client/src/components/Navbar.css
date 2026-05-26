@@ -1,4 +1,4 @@
-/* --- LUXURY BRAND EDITORIAL NAVIGATION HEADER --- */
+/* --- ASTÉRI 2K NAVIGATION SYSTEM --- */
 
 /* Global window overlay mask */
 .mega-menu-blur {
@@ -7,20 +7,19 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.15);
   backdrop-filter: blur(12px);
   z-index: 4999;
   opacity: 0;
   visibility: hidden;
   transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
 }
-
 .mega-menu-blur.active {
   opacity: 1;
   visibility: visible;
 }
 
-/* Main Pill Layout Architecture */
+/* ---- PILL NAVBAR ---- */
 .navbar-editorial {
   position: fixed;
   top: 20px;
@@ -38,12 +37,16 @@
   transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
+/* Scrolled / hovered state: paper-warm fill + Y2K border */
 .navbar-editorial:hover,
 .navbar-editorial.scrolled,
 .navbar-editorial.mega-expanded {
-  background-color: #ffffff !important;
-  border: 1.5px solid #000000 !important;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
+  background-color: var(--y2k-paper) !important;
+  border: 2px solid #000 !important;
+  box-shadow:
+    0 4px 0 #000,
+    0 8px 24px rgba(196, 163, 90, 0.15),
+    4px 4px 0 var(--y2k-gold) !important;
 }
 
 .navbar-editorial.mega-expanded {
@@ -90,53 +93,23 @@
   object-fit: contain;
   transition: height 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 }
+.navbar-editorial.mega-expanded .main-logo { height: 75px; }
 
-.navbar-editorial.mega-expanded .main-logo {
-  height: 75px;
-}
-
-/* Text Navigation Channel Links */
+/* ---- NAV LINKS ---- */
 .nav-link {
+  font-family: var(--y2k-marker);
   font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 1.5px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #ffffff !important;
+  color: #fff !important;
   white-space: nowrap;
   position: relative;
   padding-bottom: 6px;
-  transition: color 0.4s ease;
+  transition: color 0.3s ease;
 }
 
-.bag-count-editorial {
-  margin-left: 2px;
-  font-size: 11px;
-  font-weight: 700;
-  color: #ffffff;
-  transition: color 0.4s ease;
-}
-
-.nav-arrow {
-  color: #ffffff !important;
-  font-size: 9px;
-  margin-left: 4px;
-  display: inline-block;
-  transition: transform 0.4s ease;
-}
-.nav-arrow.open { transform: rotate(180deg); }
-
-.navbar-editorial:hover .nav-link,
-.navbar-editorial.scrolled .nav-link,
-.navbar-editorial.mega-expanded .nav-link,
-.navbar-editorial:hover .nav-arrow,
-.navbar-editorial.scrolled .nav-arrow,
-.navbar-editorial.mega-expanded .nav-arrow,
-.navbar-editorial:hover .bag-count-editorial,
-.navbar-editorial.scrolled .bag-count-editorial,
-.navbar-editorial.mega-expanded .bag-count-editorial {
-  color: #000000 !important;
-}
-
+/* Underline accent */
 .nav-link::after {
   content: '';
   position: absolute;
@@ -144,19 +117,58 @@
   left: 0;
   width: 0;
   height: 1.5px;
-  background-color: #ffffff;
-  transition: all 0.4s ease;
+  background: var(--y2k-gold);
+  transition: width 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+  border-radius: 2px;
 }
 .nav-item-wrapper { cursor: pointer; }
 .nav-item-wrapper:hover .nav-link::after { width: 100%; }
 
-.navbar-editorial:hover .nav-link::after,
-.navbar-editorial.scrolled .nav-link::after,
-.navbar-editorial.mega-expanded .nav-link::after {
-  background-color: #000000;
+/* When navbar is solid (scrolled / hover / mega) — switch links to black */
+.navbar-editorial:hover .nav-link,
+.navbar-editorial.scrolled .nav-link,
+.navbar-editorial.mega-expanded .nav-link {
+  color: #000 !important;
 }
 
-/* Desktop Dropdown Submenus */
+.nav-arrow {
+  color: #fff !important;
+  font-size: 9px;
+  margin-left: 4px;
+  display: inline-block;
+  transition: transform 0.4s ease, color 0.3s ease;
+}
+.nav-arrow.open { transform: rotate(180deg); }
+
+.navbar-editorial:hover .nav-arrow,
+.navbar-editorial.scrolled .nav-arrow,
+.navbar-editorial.mega-expanded .nav-arrow {
+  color: #000 !important;
+}
+
+.bag-count-editorial {
+  margin-left: 4px;
+  font-family: var(--y2k-sticker);
+  font-size: 10px;
+  font-weight: 700;
+  color: #fff;
+  background: var(--y2k-hot-pink);
+  border: 1.5px solid #000;
+  padding: 1px 7px;
+  border-radius: 999px;
+  box-shadow: 1.5px 1.5px 0 #000;
+  transition: color 0.3s ease, background 0.3s ease;
+  line-height: 1.6;
+  display: inline-block;
+}
+
+.navbar-editorial:hover .bag-count-editorial,
+.navbar-editorial.scrolled .bag-count-editorial {
+  color: #fff;
+  background: var(--y2k-hot-pink);
+}
+
+/* ---- MEGA MENU DROPDOWN ---- */
 .mega-menu-container {
   width: 100%;
   opacity: 0;
@@ -164,30 +176,200 @@
   transition: opacity 0.3s ease;
   padding: 20px 60px 40px;
   box-sizing: border-box;
+  background: var(--y2k-paper);
 }
 .mega-menu-container.active { opacity: 1; visibility: visible; }
-.mega-menu-content { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
-.mega-col-title { font-size: 11px; font-weight: 800; margin-bottom: 15px; color: #000000; letter-spacing: 1px; }
-.mega-list { list-style: none; padding: 0; margin: 0; }
-.mega-list li { font-size: 10px; font-weight: 600; color: #666666; margin-bottom: 8px; cursor: pointer; transition: color 0.2s; }
-.mega-list li:hover { color: #000000; }
-.mega-footer-link { margin-top: 30px; font-size: 11px; font-weight: 800; text-decoration: underline; cursor: pointer; color: #000000; }
 
+.mega-menu-content {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+.mega-col-title {
+  font-family: var(--y2k-marker);
+  font-size: 9px;
+  font-weight: 700;
+  margin-bottom: 15px;
+  color: rgba(0,0,0,0.4);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.mega-list { list-style: none; padding: 0; margin: 0; }
+.mega-list li {
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 600;
+  color: #444;
+  margin-bottom: 10px;
+  cursor: pointer;
+  letter-spacing: 0.06em;
+  transition: color 0.2s, padding-left 0.2s;
+}
+.mega-list li:hover {
+  color: #000;
+  padding-left: 4px;
+}
+
+.mega-footer-link {
+  margin-top: 30px;
+  font-family: var(--y2k-marker);
+  font-size: 10px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  color: #000;
+  letter-spacing: 0.14em;
+  transition: color 0.2s;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.mega-footer-link:hover { color: var(--y2k-gold-dark); }
+
+/* ---- MOBILE LOGOUT LINK ---- */
 .mobile-drawer-child-item.mobile-logout-link {
-  color: rgba(230, 126, 34, 0.9) !important; /* Matches your studio's custom accent orange */
+  color: var(--y2k-hot-pink) !important;
   font-weight: 700;
   margin-top: 4px;
 }
-/* --- DEFENSIVE MOBILE-ONLY DECK DISMISSALS --- */
+
+/* ============================================================
+   CURRENCY SELECTOR
+   ============================================================ */
+
+/* Desktop trigger — sits flush with the other nav items */
+.nav-currency-trigger {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  /* no padding-bottom here — the inner .nav-link already carries pb:6px
+     for its underline pseudo-element; doubling it drops the trigger lower */
+  position: relative;
+  line-height: 1;
+}
+.nav-currency-trigger .currency-flag {
+  font-size: 13px;
+  line-height: 1;
+  /* nudge the emoji down a hair so it sits on the same optical baseline */
+  margin-top: 1px;
+}
+
+/* The .nav-link inside the currency trigger carries pb:6px for its underline
+   pseudo-element. In a flex center container that shifts the text upward.
+   Remove it here — the trigger itself doesn't need the underline offset. */
+.nav-currency-trigger .nav-link {
+  padding-bottom: 0;
+}
+
+/* Portal dropdown */
+.currency-dropdown-portal {
+  position: fixed;
+  z-index: 99999;
+  background: var(--y2k-paper);
+  border: 1.5px solid rgba(0,0,0,0.12);
+  border-radius: 12px;
+  box-shadow:
+    0 8px 32px rgba(0,0,0,0.12),
+    0 2px 0 var(--y2k-gold);
+  overflow: hidden;
+  min-width: 200px;
+  animation: currencyFadeIn 0.15s ease forwards;
+}
+
+@keyframes currencyFadeIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.currency-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 11px 18px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.12s ease;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+.currency-option:last-child { border-bottom: none; }
+.currency-option:hover { background: rgba(196,163,90,0.08); }
+.currency-option.active { background: rgba(196,163,90,0.12); }
+
+.currency-option-flag {
+  font-size: 15px;
+  flex-shrink: 0;
+}
+.currency-option-code {
+  font-family: var(--y2k-marker);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #000;
+  flex-shrink: 0;
+  min-width: 32px;
+}
+.currency-option-label {
+  font-family: var(--font-body);
+  font-size: 11px;
+  color: rgba(0,0,0,0.45);
+  flex: 1;
+}
+.currency-option.active .currency-option-code { color: var(--y2k-gold-dark); }
+.currency-option.active .currency-option-label { color: var(--y2k-gold-dark); }
+
+/* ---- Mobile currency grid ---- */
+.mobile-currency-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 4px;
+  margin-bottom: 8px;
+}
+.mobile-currency-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 10px 6px;
+  background: transparent;
+  border: 1.5px solid rgba(0,0,0,0.1);
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: var(--y2k-marker);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #000;
+  transition: all 0.15s ease;
+}
+.mobile-currency-btn:first-child { font-size: 16px; }
+.mobile-currency-btn span:first-child { font-size: 18px; line-height: 1; }
+.mobile-currency-btn:hover { border-color: var(--y2k-gold); background: rgba(196,163,90,0.06); }
+.mobile-currency-btn.active {
+  border-color: var(--y2k-gold);
+  background: rgba(196,163,90,0.1);
+  color: var(--y2k-gold-dark);
+}
+
+/* ---- DESKTOP-ONLY / MOBILE-ONLY GUARDS ---- */
 .mobile-only { display: none !important; }
 .mobile-nav-drawer { display: none !important; }
 
-/* --- HIGH-END RESPONSIVE SYSTEM OVERHAUL --- */
+/* ================================================================
+   RESPONSIVE SYSTEM
+   ================================================================ */
 @media (max-width: 1024px) {
   .desktop-only { display: none !important; }
   .mobile-only { display: flex !important; }
 
-  /* Full-bleed architecture navigation bar header */
+  /* Full-bleed mobile nav bar */
   .navbar-editorial {
     top: 0 !important;
     left: 0 !important;
@@ -195,10 +377,10 @@
     width: 100% !important;
     height: 65px !important;
     border-radius: 0 !important;
-    background-color: #ffffff !important;
+    background-color: var(--y2k-paper) !important;
     border: none !important;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
-    box-shadow: none !important;
+    border-bottom: 2.5px solid #000 !important;
+    box-shadow: 0 2px 0 var(--y2k-gold) !important;
   }
 
   .nav-top-row {
@@ -211,13 +393,13 @@
   .main-logo { height: 50px !important; }
   .nav-logo-centered { width: auto !important; }
 
-  /* Button container target bounds normalized for mobile alignment layout track paths */
+  /* Touch targets */
   .mobile-action-icon {
     background: transparent;
     border: none;
     padding: 4px;
-    color: #000000 !important;
-    width: 24px; /* Locked down hit area footprint boxes safely */
+    color: #000 !important;
+    width: 24px;
     height: 24px;
     cursor: pointer;
     display: flex;
@@ -226,12 +408,11 @@
     position: relative;
   }
 
-  /* --- FIXED THE CRITICAL IOS SAFARI VECTOR COLLAPSE PATCH --- */
   .mobile-action-icon svg {
     width: 100% !important;
     height: 100% !important;
     display: block;
-    stroke: #000000 !important;
+    stroke: #000 !important;
   }
 
   .bag-trigger {
@@ -243,25 +424,29 @@
   .bag-count-editorial {
     font-size: 10px !important;
     font-weight: 700 !important;
-    color: #000000 !important;
-    margin-left: 2px !important;
-    background: rgba(0, 0, 0, 0.05);
-    padding: 2px 6px;
-    border-radius: 20px;
+    color: #fff !important;
+    margin-left: 4px !important;
+    background: var(--y2k-hot-pink);
+    border: 1.5px solid #000;
+    padding: 1px 7px;
+    border-radius: 999px;
+    box-shadow: 1.5px 1.5px 0 #000;
   }
 
-  /* --- FULLSCREEN MOBILE OVERLAY TARGET DRAWER --- */
+  /* ---- MOBILE DRAWER ---- */
   .mobile-nav-drawer {
     display: block !important;
     position: fixed;
     top: 65px;
     left: 0;
     width: 100vw;
-    background-color: #ffffff;
+    background-color: var(--y2k-paper);
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.6  0 0 0 0 0.5  0 0 0 0 0.3  0 0 0 0.12 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
     overflow: hidden;
     max-height: 0;
     transition: max-height 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    border-bottom: 2.5px solid #000;
+    box-shadow: 0 4px 0 var(--y2k-gold);
   }
 
   .navbar-editorial.mobile-expanded .mobile-nav-drawer {
@@ -276,31 +461,53 @@
 
   .mobile-drawer-links-wrapper { display: flex; flex-direction: column; }
 
+  /* Root nav items — editorial condensed */
   .mobile-drawer-root-item {
-    font-size: 1.15rem;
+    font-family: var(--y2k-sticker);
+    font-size: clamp(2rem, 8vw, 3rem);
     font-weight: 400;
-    letter-spacing: 1px;
-    color: #000000;
-    margin-bottom: 24px;
+    letter-spacing: 0.04em;
+    color: #000;
+    margin-bottom: 4px;
     text-transform: uppercase;
+    cursor: pointer;
+    line-height: 1;
   }
 
+  /* Section header tags */
   .mobile-drawer-header-tag {
-    font-size: 0.6rem;
+    display: inline-block;
+    font-family: var(--y2k-marker);
+    font-size: 9px;
     font-weight: 700;
-    letter-spacing: 2px;
-    color: rgba(0, 0, 0, 0.3);
-    margin-top: 12px;
+    letter-spacing: 0.18em;
+    background: transparent;
+    color: rgba(0,0,0,0.4);
+    padding: 4px 0;
+    margin-top: 24px;
     margin-bottom: 10px;
     text-transform: uppercase;
+    border: none;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    width: 100%;
   }
 
+  /* Child nav links */
   .mobile-drawer-child-item {
-    font-size: 0.8rem;
-    font-weight: 600;
-    letter-spacing: 1px;
-    color: #333333;
-    padding: 8px 0;
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #000;
+    padding: 10px 0;
     text-transform: uppercase;
+    cursor: pointer;
+    border-bottom: 1px dashed rgba(0, 0, 0, 0.12);
+    transition: color 0.18s ease, padding-left 0.18s ease;
   }
+  .mobile-drawer-child-item:hover {
+    color: var(--y2k-gold-dark);
+    padding-left: 8px;
+  }
+  .mobile-drawer-child-item:last-child { border-bottom: none; }
 }

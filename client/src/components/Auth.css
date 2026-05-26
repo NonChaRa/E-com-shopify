@@ -1,7 +1,8 @@
+/* --- ASTÉRI 2K AUTH MODALS (Login + Register) --- */
+
 :root {
-  --muted-text: #666;
-  --field-border: #e0e0e0;
-  --modal-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  --muted-text: #555;
+  --field-border: rgba(0, 0, 0, 0.2);
 }
 
 .modal-overlay {
@@ -10,15 +11,15 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(5px);      /* Gentle blur for focus */
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(10px);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 2000;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.4s ease, visibility 0.4s ease;
+  transition: opacity 0.35s ease, visibility 0.35s ease;
 }
 
 .modal-overlay.active {
@@ -26,151 +27,216 @@
   visibility: visible;
 }
 
-/* 2. Professional Modal Container (Clean Card style) */
+/* --- THE MODAL CARD --- */
 .auth-modal {
-  background: var(--white);
-  padding: 60px;
+  background-color: var(--y2k-paper);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.6  0 0 0 0 0.5  0 0 0 0 0.3  0 0 0 0.13 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  padding: 56px 52px;
   width: 100%;
   max-width: 460px;
   position: relative;
-  border: 1px solid var(--black); /* Fine, thin border */
-  box-shadow: var(--modal-shadow); /* Soft, professional depth */
+  border: 2.5px solid #000;
+  border-radius: 18px;
+  box-shadow:
+    6px 6px 0 var(--y2k-hot-pink),
+    6px 6px 0 1.5px #000;
   text-align: center;
-
-  transform: translateY(20px);
+  transform: translateY(24px) rotate(-0.5deg);
   opacity: 0;
-  transition: transform 0.4s ease, opacity 0.4s ease;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.35s ease;
 }
 
 .modal-overlay.active .auth-modal {
-  transform: translateY(0);
+  transform: translateY(0) rotate(0deg);
   opacity: 1;
 }
 
-/* 3. Close Button refined */
+/* ---- CLOSE BUTTON ---- */
 .close-modal {
   position: absolute;
-  top: 25px;
-  right: 25px;
-  background: none;
-  border: none;
-  font-size: 18px;
+  top: 18px;
+  right: 20px;
+  background: var(--y2k-lemon);
+  border: 2px solid #000;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  font-size: 14px;
+  font-weight: 800;
   cursor: pointer;
-  color: var(--black);
-  opacity: 0.5;
-  transition: opacity 0.2s ease, transform 0.2s ease;
+  color: #000;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 2px 2px 0 #000;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
-
 .close-modal:hover {
-  opacity: 1;
-  transform: rotate(90deg); /* Gentle rotation on hover */
+  background: var(--y2k-hot-pink);
+  color: #fff;
+  transform: rotate(90deg) scale(1.1);
+  box-shadow: 3px 3px 0 #000;
 }
 
-/* 4. Editorial Typography */
+/* ---- HEADER ---- */
+.auth-header {
+  margin-bottom: 32px;
+}
+
 .auth-header h2 {
-  font-family: var(--font-body); /* Use clean body font, not cyber */
-  color: var(--black);
-  font-size: 2.2rem;
-  font-weight: 300;
-  letter-spacing: 2px; /* Professional letter spacing */
+  font-family: var(--y2k-sticker);
+  color: var(--y2k-hot-pink);
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  font-weight: 400;
+  letter-spacing: 0.03em;
   text-transform: uppercase;
   margin-bottom: 10px;
+  text-shadow:
+    -1.5px -1.5px 0 #fff,
+    1.5px -1.5px 0 #fff,
+    -1.5px 1.5px 0 #fff,
+    1.5px 1.5px 0 #fff,
+    4px 4px 0 var(--y2k-cyan),
+    5px 5px 0 #000;
+  transform: rotate(-1deg);
+  display: inline-block;
 }
 
 .auth-subtitle {
-  font-family: var(--font-body);
-  color: var(--muted-text);
-  font-size: 11px;
-  letter-spacing: 2px;
-  margin-bottom: 50px;
+  font-family: var(--y2k-marker);
+  color: var(--y2k-magenta);
+  font-size: 1rem;
+  margin-bottom: 0;
   display: block;
-  text-transform: uppercase;
+  text-shadow: 1px 1px 0 #000;
+  transform: rotate(-1.5deg);
 }
 
-/* 5. Clean Input Fields */
+/* ---- FORM ---- */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
 .input-group {
-  margin-bottom: 25px;
+  margin-bottom: 22px;
   text-align: left;
 }
 
 .input-group label {
-  font-family: var(--font-body);
+  font-family: var(--y2k-sticker);
   font-size: 10px;
-  letter-spacing: 2px;
-  color: var(--black);
+  letter-spacing: 0.15em;
+  color: var(--y2k-magenta);
   display: block;
   margin-bottom: 8px;
   text-transform: uppercase;
 }
 
 .auth-input {
-  background: var(--white);
-  border: 1px solid var(--field-border); /* Thin, light border */
-  padding: 15px;
-  color: var(--black);
+  background: #fff;
+  border: 2px solid #000;
+  border-radius: 10px;
+  padding: 14px 16px;
+  color: #000;
   font-family: var(--font-body);
   font-size: 14px;
   width: 100%;
   box-sizing: border-box;
-  transition: border-color 0.2s ease;
+  box-shadow: 3px 3px 0 #000;
+  transition: all 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .auth-input:focus {
   outline: none;
-  border-color: var(--black); /* Focus highlights with thin black border */
+  border-color: var(--y2k-hot-pink);
+  box-shadow: 3px 3px 0 var(--y2k-hot-pink);
+  background: var(--y2k-paper);
+  transform: translate(-1px, -1px);
 }
 
-/* 6. Professional CTA Button */
+.auth-input::placeholder {
+  color: rgba(0, 0, 0, 0.3);
+  font-style: italic;
+}
+
+/* ---- SUBMIT BUTTON ---- */
 .auth-submit-btn {
-  background: var(--black);
-  color: var(--white);
-  font-family: var(--font-body);
-  font-size: 12px;
-  letter-spacing: 2px;
-  font-weight: 400;
-  padding: 18px;
+  background: var(--y2k-hot-pink);
+  color: #fff;
+  font-family: var(--y2k-sticker);
+  font-size: 13px;
+  letter-spacing: 0.15em;
+  font-weight: 700;
+  padding: 16px;
   width: 100%;
-  border: 1px solid var(--black);
+  border: 2.5px solid #000;
+  border-radius: 999px;
   cursor: pointer;
   text-transform: uppercase;
-
-  clip-path: none;
-
-  transition: background 0.3s ease, color 0.3s ease, transform 0.1s ease;
+  text-shadow: 1px 1px 0 rgba(0,0,0,0.3);
+  box-shadow:
+    5px 5px 0 #000,
+    inset 0 -4px 0 rgba(0,0,0,0.18),
+    inset 0 4px 0 rgba(255,255,255,0.35);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  margin-top: 8px;
 }
 
-/* Hover Animation */
+/* shimmer streak */
+.auth-submit-btn::before {
+  content: "";
+  position: absolute;
+  top: 0; left: -75%;
+  width: 50%; height: 100%;
+  background: linear-gradient(100deg, transparent 30%, rgba(255,255,255,0.7) 50%, transparent 70%);
+  transform: skewX(-20deg);
+  transition: left 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
 .auth-submit-btn:hover:not(:disabled) {
-  background: var(--white);
-  color: var(--black);
+  background: var(--y2k-magenta);
+  transform: translate(-2px, -2px) rotate(-1deg);
+  box-shadow: 7px 7px 0 #000,
+    inset 0 -4px 0 rgba(0,0,0,0.18),
+    inset 0 4px 0 rgba(255,255,255,0.35);
 }
+.auth-submit-btn:hover:not(:disabled)::before { left: 130%; }
 
-/* Click Animation (Click Stuff) */
 .auth-submit-btn:active:not(:disabled) {
-  transform: scale(0.98); /* Slight shrink on click for tactile feel */
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 #000;
 }
 
-/* Disabled/Processing state */
 .auth-submit-btn:disabled {
-  background: #eaeaea;
-  border-color: #eaeaea;
-  color: #999;
+  background: #ccc;
+  border-color: #aaa;
+  color: #888;
   cursor: not-allowed;
+  box-shadow: 2px 2px 0 #aaa;
+  text-shadow: none;
 }
 
-/* 7. Consent Checkbox Styling */
+/* ---- CONSENT CHECKBOX ---- */
 .checkbox-group {
   display: flex;
   align-items: flex-start;
   gap: 12px;
-  margin-bottom: 35px;
+  margin-bottom: 24px;
   text-align: left;
 }
 
 .checkbox-group input[type="checkbox"] {
-  accent-color: var(--black); /* Styles the native checkbox black */
+  accent-color: var(--y2k-hot-pink);
   margin-top: 3px;
   cursor: pointer;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
 }
 
 .checkbox-group label {
@@ -179,26 +245,36 @@
   line-height: 1.6;
   color: var(--muted-text);
   cursor: pointer;
+  font-weight: 500;
 }
 
-/* 8. Bottom Toggle Text refined */
+/* ---- TOGGLE LINK ---- */
 .auth-toggle-text {
-  font-family: var(--font-body);
-  font-size: 11px;
-  letter-spacing: 1px;
+  font-family: var(--y2k-sticker);
+  font-size: 10px;
+  letter-spacing: 0.12em;
   color: var(--muted-text);
-  margin-top: 40px;
+  margin-top: 28px;
   text-transform: uppercase;
 }
 
 .toggle-link {
-  color: var(--black);
-  font-weight: bold;
+  color: var(--y2k-hot-pink);
+  font-weight: 700;
   cursor: pointer;
   margin-left: 8px;
-  transition: opacity 0.2s ease;
+  text-shadow: 1px 1px 0 #000;
+  transition: color 0.18s;
+  text-decoration: underline;
 }
+.toggle-link:hover { color: var(--y2k-magenta); }
 
-.toggle-link:hover {
-  opacity: 0.7; /* Subdued hover, matching product card interactions */
+/* ---- MOBILE ---- */
+@media (max-width: 480px) {
+  .auth-modal {
+    padding: 44px 28px;
+    max-width: 95vw;
+    box-shadow: 4px 4px 0 var(--y2k-hot-pink), 4px 4px 0 1px #000;
+  }
+  .auth-header h2 { font-size: 1.8rem; }
 }

@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { useNavigate } from 'react-router-dom'; // Add this
+import { useNavigate } from 'react-router-dom';
 import './SplitFeature.css';
 import leftImg from '../assets/Blue-Imperial-Collection/Royal.png';
 import rightImg from '../assets/Gadom-Collection/Gadom.png';
@@ -14,7 +14,7 @@ const SplitFeature = memo(() => {
         <div className="feature-content">
           {/* Link to the specific handle */}
           <button className="feature-btn" onClick={() => navigate('/shop?collection=imperial-blue')}>
-            Shop
+            Shop Collection
           </button>
         </div>
       </div>
@@ -24,7 +24,7 @@ const SplitFeature = memo(() => {
         <div className="feature-content">
           {/* Link to the specific handle */}
           <button className="feature-btn" onClick={() => navigate('/shop?collection=gadom')}>
-            Shop
+            Shop Collection
           </button>
         </div>
       </div>

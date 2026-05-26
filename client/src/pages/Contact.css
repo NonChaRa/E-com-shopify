@@ -1,38 +1,56 @@
-/* --- EDITORIAL STUDIO CONTACT SYSTEM --- */
+/* --- ASTÉRI 2K CONTACT PAGE --- */
 
 .contact-page-container {
   max-width: 1000px;
   margin: 0 auto;
   padding: 160px 40px 120px 40px;
   min-height: 90vh;
+  background-color: var(--y2k-paper);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.6  0 0 0 0 0.5  0 0 0 0 0.3  0 0 0 0.1 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  position: relative;
 }
 
+/* ---- HEADER ---- */
 .contact-header {
   text-align: center;
   margin-bottom: 80px;
+  position: relative;
 }
 
 .contact-header h1 {
-  font-size: 3rem;
+  font-family: var(--y2k-sticker);
+  font-size: clamp(2.6rem, 6vw, 4.5rem);
   font-weight: 300;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.03em;
   text-transform: uppercase;
-  color: #000000;
+  color: var(--y2k-hot-pink);
   margin-bottom: 24px;
+  text-shadow:
+    -2px -2px 0 #fff,
+    2px -2px 0 #fff,
+    -2px 2px 0 #fff,
+    2px 2px 0 #fff,
+    6px 6px 0 var(--y2k-cyan),
+    7px 7px 0 #000;
+  transform: rotate(-1.5deg);
+  display: inline-block;
 }
 
 .contact-subtitle {
-  color: rgba(0, 0, 0, 0.5);
-  font-size: 0.85rem;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+  font-family: var(--y2k-marker);
+  color: rgba(0, 0, 0, 0.7);
+  font-size: 1.2rem;
+  letter-spacing: 0.02em;
+  text-transform: none;
   max-width: 520px;
   margin: 0 auto;
-  line-height: 1.7;
+  line-height: 1.6;
+  text-shadow: 1px 1px 0 var(--y2k-lemon);
+  transform: rotate(-0.5deg);
+  display: inline-block;
 }
 
-/* --- FORM GRID ARCHITECTURE --- */
-
+/* ---- FORM ---- */
 .contact-form {
   max-width: 760px;
   margin: 0 auto;
@@ -45,137 +63,169 @@
 }
 
 .input-group {
-  margin-bottom: 35px;
+  margin-bottom: 32px;
   display: flex;
   flex-direction: column;
 }
 
 .input-group label {
-  font-size: 0.65rem;
+  font-family: var(--y2k-sticker);
+  font-size: 10px;
   font-weight: 700;
-  letter-spacing: 0.2em;
-  margin-bottom: 12px;
-  color: #000000;
+  letter-spacing: 0.18em;
+  margin-bottom: 10px;
+  color: var(--y2k-magenta);
   text-transform: uppercase;
 }
 
-/* Luxury Input Component Framing */
+/* Vintage Y2K input fields */
 .input-group input,
 .input-group textarea {
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  background: transparent;
-  padding: 16px;
-  font-family: inherit;
-  font-size: 0.9rem;
-  color: #000000;
+  background: #fff;
+  border: 2px solid #000;
+  border-radius: 10px;
+  padding: 16px 18px;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: #000;
   letter-spacing: 0.02em;
-  transition: border-color 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  box-shadow: 3px 3px 0 #000;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  resize: vertical;
 }
 
 .input-group input::placeholder,
 .input-group textarea::placeholder {
-  color: rgba(0, 0, 0, 0.25);
+  color: rgba(0, 0, 0, 0.3);
+  font-style: italic;
 }
 
 .input-group input:focus,
 .input-group textarea:focus {
   outline: none;
-  border-color: #000000;
-  background-color: #ffffff;
+  border-color: var(--y2k-hot-pink);
+  box-shadow: 3px 3px 0 var(--y2k-hot-pink);
+  background: var(--y2k-paper);
+  transform: translate(-1px, -1px);
 }
 
-/* --- CHECKBOX ARCHITECTURE --- */
-
+/* ---- CHECKBOX ROW ---- */
 .method-group {
   margin-bottom: 40px;
 }
 
+.method-group > .input-group > label {
+  font-family: var(--y2k-sticker);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: var(--y2k-magenta);
+  margin-bottom: 14px;
+}
+
 .checkbox-row {
   display: flex;
-  gap: 40px;
+  gap: 32px;
   margin-top: 5px;
+  flex-wrap: wrap;
 }
 
 .custom-checkbox {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   cursor: pointer;
 }
 
 .custom-checkbox input[type="checkbox"] {
-  width: 15px;
-  height: 15px;
-  accent-color: #000000;
+  width: 18px;
+  height: 18px;
+  accent-color: var(--y2k-hot-pink);
   cursor: pointer;
-  border: 1px solid #000000;
+  border: 2px solid #000;
+  border-radius: 4px;
 }
 
 .checkbox-label {
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.15em;
-  color: #000000;
-}
-
-/* --- BUTTON & FEEDBACK LAYOUT --- */
-
-.contact-send-btn {
-  background: #000000;
-  color: #ffffff;
-  border: none;
-  padding: 16px 48px;
-  border-radius: 40px;
-  font-size: 0.7rem;
+  font-family: var(--y2k-sticker);
+  font-size: 11px;
   font-weight: 700;
-  letter-spacing: 0.2em;
-  cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-  margin-top: 15px;
+  letter-spacing: 0.1em;
+  color: #000;
+  text-transform: uppercase;
 }
 
-.contact-send-btn:hover:not(:disabled) {
-  background: #1a1a1a;
-  transform: translateY(-2px);
+/* ---- SEND BUTTON ---- */
+.contact-send-btn {
+  background: var(--y2k-hot-pink);
+  color: #fff;
+  border: 2.5px solid #000;
+  padding: 16px 52px;
+  border-radius: 999px;
+  font-family: var(--y2k-sticker);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  cursor: pointer;
+  text-shadow: 1px 1px 0 rgba(0,0,0,0.3);
+  box-shadow:
+    5px 5px 0 #000,
+    inset 0 -4px 0 rgba(0,0,0,0.18),
+    inset 0 4px 0 rgba(255,255,255,0.35);
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  margin-top: 15px;
+  position: relative;
+  overflow: hidden;
 }
+.contact-send-btn::before {
+  content: "";
+  position: absolute;
+  top: 0; left: -75%;
+  width: 50%; height: 100%;
+  background: linear-gradient(100deg, transparent 30%, rgba(255,255,255,0.7) 50%, transparent 70%);
+  transform: skewX(-20deg);
+  transition: left 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.contact-send-btn:hover:not(:disabled) {
+  background: var(--y2k-magenta);
+  transform: translate(-2px, -2px) rotate(-1.5deg);
+  box-shadow: 7px 7px 0 #000,
+    inset 0 -4px 0 rgba(0,0,0,0.18),
+    inset 0 4px 0 rgba(255,255,255,0.35);
+}
+.contact-send-btn:hover:not(:disabled)::before { left: 130%; }
 
 .contact-send-btn:disabled {
-  background: rgba(0, 0, 0, 0.2);
+  background: #ccc;
+  border-color: #aaa;
+  color: #888;
   cursor: not-allowed;
+  box-shadow: 2px 2px 0 #aaa;
+  text-shadow: none;
 }
 
+/* ---- STATUS MESSAGE ---- */
 .contact-status-alert-text {
-  font-size: 0.75rem;
-  letter-spacing: 0.1em;
-  font-weight: 600;
-  color: #000000;
+  font-family: var(--y2k-marker);
+  font-size: 1.1rem;
+  letter-spacing: 0.02em;
+  color: var(--y2k-hot-pink);
+  text-shadow: 1px 1px 0 #000;
   margin-top: 30px;
-  line-height: 1.6;
+  line-height: 1.5;
+  display: inline-block;
+  transform: rotate(-1deg);
 }
 
-/* --- ADAPTIVE SYSTEM MEDIA BREAKPOINTS --- */
-
+/* ---- RESPONSIVE ---- */
 @media (max-width: 768px) {
   .contact-page-container {
     padding-top: 120px;
+    padding-left: 24px;
+    padding-right: 24px;
     padding-bottom: 80px;
   }
-
-  .contact-header {
-    margin-bottom: 50px;
-  }
-
-  .contact-header h1 {
-    font-size: 2.2rem;
-  }
-
-  .form-row-dual {
-    grid-template-columns: 1fr;
-    gap: 0;
-  }
-
-  .checkbox-row {
-    flex-direction: column;
-    gap: 16px;
-  }
+  .contact-header { margin-bottom: 50px; }
+  .form-row-dual { grid-template-columns: 1fr; gap: 0; }
+  .checkbox-row { flex-direction: column; gap: 16px; }
+  .contact-send-btn { width: 100%; text-align: center; }
 }

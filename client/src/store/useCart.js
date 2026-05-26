@@ -42,10 +42,9 @@ export const useCart = create(
             if (item.cartId === cartId) {
               const isPreorder = item.stock <= 0 && item.available;
               const newQty = (item.quantity || 1) + delta;
-              if (isPreorder && newQty > 5) {
-                alert("Maximum 5 sets per pre-order allowed.");
-                return item;
-              }
+              // Silently cap pre-order items at 5 — the CartSidebar
+              // disables the + button at qty >= 5, so this is a safety guard only.
+              if (isPreorder && newQty > 5) return item;
 
               return { ...item, quantity: Math.max(1, newQty) };
             }

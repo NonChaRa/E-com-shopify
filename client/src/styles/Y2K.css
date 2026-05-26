@@ -6,7 +6,8 @@
    - All decorative pieces are pseudo-elements / utility classes
    ============================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Bungee&family=Caveat+Brush&family=Rubik+Mono+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300;1,9..40,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap');
 
 :root {
   /* --- Y2K CANDY PALETTE --- */
@@ -27,15 +28,21 @@
   --y2k-paper:      #f6efde;
   --y2k-paper-warm: #f0e6cf;
 
+  /* --- LUXURY GOLD ACCENT --- */
+  --y2k-gold:       #C4A35A;
+  --y2k-gold-warm:  #E8C97A;
+  --y2k-gold-dark:  #9A7A38;
+
   /* --- SHADOWS & GLOWS --- */
   --y2k-shadow-pink: 4px 4px 0 var(--y2k-hot-pink);
   --y2k-shadow-cyan: 4px 4px 0 var(--y2k-cyan);
   --y2k-glow-pink:   0 0 24px rgba(255, 63, 164, 0.55);
 
-  /* --- DISPLAY FONTS (sticker-style) --- */
-  --y2k-sticker:  'Bungee', 'Anton', sans-serif;
-  --y2k-marker:   'Caveat Brush', cursive;
-  --y2k-block:    'Rubik Mono One', sans-serif;
+  /* --- DISPLAY FONTS --- */
+  --y2k-sticker:  'Bebas Neue', 'Anton', sans-serif;
+  --y2k-marker:   'Syne', 'DM Sans', sans-serif;
+  --y2k-block:    'Bebas Neue', sans-serif;
+  --y2k-serif:    'Cormorant Garamond', 'Georgia', serif;
 }
 
 /* ============================================================

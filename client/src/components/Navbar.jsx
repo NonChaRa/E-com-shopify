@@ -1,7 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import './Navbar.css';
 import logo from '../assets/Asteri2k.gif';
 import { useNavigate } from 'react-router-dom';
+import { useCurrency } from '../store/CurrencyContext';
+import { CURRENCIES } from '../store/currencies';
 
 const Navbar = ({ cartCount, onOpenCart, user, onOpenLogin, onLogout, forceSolid }) => {
   const [openMenu, setOpenMenu] = useState(null);
@@ -9,6 +12,11 @@ const Navbar = ({ cartCount, onOpenCart, user, onOpenLogin, onLogout, forceSolid
   const [isVisible, setIsVisible] = useState(true);
   const [isScrolled, setIsScrolled] = useState(false);
   const [prevScrollPos, setPrevScrollPos] = useState(window.pageYOffset);
+  const [currencyOpen, setCurrencyOpen] = useState(false);
+  const [dropdownPos, setDropdownPos] = useState({ top: 0, right: 0 });
+  const currencyTriggerRef = useRef(null);
+  const currencyDropdownRef = useRef(null);
+  const { currency, changeCurrency } = useCurrency();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -27,6 +35,36 @@ const Navbar = ({ cartCount, onOpenCart, user, onOpenLogin, onLogout, forceSolid
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, [prevScrollPos]);
+
+  // Close currency dropdown on outside click.
+  // Uses 'mousedown' so it fires before the trigger's 'click'.
+  // Must exclude BOTH the trigger AND the portal dropdown from the check —
+  // otherwise the mousedown fires before the option's click and unmounts
+  // the dropdown so the click never reaches the button.
+  useEffect(() => {
+    if (!currencyOpen) return;
+    const handler = (e) => {
+      const inTrigger  = currencyTriggerRef.current?.contains(e.target);
+      const inDropdown = currencyDropdownRef.current?.contains(e.target);
+      if (!inTrigger && !inDropdown) {
+        setCurrencyOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, [currencyOpen]);
+
+  const openCurrencyDropdown = () => {
+    if (currencyTriggerRef.current) {
+      const rect = currencyTriggerRef.current.getBoundingClientRect();
+      setDropdownPos({
+        top: rect.bottom + 8,
+        right: window.innerWidth - rect.right,
+      });
+    }
+    setOpenMenu(null); // close mega menu
+    setCurrencyOpen(v => !v);
+  };
 
   const handleMobileNav = (path) => {
     navigate(path);
@@ -105,6 +143,17 @@ const Navbar = ({ cartCount, onOpenCart, user, onOpenLogin, onLogout, forceSolid
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
               </svg>
             </button>
+
+            {/* Currency selector */}
+            <div
+              className="nav-currency-trigger desktop-only"
+              ref={currencyTriggerRef}
+              onClick={openCurrencyDropdown}
+            >
+              <span className="currency-flag">{CURRENCIES[currency].flag}</span>
+              <span className="nav-link">{currency}</span>
+              <span className={`nav-arrow ${currencyOpen ? 'open' : ''}`}>▾</span>
+            </div>
 
             <div className="nav-item-wrapper bag-trigger" onClick={() => { onOpenCart(); setMobileMenuOpen(false); }}>
               <span className="desktop-only nav-link">BAG</span>
@@ -194,10 +243,47 @@ const Navbar = ({ cartCount, onOpenCart, user, onOpenLogin, onLogout, forceSolid
                   LOGIN / REGISTER
                 </div>
               )}
+
+              {/* Mobile currency section */}
+              <div className="mobile-drawer-header-tag">CURRENCY</div>
+              <div className="mobile-currency-grid">
+                {Object.values(CURRENCIES).map(c => (
+                  <button
+                    key={c.code}
+                    className={`mobile-currency-btn ${currency === c.code ? 'active' : ''}`}
+                    onClick={() => { changeCurrency(c.code); setMobileMenuOpen(false); }}
+                  >
+                    <span>{c.flag}</span>
+                    <span>{c.code}</span>
+                  </button>
+                ))}
+              </div>
             </nav>
           </div>
         </div>
       </nav>
+
+      {/* Currency dropdown — portaled to body to avoid navbar overflow clipping */}
+      {currencyOpen && createPortal(
+        <div
+          ref={currencyDropdownRef}
+          className="currency-dropdown-portal"
+          style={{ top: dropdownPos.top, right: dropdownPos.right }}
+        >
+          {Object.values(CURRENCIES).map(c => (
+            <button
+              key={c.code}
+              className={`currency-option ${currency === c.code ? 'active' : ''}`}
+              onClick={() => { changeCurrency(c.code); setCurrencyOpen(false); }}
+            >
+              <span className="currency-option-flag">{c.flag}</span>
+              <span className="currency-option-code">{c.code}</span>
+              <span className="currency-option-label">{c.label}</span>
+            </button>
+          ))}
+        </div>,
+        document.body
+      )}
     </>
   );
 };

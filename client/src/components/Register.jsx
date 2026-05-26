@@ -95,7 +95,6 @@ const Register = ({ isOpen, onClose }) => {
 
         <div className="auth-header">
           <h2>JOIN THE STUDIO</h2>
-          <span className="auth-subtitle">✿ ASTÉRI Studio Registration</span>
         </div>
 
         <form onSubmit={handleRegister} className="auth-form">

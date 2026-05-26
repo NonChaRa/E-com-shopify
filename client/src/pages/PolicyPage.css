@@ -1,88 +1,166 @@
-/* --- EDITORIAL POLICY PAGE SYSTEM --- */
+/* --- ASTÉRI 2K POLICY PAGES --- */
 
 .policy-wrapper {
   padding: 40px 40px 120px 40px;
   max-width: 1400px;
   margin: 0 auto;
   min-height: 70vh;
+  background-color: var(--y2k-paper);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.6  0 0 0 0 0.5  0 0 0 0 0.3  0 0 0 0.1 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
 }
 
+/* Re-style the shared .shop-main-title for policy context */
+.policy-wrapper .shop-main-title {
+  font-family: var(--y2k-sticker);
+  font-size: clamp(2.5rem, 6.5vw, 5rem);
+  letter-spacing: 0.04em;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  color: var(--y2k-lemon);
+  text-shadow:
+    -3px -3px 0 #fff,
+    3px -3px 0 #fff,
+    -3px 3px 0 #fff,
+    3px 3px 0 #fff,
+    6px 6px 0 var(--y2k-hot-pink),
+    8px 8px 0 #000;
+  transform: rotate(-1.5deg);
+  display: inline-block;
+}
+
+.policy-wrapper .shop-header-minimal {
+  text-align: center;
+  padding: 100px 8% 45px 8%;
+  border-bottom: 2px dashed rgba(0, 0, 0, 0.2);
+  margin-bottom: 0;
+}
+
+/* ---- LOADING STATE ---- */
+.pdp-loading-state {
+  font-family: var(--y2k-sticker);
+  font-size: 14px;
+  letter-spacing: 0.1em;
+  color: var(--y2k-hot-pink);
+  text-shadow: 2px 2px 0 #000;
+  text-align: center;
+  padding: 120px 0;
+  text-transform: uppercase;
+}
+
+/* ---- CONTENT AREA ---- */
 .policy-content-area {
   max-width: 740px;
-  margin: 80px auto 0 auto;
+  margin: 60px auto 0 auto;
 }
 
-/* --- SHOPIFY RICH TEXT HOOKS --- */
-
+/* ---- RICH TEXT BODY (from Shopify) ---- */
 .policy-editorial-body {
+  font-family: var(--font-body);
   font-size: 0.95rem;
-  line-height: 1.85;
+  line-height: 1.9;
   color: #1a1a1a;
   letter-spacing: 0.01em;
+  font-weight: 500;
 }
 
-/* Individual Paragraph Control */
 .policy-editorial-body p {
   margin-bottom: 2rem;
 }
 
-/* Section Sub-headings from Shopify Editor */
+/* Section headings — sticker style */
 .policy-editorial-body h2 {
-  font-family: inherit;
-  font-size: 1.25rem;
-  font-weight: 600;
+  font-family: var(--y2k-sticker);
+  font-size: 1.2rem;
+  font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   margin-top: 3.5rem;
   margin-bottom: 1.2rem;
-  color: #000000;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-  padding-bottom: 10px;
+  color: var(--y2k-hot-pink);
+  text-shadow: 2px 2px 0 #000;
+  transform: rotate(-0.5deg);
+  display: inline-block;
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+/* Divider after h2 (dashed Y2K line) */
+.policy-editorial-body h2::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--y2k-hot-pink) 0, var(--y2k-hot-pink) 6px,
+    transparent 6px, transparent 12px
+  );
+  margin-top: 8px;
 }
 
 .policy-editorial-body h3 {
-  font-size: 1.05rem;
-  font-weight: 600;
-  letter-spacing: 0.05em;
+  font-family: var(--y2k-sticker);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   margin-top: 2.5rem;
   margin-bottom: 0.8rem;
-  color: #000000;
+  color: var(--y2k-cyan);
+  text-shadow: 2px 2px 0 #000;
 }
 
-/* Lists & Bullet points spacing inside terms layout */
+/* Lists — hot-pink square bullets */
 .policy-editorial-body ul,
 .policy-editorial-body ol {
   margin-bottom: 2rem;
   padding-left: 24px;
-  list-style-type: square;
+  list-style: none;
 }
 
-.policy-editorial-body li {
-  margin-bottom: 0.6rem;
-  padding-left: 4px;
+.policy-editorial-body ul li,
+.policy-editorial-body ol li {
+  margin-bottom: 0.8rem;
+  padding-left: 20px;
+  position: relative;
+}
+
+/* Custom bullet — pink square for ul, pink number-style for ol */
+.policy-editorial-body ul li::before {
+  content: "▪";
+  position: absolute;
+  left: 0;
+  color: var(--y2k-hot-pink);
+  font-size: 14px;
+  line-height: 1.7;
 }
 
 .policy-editorial-body strong {
-  font-weight: 600;
-  color: #000000;
+  font-weight: 700;
+  color: #000;
 }
 
-.shop-main-title {
-  color: black;
+.policy-editorial-body a {
+  color: var(--y2k-hot-pink);
+  font-weight: 700;
+  text-decoration: underline;
+  transition: color 0.18s;
+}
+.policy-editorial-body a:hover {
+  color: var(--y2k-magenta);
 }
 
-
-/* Responsive Scaling for smaller screens */
+/* ---- RESPONSIVE ---- */
 @media (max-width: 768px) {
   .policy-wrapper {
     padding: 20px 20px 80px 20px;
   }
-
-  .policy-content-area {
-    margin-top: 50px;
+  .policy-wrapper .shop-header-minimal {
+    padding: 80px 6% 30px 6%;
   }
-
+  .policy-content-area {
+    margin-top: 40px;
+  }
   .policy-editorial-body {
     font-size: 0.9rem;
     line-height: 1.75;

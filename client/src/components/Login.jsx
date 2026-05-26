@@ -50,7 +50,6 @@ const Login = ({ isOpen, onClose, onLoginSuccess, onOpenRegister }) => {
 
         <div className="auth-header">
           <h2>WELCOME BACK</h2>
-          <span className="auth-subtitle">ASTÉRI Studio Login</span>
         </div>
 
         <form onSubmit={handleLogin} className="auth-form">

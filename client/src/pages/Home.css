@@ -1,129 +1,157 @@
-/* --- 1. COLLECTION HEADER & NAV --- */
+/* ============================================================
+   TICKER STRIP — scrolling marquee between hero and products
+   ============================================================ */
+.brand-ticker-strip {
+  background: #0a0a0a;
+  overflow: hidden;
+  padding: 0;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  position: relative;
+  z-index: 10;
+}
+
+.brand-ticker-track {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  white-space: nowrap;
+  animation: tickerScroll 30s linear infinite;
+  width: max-content;
+  padding: 14px 0;
+}
+
+.ticker-item {
+  font-family: var(--y2k-marker);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+  padding: 0 20px;
+}
+
+.ticker-dot {
+  font-size: 8px;
+  color: var(--y2k-gold);
+  padding: 0 6px;
+  flex-shrink: 0;
+}
+
+@keyframes tickerScroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ============================================================
+   COLLECTION HEADER
+   ============================================================ */
 .collection-header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  padding: 80px 8% 30px 8%;
+  align-items: flex-end;
+  padding: 80px 8% 36px 8%;
   width: 100%;
   position: relative;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  margin-bottom: 48px;
 }
 
-/* Y2K Decorative Charm beside collection title */
-.collection-header::before {
-  content: "";
-  position: absolute;
-  top: 70px;
-  left: 4%;
-  width: 48px;
-  height: 48px;
-  background: var(--y2k-hot-pink);
-  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 29'><path d='M16 29s-13-8.35-13-17a8 8 0 0 1 13-6.2A8 8 0 0 1 29 12c0 8.65-13 17-13 17z' fill='black'/></svg>");
-          mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 29'><path d='M16 29s-13-8.35-13-17a8 8 0 0 1 13-6.2A8 8 0 0 1 29 12c0 8.65-13 17-13 17z' fill='black'/></svg>");
-  -webkit-mask-size: contain;
-          mask-size: contain;
-  -webkit-mask-repeat: no-repeat;
-          mask-repeat: no-repeat;
-  transform: rotate(-12deg);
-  filter: drop-shadow(2px 2px 0 #000);
-  animation: y2kCharmFloat 4s ease-in-out infinite;
-  --r: -12deg;
+.collection-header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.collection-eyebrow {
+  font-family: var(--y2k-marker);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.45);
 }
 
 .collection-title {
-  font-family: var(--font-anton);
-  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  font-family: var(--y2k-sticker);
+  font-size: clamp(3.5rem, 8vw, 8rem);
   text-transform: uppercase;
-  color: var(--y2k-cyan);
+  color: #0a0a0a;
   margin: 0;
-  letter-spacing: 0.04em;
-  text-shadow:
-    -1px -1px 0 #fff,
-    1px -1px 0 #fff,
-    -2px 2px 0 #fff,
-    1px 2px 0 #fff,
-    5px 5px 0 var(--y2k-hot-pink),
-    6px 6px 0 #000;
-  transform: rotate(-1.5deg);
-  display: inline-block;
+  line-height: 0.88;
+  letter-spacing: 0.01em;
 }
 
 .collection-categories {
   display: flex;
-  gap: 28px;
-  justify-content: center;
+  gap: 10px;
+  justify-content: flex-end;
   align-items: center;
+  padding-bottom: 8px;
 }
 
 .category-link {
-  font-family: var(--y2k-sticker);
+  font-family: var(--y2k-marker);
   font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  color: #000;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: rgba(0,0,0,0.6);
   cursor: pointer;
   position: relative;
   text-transform: uppercase;
-  padding: 8px 16px;
-  background: #fff;
-  border: 2px solid #000;
+  padding: 9px 20px;
+  background: transparent;
+  border: 1.5px solid rgba(0,0,0,0.2);
   border-radius: 999px;
-  box-shadow: 3px 3px 0 #000;
-  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: all 0.22s ease;
 }
 
 .category-link:hover {
-  transform: translate(-1px, -1px) rotate(-2deg);
-  box-shadow: 4px 4px 0 #000;
-  background: var(--y2k-lemon);
+  background: #0a0a0a;
+  color: #fff;
+  border-color: #0a0a0a;
 }
 
 .category-link.active {
-  background: var(--y2k-hot-pink);
+  background: #0a0a0a;
   color: #fff;
-  text-shadow: 1px 1px 0 rgba(0,0,0,0.3);
-  transform: rotate(-2deg);
+  border-color: #0a0a0a;
 }
 
-/* --- 2. THE EDITORIAL SLIDER --- */
-.slider-wrapper {
-  position: relative;
-  width: 100%;
-  padding: 0 8%;
-}
-
-.slider-row {
-  display: flex;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  gap: 28px;
-  padding-bottom: 60px;
-  scrollbar-width: none;
-  scroll-behavior: smooth;
-  min-height: 460px;
+/* ============================================================
+   STAGGERED EDITORIAL PRODUCT GRID
+   ============================================================ */
+.editorial-grid-wrapper {
+  padding: 0 8% 60px 8%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 28px 24px;
   transition: opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-  will-change: opacity;
 }
 
-.slider-row::-webkit-scrollbar {
-  display: none;
-}
-.slider-row.products-fading {
+.editorial-grid-wrapper.products-fading {
   opacity: 0.1;
   pointer-events: none;
 }
-.no-products-msg {
-  font-family: var(--y2k-sticker);
-  font-size: 12px;
-  letter-spacing: 0.1em;
-  color: var(--y2k-hot-pink);
-  padding: 40px 0;
-  text-transform: uppercase;
+
+/* Every even card is offset downward for editorial stagger */
+.editorial-grid-wrapper .editorial-card:nth-child(even) {
+  margin-top: 60px;
 }
 
-/* --- 3. PRODUCT CARDS — Y2K PAPER-STICKER STYLE --- */
+.no-products-msg {
+  font-family: var(--y2k-marker);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: rgba(0,0,0,0.4);
+  padding: 40px 0;
+  text-transform: uppercase;
+  grid-column: 1 / -1;
+}
+
+/* --- 3. PRODUCT CARDS --- */
 .editorial-card {
-  flex: 0 0 19%;
-  min-width: 230px;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -134,32 +162,32 @@
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.6  0 0 0 0 0.5  0 0 0 0 0.3  0 0 0 0.12 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
   border: 2px solid #000;
   border-radius: 14px;
-  box-shadow: 5px 5px 0 #000;
-  transform: rotate(-0.5deg);
+  box-shadow: 4px 4px 0 rgba(0,0,0,0.65);
+  transform: rotate(-0.2deg);
   transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
 }
 
-.editorial-card:nth-child(2n)   { transform: rotate(0.8deg); }
-.editorial-card:nth-child(3n)   { transform: rotate(-1.2deg); }
-.editorial-card:nth-child(4n+1) { transform: rotate(0.3deg); }
+.editorial-card:nth-child(2n)   { transform: rotate(0.3deg); }
+.editorial-card:nth-child(3n)   { transform: rotate(-0.2deg); }
+.editorial-card:nth-child(4n+1) { transform: rotate(0.15deg); }
 
 .editorial-card:hover {
   transform: rotate(0) translate(-2px, -3px);
-  box-shadow: 8px 8px 0 var(--y2k-hot-pink), 8px 8px 0 1px #000;
+  box-shadow: 6px 6px 0 var(--y2k-gold), 6px 6px 0 1.5px rgba(0,0,0,0.7);
   z-index: 4;
 }
 
-/* Charm sticker peeks out of each card (alternating) */
+/* Charm sticker peeks out of each card — kept small, delicate */
 .editorial-card::before {
   content: "";
   position: absolute;
-  top: -14px;
-  right: -10px;
-  width: 32px;
-  height: 32px;
-  background: var(--y2k-hot-pink);
+  top: -11px;
+  right: -8px;
+  width: 22px;
+  height: 22px;
+  background: var(--y2k-gold);
   z-index: 5;
-  filter: drop-shadow(2px 2px 0 #000);
+  filter: drop-shadow(1.5px 1.5px 0 rgba(0,0,0,0.6));
   -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 29'><path d='M16 29s-13-8.35-13-17a8 8 0 0 1 13-6.2A8 8 0 0 1 29 12c0 8.65-13 17-13 17z' fill='black'/></svg>");
           mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 29'><path d='M16 29s-13-8.35-13-17a8 8 0 0 1 13-6.2A8 8 0 0 1 29 12c0 8.65-13 17-13 17z' fill='black'/></svg>");
   -webkit-mask-size: contain;
@@ -171,28 +199,28 @@
 }
 
 .editorial-card:nth-child(2n)::before {
-  background: var(--y2k-lemon);
+  background: var(--y2k-hot-pink);
   -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 2l2.9 6.9 7.4.6-5.6 4.9 1.7 7.3L12 17.8 5.6 21.7l1.7-7.3L1.7 9.5l7.4-.6L12 2z' fill='black'/></svg>");
           mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 2l2.9 6.9 7.4.6-5.6 4.9 1.7 7.3L12 17.8 5.6 21.7l1.7-7.3L1.7 9.5l7.4-.6L12 2z' fill='black'/></svg>");
 }
 .editorial-card:nth-child(3n)::before {
-  background: var(--y2k-cyan);
-  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 24'><path d='M16 12 L4 4 Q0 4 0 8 V16 Q0 20 4 20 L16 12 L28 4 Q32 4 32 8 V16 Q32 20 28 20 Z M13 9 H19 Q21 9 21 11 V13 Q21 15 19 15 H13 Q11 15 11 13 V11 Q11 9 13 9 Z' fill='black'/></svg>");
-          mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 24'><path d='M16 12 L4 4 Q0 4 0 8 V16 Q0 20 4 20 L16 12 L28 4 Q32 4 32 8 V16 Q32 20 28 20 Z M13 9 H19 Q21 9 21 11 V13 Q21 15 19 15 H13 Q11 15 11 13 V11 Q11 9 13 9 Z' fill='black'/></svg>");
+  background: var(--y2k-gold-warm);
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 0 L14 10 L24 12 L14 14 L12 24 L10 14 L0 12 L10 10 Z' fill='black'/></svg>");
+          mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 0 L14 10 L24 12 L14 14 L12 24 L10 14 L0 12 L10 10 Z' fill='black'/></svg>");
 }
 
 .editorial-card:hover::before {
-  transform: rotate(-15deg) scale(1.15);
+  transform: rotate(-15deg) scale(1.2);
 }
 
 .editorial-image-wrapper {
   position: relative;
   width: 100%;
-  aspect-ratio: 4 / 5.5;
+  aspect-ratio: 3 / 4;
   overflow: hidden;
-  border: 2px solid #000;
-  border-radius: 8px;
-  background: #fff;
+  border: 1.5px solid rgba(0,0,0,0.12);
+  border-radius: 10px;
+  background: #f8f5ef;
   isolation: isolate;
 }
 
@@ -287,10 +315,11 @@
 
 .quick-add-label {
   display: block;
-  font-family: var(--y2k-sticker);
+  font-family: var(--y2k-marker);
   font-size: 9px;
-  letter-spacing: 0.15em;
-  color: var(--y2k-cyan);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  color: var(--y2k-gold-warm);
   margin-bottom: 10px;
   text-align: center;
   text-transform: uppercase;
@@ -305,14 +334,15 @@
 .mini-size-btn {
   background: #fff;
   color: #000;
-  border: 2px solid #000;
+  border: 1.5px solid rgba(255,255,255,0.4);
   padding: 8px 0;
-  font-family: var(--y2k-sticker);
+  font-family: var(--y2k-marker);
   font-size: 10px;
-  font-weight: 700;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.18s ease;
   border-radius: 6px;
+  letter-spacing: 0.06em;
 }
 .mini-size-btn:hover:not(:disabled) {
   background: var(--y2k-lemon);
@@ -334,28 +364,41 @@
 
 /* --- 5. PRODUCT INFO TEXT --- */
 .editorial-info {
-  padding: 4px 4px 0 4px;
+  padding: 12px 4px 2px 4px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
+  border-top: 1px solid rgba(0,0,0,0.08);
+}
+
+/* tiny "HANDMADE ✦" stamp above the name */
+.editorial-info::before {
+  content: "HANDMADE ✦ MADE TO ORDER";
+  font-family: var(--y2k-marker);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: rgba(0,0,0,0.3);
+  text-transform: uppercase;
 }
 
 .product-name {
-  font-family: var(--y2k-sticker);
-  font-size: 12px;
-  font-weight: 600;
+  font-family: var(--y2k-sticker);   /* Bebas Neue — big editorial weight */
+  font-size: 1.35rem;
+  font-weight: 400;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: #000;
+  color: #0a0a0a;
   margin: 0;
-  line-height: 1.3;
+  line-height: 1;
 }
 
 .product-price {
-  font-family: var(--font-body);
-  font-size: 12px;
-  color: var(--y2k-hot-pink);
-  font-weight: 700;
+  font-family: var(--font-body);     /* DM Sans — clean, readable */
+  font-size: 1.05rem;
+  font-style: normal;
+  color: var(--y2k-gold-dark);
+  font-weight: 600;
   letter-spacing: 0.04em;
 }
 
@@ -385,12 +428,12 @@
 .confirm-add-btn {
   background: var(--y2k-hot-pink);
   color: #fff;
-  border: 2px solid #000;
+  border: 1.5px solid rgba(255,255,255,0.3);
   padding: 10px;
-  font-family: var(--y2k-sticker);
+  font-family: var(--y2k-marker);
   font-size: 10px;
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   cursor: pointer;
   text-transform: uppercase;
   border-radius: 6px;
@@ -444,42 +487,101 @@
   color: #fff;
 }
 
+/* --- 7. SLIDER ARROW (hidden — grid layout replaces scroll) --- */
+.slider-indicator-arrow { display: none !important; }
+.slider-wrapper { display: none !important; }
+
 /* --- 8. EXPLORE ALL BUTTON --- */
 .shop-all-cta-centered {
   display: flex;
   justify-content: center;
-  margin: 40px 0 60px 0;
+  margin: 40px 0 0 0;
+}
+
+/* ============================================================
+   CRAFT PROCESS STRIP
+   ============================================================ */
+.craft-process-strip {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  padding: 80px 8%;
+  border-top: 1px solid rgba(0,0,0,0.1);
+  margin-top: 80px;
+}
+
+.craft-step {
+  flex: 1;
+  padding: 0 6%;
+  position: relative;
+}
+
+.craft-step:first-child { padding-left: 0; }
+.craft-step:last-child  { padding-right: 0; }
+
+.craft-num {
+  display: block;
+  font-family: var(--y2k-serif);
+  font-size: 3rem;
+  font-weight: 300;
+  color: rgba(0,0,0,0.12);
+  line-height: 1;
+  margin-bottom: 16px;
+  letter-spacing: 0.04em;
+}
+
+.craft-title {
+  font-family: var(--y2k-sticker);
+  font-size: clamp(1.4rem, 2.2vw, 2rem);
+  text-transform: uppercase;
+  color: #0a0a0a;
+  margin: 0 0 12px 0;
+  letter-spacing: 0.02em;
+  line-height: 1;
+}
+
+.craft-desc {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 400;
+  color: rgba(0,0,0,0.55);
+  line-height: 1.65;
+  margin: 0;
+  max-width: 220px;
+}
+
+.craft-arrow {
+  flex: 0 0 auto;
+  font-size: 1.4rem;
+  color: var(--y2k-gold);
+  padding-top: 44px;
+  padding-bottom: 0;
+  align-self: flex-start;
 }
 
 .editorial-explore-btn {
   position: relative;
-  background-color: white;
-  color: #002233;
-  padding: 16px 42px;
+  background-color: #0a0a0a;
+  color: #fff;
+  padding: 16px 48px;
   border-radius: 999px;
-  font-family: var(--y2k-sticker);
+  font-family: var(--y2k-marker);
   font-weight: 700;
   text-transform: uppercase;
-  font-size: 13px;
-  letter-spacing: 0.12em;
+  font-size: 12px;
+  letter-spacing: 0.18em;
   cursor: pointer;
-  border: 2.5px solid #000;
-  box-shadow:
-    1px 1px 0 #000,
-    inset 0 -4px 0 rgba(0,0,0,0.18),
-    inset 0 4px 0 rgba(255,255,255,0.5);
-  transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.18s;
+  border: 2px solid #0a0a0a;
+  box-shadow: 4px 4px 0 rgba(0,0,0,0.2);
+  transition: all 0.22s ease;
 }
 
 .editorial-explore-btn:hover {
-  background-color: var(--y2k-hot-pink);
-  color: #fff;
-  text-shadow: 1px 1px 0 rgba(0,0,0,0.3);
-  transform: translate(-2px, -2px) rotate(-2deg);
-  box-shadow:
-    7px 7px 0 #000,
-    inset 0 -4px 0 rgba(0,0,0,0.18),
-    inset 0 4px 0 rgba(255,255,255,0.4);
+  background-color: #fff;
+  color: #0a0a0a;
+  border-color: #0a0a0a;
+  box-shadow: 5px 5px 0 var(--y2k-gold);
+  transform: translate(-2px, -2px);
 }
 
 /* --- 9. ANIMATIONS & RESPONSIVE --- */
@@ -488,96 +590,75 @@
   to { opacity: 1; transform: scale(1); }
 }
 
-@media (max-width: 1024px) {
-  .collection-header, .slider-wrapper {
-    padding-left: 5%;
-    padding-right: 5%;
-  }
-  .editorial-card {
-    flex: 0 0 30%;
-    min-width: 200px;
+@media (max-width: 1280px) {
+  .editorial-grid-wrapper {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
-/* --- RESPONSIVE LOOKBOOK OVERHAUL --- */
+@media (max-width: 1024px) {
+  .collection-header {
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+  .editorial-grid-wrapper {
+    padding: 0 5% 60px 5%;
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .craft-process-strip {
+    padding: 60px 5%;
+  }
+}
+
 @media (max-width: 768px) {
   .collection-header {
     flex-direction: column;
-    align-items: center;
-    text-align: center;
-    padding: 60px 24px 0 24px;
-    width: 100%;
+    align-items: flex-start;
+    padding: 60px 24px 24px 24px;
     gap: 20px;
   }
 
-  .collection-header::before {
-    display: none;
-  }
-
   .collection-title {
-    font-size: 1.8rem;
-    letter-spacing: 0.02em;
-    margin-bottom: 8px;
+    font-size: clamp(3rem, 15vw, 5rem);
   }
 
-  /* Horizontal swipe track */
   .collection-categories {
-    width: 100%;
-    display: flex;
     justify-content: flex-start;
-    gap: 10px;
-    overflow-x: auto;
-    padding: 8px 4px 14px 4px;
-    scrollbar-width: none;
-  }
-  .collection-categories::-webkit-scrollbar {
-    display: none;
+    flex-wrap: wrap;
+    gap: 8px;
   }
 
   .category-link {
     font-size: 10px;
-    letter-spacing: 0.1em;
-    padding: 7px 12px;
+    padding: 7px 14px;
     white-space: nowrap;
-    box-shadow: 2px 2px 0 #000;
   }
 
-  .slider-wrapper {
-    padding: 24px 16px 40px 16px;
+  .editorial-grid-wrapper {
+    padding: 0 16px 40px 16px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px 12px;
   }
 
-  /* Converts horizontal scroll row to a 2-column store grid matrix */
-  .slider-row {
-    display: grid !important;
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 28px 14px !important;
-    overflow-x: visible !important;
-    min-height: auto !important;
-    padding-bottom: 0;
+  /* Reset stagger on mobile — no room */
+  .editorial-grid-wrapper .editorial-card:nth-child(even) {
+    margin-top: 0;
   }
 
   .editorial-card {
-    width: 100% !important;
-    max-width: 100% !important;
-    flex: none !important;
-    min-width: 0 !important;
-    gap: 8px;
     padding: 10px;
-    box-shadow: 3px 3px 0 #000;
-  }
-  .editorial-card:hover {
-    box-shadow: 5px 5px 0 var(--y2k-hot-pink), 5px 5px 0 1px #000;
+    box-shadow: 3px 3px 0 rgba(0,0,0,0.55);
   }
 
   .editorial-card::before {
-    width: 24px;
-    height: 24px;
-    top: -10px;
-    right: -6px;
+    width: 18px;
+    height: 18px;
+    top: -8px;
+    right: -5px;
   }
 
   .editorial-image-wrapper {
-    border-radius: 6px;
+    border-radius: 8px;
   }
 
   .quick-add-trigger-circle {
@@ -589,14 +670,12 @@
   }
 
   .product-name {
-    font-size: 10.5px;
-    letter-spacing: 0.02em;
-    line-height: 1.3;
+    font-size: 1.1rem;
+    letter-spacing: 0.04em;
   }
 
   .product-price {
-    font-size: 10.5px;
-    font-weight: 700;
+    font-size: 0.9rem;
   }
 
   .shop-all-cta-centered {
@@ -605,6 +684,71 @@
 
   .editorial-explore-btn {
     font-size: 11px;
-    padding: 13px 30px;
+    padding: 13px 32px;
+  }
+
+  /* Craft process on mobile — vertical stack */
+  .craft-process-strip {
+    flex-direction: column;
+    gap: 36px;
+    padding: 60px 24px;
+    margin-top: 40px;
+  }
+
+  .craft-step {
+    padding: 0;
+  }
+
+  .craft-arrow {
+    display: none;
+  }
+
+  .craft-num {
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
+
+  .craft-title {
+    font-size: 1.5rem;
+  }
+
+  .craft-desc {
+    max-width: 100%;
   }
 }
+
+/* ============================================================
+   SCROLL-REVEAL: EDITORIAL PRODUCT CARDS
+   Cards start invisible; the grid wrapper gets .is-visible when
+   it scrolls into view (via useInView hook). Each card then
+   fades in with a per-child stagger delay.
+   Uses animation (not transition) so it doesn't conflict with
+   the existing hover transition on transform / box-shadow.
+   ============================================================ */
+
+/* Hidden before reveal — opacity only, preserving the nth-child rotations */
+.editorial-grid-wrapper .editorial-card {
+  opacity: 0;
+}
+
+/* Fade-in animation fires once the parent has .is-visible */
+.editorial-grid-wrapper.is-visible .editorial-card {
+  animation: editorialCardReveal 0.55s ease both;
+}
+
+@keyframes editorialCardReveal {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Stagger: 70 ms between each of the 8 cards */
+.editorial-grid-wrapper.is-visible .editorial-card:nth-child(1) { animation-delay: 0.00s; }
+.editorial-grid-wrapper.is-visible .editorial-card:nth-child(2) { animation-delay: 0.07s; }
+.editorial-grid-wrapper.is-visible .editorial-card:nth-child(3) { animation-delay: 0.14s; }
+.editorial-grid-wrapper.is-visible .editorial-card:nth-child(4) { animation-delay: 0.21s; }
+.editorial-grid-wrapper.is-visible .editorial-card:nth-child(5) { animation-delay: 0.28s; }
+.editorial-grid-wrapper.is-visible .editorial-card:nth-child(6) { animation-delay: 0.35s; }
+.editorial-grid-wrapper.is-visible .editorial-card:nth-child(7) { animation-delay: 0.42s; }
+.editorial-grid-wrapper.is-visible .editorial-card:nth-child(8) { animation-delay: 0.49s; }
+
+/* Reduced-motion: skip animation — handled by Global.css rule */

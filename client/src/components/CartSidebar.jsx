@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
 import './CartSidebar.css';
-import { shopifyFetch } from './lib/shopify'; // Ensure path is correct based on your folder structure
+import { shopifyFetch } from './lib/shopify';
 import { CREATE_CART_MUTATION, CART_BUYER_IDENTITY_UPDATE } from './lib/queries';
+import { useCurrency } from '../store/CurrencyContext';
+import { useToast } from '../store/ToastContext';
 
 const CartSidebar = ({ isOpen, onClose, cart, onRemove, updateQuantity, user }) => {
   const [isSyncing, setIsSyncing] = useState(false);
   const subtotal = cart.reduce((acc, item) => acc + (item.price * (item.quantity || 1)), 0);
   const hasPreorder = cart.some(item => item.stock <= 0 && item.available);
+  const { currency, formatPrice } = useCurrency();
+  const { showToast } = useToast();
+  const showCurrencyNotice = currency !== 'THB';
 
   const handleCheckout = async () => {
       if (cart.length === 0) return;
@@ -45,7 +50,7 @@ const CartSidebar = ({ isOpen, onClose, cart, onRemove, updateQuantity, user }) 
         }
       } catch (err) {
         console.error("Checkout Error:", err);
-        alert("Checkout failed. Please try again.");
+        showToast('Checkout failed. Please try again.', 'error');
       } finally {
         setIsSyncing(false);
       }
@@ -78,7 +83,7 @@ const CartSidebar = ({ isOpen, onClose, cart, onRemove, updateQuantity, user }) 
                         <h3 className="item-name">{item.name}</h3>
                         {isPreorder && <span className="cart-preorder-tag">PRE-ORDER</span>}
                       </div>
-                      <span className="item-price">THB {Number(item.price * item.quantity).toLocaleString()}</span>
+                      <span className="item-price">{formatPrice(item.price * item.quantity)}</span>
                     </div>
 
                     <p className="item-variant">Size: {item.selectedSize}</p>
@@ -94,7 +99,16 @@ const CartSidebar = ({ isOpen, onClose, cart, onRemove, updateQuantity, user }) 
                           +
                         </button>
                       </div>
-                      <button className="trash-btn" onClick={() => onRemove(item.cartId)}>REMOVE</button>
+                      <button
+                        className="trash-btn"
+                        onClick={() => {
+                          onRemove(item.cartId);
+                          const label = item.name.length > 22 ? item.name.slice(0, 22) + '…' : item.name;
+                          showToast(`${label} removed`, 'info');
+                        }}
+                      >
+                        REMOVE
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -111,9 +125,16 @@ const CartSidebar = ({ isOpen, onClose, cart, onRemove, updateQuantity, user }) 
           )}
           <div className="subtotal-row">
             <span className="label">Subtotal</span>
-            <span className="amount">THB {subtotal.toLocaleString()}</span>
+            <span className="amount">{formatPrice(subtotal)}</span>
           </div>
           <p className="tax-disclaimer">Taxes included. Shipping calculated at checkout.</p>
+
+          {showCurrencyNotice && (
+            <p className="currency-checkout-notice">
+              ⓘ Prices shown in {currency}. Your checkout will be processed in <strong>Thai Baht (฿&nbsp;THB)</strong>.
+            </p>
+          )}
+
           <div className="cart-actions">
             <button className="secondary-btn" onClick={onClose}>CONTINUE SHOPPING</button>
             <button
