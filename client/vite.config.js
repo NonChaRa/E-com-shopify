@@ -8,13 +8,20 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        // Split the bundle into focused chunks so the initial page only loads
-        // what it needs. Heavy vendor libs are cached separately and reused
-        // across deploys when only app code changes.
-        manualChunks: {
-          'vendor-react':    ['react', 'react-dom', 'react-router-dom'],
-          'vendor-supabase': ['@supabase/supabase-js'],
-          'vendor-misc':     ['react-icons', 'dompurify', 'zustand'],
+        // Converted from Object to Function for Vite 8 / Rolldown compatibility
+        manualChunks(id) {
+          // Only split out dependencies coming from node_modules
+          if (id.includes('node_modules')) {
+            if (id.includes('react') || id.includes('react-dom') || id.includes('react-router-dom')) {
+              return 'vendor-react';
+            }
+            if (id.includes('@supabase/supabase-js')) {
+              return 'vendor-supabase';
+            }
+            if (id.includes('react-icons') || id.includes('dompurify') || id.includes('zustand')) {
+              return 'vendor-misc';
+            }
+          }
         },
       },
     },
