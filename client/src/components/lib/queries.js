@@ -1,8 +1,3 @@
-// src/components/lib/queries.js
-
-/**
- * PRODUCT CATALOG QUERIES
- */
 export const GET_PRODUCTS_QUERY = `
   query getProducts($first: Int!) {
     products(first: $first) {
@@ -83,9 +78,6 @@ export const GET_COLLECTION_PRODUCTS = `
   }
 `;
 
-/**
- * CART & CHECKOUT MUTATIONS
- */
 export const CREATE_CART_MUTATION = `
   mutation cartCreate($input: CartInput) {
     cartCreate(input: $input) {
@@ -116,9 +108,6 @@ export const CART_BUYER_IDENTITY_UPDATE = `
   }
 `;
 
-/**
- * CUSTOMER PROFILE & AUTH QUERIES
- */
 export const GET_CUSTOMER_ORDERS = `
   query getCustomerOrders($customerAccessToken: String!) {
     customer(customerAccessToken: $customerAccessToken) {

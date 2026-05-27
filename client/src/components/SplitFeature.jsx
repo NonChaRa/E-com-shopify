@@ -1,8 +1,8 @@
 import React, { memo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './SplitFeature.css';
-import leftImg from '../assets/Blue-Imperial-Collection/Royal.png';
-import rightImg from '../assets/Gadom-Collection/Gadom.png';
+import leftImg from '../assets/Blue-Imperial-Collection/Royal.webp';
+import rightImg from '../assets/Gadom-Collection/Gadom.webp';
 
 const SplitFeature = memo(() => {
   const navigate = useNavigate();

@@ -1,32 +1,35 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaInstagram, FaFacebookF, FaYoutube, FaTiktok } from 'react-icons/fa';
+import useRateLimit from '../hooks/useRateLimit';
 import './Footer.css';
+
+const NEWSLETTER_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/newsletter-subscribe`;
 
 const Footer = () => {
   const [email, setEmail] = useState('');
   const [statusMsg, setStatusMsg] = useState('');
   const [submitting, setSubmitting] = useState(false);
+  const { canSubmit, recordSubmission, secondsLeft } = useRateLimit('newsletter', 30);
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
   const handleSubscribe = async (e) => {
     e.preventDefault();
-    if (!email) return;
+    if (!email || !canSubmit) return;
     setSubmitting(true);
     setStatusMsg('');
 
     try {
-      const response = await fetch('https://jhproyifnoxcxswkwgci.supabase.co/functions/v1/newsletter-subscribe', {
+      const response = await fetch(NEWSLETTER_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email })
+        body: JSON.stringify({ email }),
       });
 
-      if (!response.ok) throw new Error("Sync failure.");
+      if (!response.ok) throw new Error('Sync failure.');
 
+      recordSubmission();
       setStatusMsg('WELCOME TO THE ARCHIVE LIST. ✿');
       setEmail('');
     } catch (err) {
@@ -39,13 +42,9 @@ const Footer = () => {
 
   return (
     <footer className="studio-site-footer">
-      {/* --- NOTE: UPPER BRAND BANNER REMOVED FROM HERE TO PREVENT OVERRIDING YOUR HERO COMPONENT --- */}
-
-      {/* Main Structural Column Links */}
       <section className="footer-main-grid-area">
         <div className="footer-layout-container">
 
-          {/* Newsletter Segment */}
           <div className="footer-column-block newsletter-block">
             <h3 className="column-editorial-title">BE THE FIRST TO KNOW ABOUT NEW COLLECTIONS AND DROPS.</h3>
             <form onSubmit={handleSubscribe} className="footer-minimal-form">
@@ -56,10 +55,10 @@ const Footer = () => {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                disabled={submitting}
+                disabled={submitting || !canSubmit}
               />
-              <button type="submit" className="footer-minimal-submit-btn" disabled={submitting}>
-                {submitting ? 'PROCESSING...' : 'SUBSCRIBE'}
+              <button type="submit" className="footer-minimal-submit-btn" disabled={submitting || !canSubmit}>
+                {submitting ? 'PROCESSING...' : !canSubmit ? `WAIT ${secondsLeft}s` : 'SUBSCRIBE'}
               </button>
             </form>
             {statusMsg && <p className="footer-status-alert-msg">{statusMsg}</p>}
@@ -72,7 +71,6 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Brand Links Column */}
           <div className="footer-column-block links-block">
             <h3 className="column-editorial-title">THE BRAND</h3>
             <nav className="footer-nav-list">
@@ -82,7 +80,6 @@ const Footer = () => {
             </nav>
           </div>
 
-          {/* Legal Links Column */}
           <div className="footer-column-block links-block">
             <h3 className="column-editorial-title">LEGAL</h3>
             <nav className="footer-nav-list">
@@ -92,7 +89,6 @@ const Footer = () => {
             </nav>
           </div>
 
-          {/* Automated Collection Links Column */}
           <div className="footer-column-block links-block">
             <h3 className="column-editorial-title">SHOP</h3>
             <nav className="footer-nav-list">
@@ -103,7 +99,6 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Footer Base Subtext Metadata */}
         <div className="footer-bottom-bar-metadata">
           <p className="copyright-label">© 2026 ASTÉRI STUDIO. ALL RIGHTS RESERVED.</p>
           <div className="scroll-top-trigger" onClick={scrollToTop}>

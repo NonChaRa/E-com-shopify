@@ -172,7 +172,7 @@
   height: 100%;
   position: relative;
   flex-shrink: 0;
-  background-image: url('../assets/Loyalty-bg.png');
+  background-image: url('../assets/Loyalty-bg.avif');
   background-size: cover;
   background-position: center;
   border-right: 2.5px solid #000;
@@ -188,7 +188,7 @@
     linear-gradient(135deg, rgba(255,63,164,0.35) 0%, transparent 60%),
     linear-gradient(to top, rgba(0,0,0,0.45) 0%, transparent 50%);
   z-index: 1;
-  background-image: url('../assets/Loyalty-bg.png');
+  background-image: url('../assets/Loyalty-bg.avif');
   background-size: cover;
   background-position: center;
 }

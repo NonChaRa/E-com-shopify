@@ -31,7 +31,7 @@ const TickerStrip = () => (
 // ---------------------------------------------------------------------------
 // ProductCard
 // ---------------------------------------------------------------------------
-const ProductCard = ({ p, navigate, addToCart }) => {
+const ProductCard = ({ p, navigate, addToCart, priority = false }) => {
   const [showSizes, setShowSizes]         = useState(false);
   const [pendingPreorder, setPendingPreorder] = useState(null);
   const { formatPrice } = useCurrency();
@@ -69,7 +69,12 @@ const ProductCard = ({ p, navigate, addToCart }) => {
       onMouseLeave={() => setShowSizes(false)}
     >
       <div className="editorial-image-wrapper">
-        <img src={p.image_url} alt={p.name} loading="lazy" />
+        <img
+          src={p.image_url}
+          alt={p.name}
+          loading={priority ? 'eager' : 'lazy'}
+          fetchpriority={priority ? 'high' : 'auto'}
+        />
 
         <div className={`quick-size-overlay ${showSizes ? 'active' : ''}`}>
           {!pendingPreorder ? (
@@ -207,8 +212,8 @@ const Home = ({ allProducts, fetchByCollection, fetchAllProducts, loading, addTo
               <SkeletonEditorialCard key={i} index={i} />
             ))
           ) : displayProducts.length > 0 ? (
-            displayProducts.map((p) => (
-              <ProductCard key={p.id} p={p} navigate={navigate} addToCart={addToCart} />
+            displayProducts.map((p, i) => (
+              <ProductCard key={p.id} p={p} navigate={navigate} addToCart={addToCart} priority={i === 0} />
             ))
           ) : (
             <p className="no-products-msg">NO PRODUCTS FOUND IN THIS COLLECTION.</p>

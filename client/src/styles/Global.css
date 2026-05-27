@@ -1,7 +1,4 @@
-/* --- 1. FONTS & COLOR VARIABLES --- */
-@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
-
-/* --- Y2K SYSTEM (new) --- */
+/* Fonts are loaded via <link> in index.html for faster discovery (no CSS @import) */
 @import url('./Y2K.css');
 
 :root {

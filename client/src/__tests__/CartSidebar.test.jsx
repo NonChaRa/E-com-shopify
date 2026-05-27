@@ -1,57 +1,95 @@
 // @vitest-environment jsdom
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
-import '@testing-library/jest-dom'; // CUSTOM DOM MATCHERS EXTENSION
 import CartSidebar from '../components/CartSidebar';
+import { CurrencyProvider } from '../store/CurrencyContext';
+import { ToastProvider } from '../store/ToastContext';
 
-const mockCart = [
+const Wrapper = ({ children }) => (
+  <ToastProvider>
+    <CurrencyProvider>{children}</CurrencyProvider>
+  </ToastProvider>
+);
+
+const makeCart = (overrides = {}) => [
   {
-    cartId: "cart-item-1",
-    variantId: "v1",
-    name: "DARK ANGEL",
+    cartId: 'cart-item-1',
+    variantId: 'v1',
+    name: 'DARK ANGEL',
     price: 699,
     quantity: 2,
-    selectedSize: "M",
+    selectedSize: 'M',
     stock: 10,
-    available: true
-  }
+    available: true,
+    ...overrides,
+  },
 ];
 
-describe('Cart Sidebar Suite: Business Calculation Framework', () => {
-
-  it('should accurately process subtotals and multiply items by their quantity count', () => {
-    render(
+const renderSidebar = (cart, handlers = {}) =>
+  render(
+    <Wrapper>
       <CartSidebar
         isOpen={true}
         onClose={vi.fn()}
-        cart={mockCart}
-        onRemove={vi.fn()}
-        updateQuantity={vi.fn()}
+        cart={cart}
+        user={null}
+        onRemove={handlers.onRemove ?? vi.fn()}
+        updateQuantity={handlers.updateQuantity ?? vi.fn()}
+        onOpenCart={vi.fn()}
       />
-    );
+    </Wrapper>
+  );
 
-    // FIXED: Uses getAllByText because THB 1,398 shows up in both the line-item and checkout total fields
-    const totalElements = screen.getAllByText(/1,398/);
-    expect(totalElements.length).toBeGreaterThanOrEqual(1);
-    expect(totalElements[0]).toBeInTheDocument();
+describe('CartSidebar — subtotal calculation', () => {
+  it('calculates subtotal as price × quantity', () => {
+    renderSidebar(makeCart()); // 699 × 2 = 1,398
+    const totals = screen.getAllByText(/1[,.]?398/);
+    expect(totals.length).toBeGreaterThanOrEqual(1);
   });
 
-  it('should dispatch call actions when interacting with quantity control buttons', () => {
-    const mockUpdateQuantity = vi.fn();
+  it('shows 0 subtotal for an empty cart', () => {
+    renderSidebar([]);
+    // formatPrice(0) in THB → '฿0'
+    expect(screen.getByText('฿0')).toBeInTheDocument();
+  });
+});
 
-    render(
-      <CartSidebar
-        isOpen={true}
-        onClose={vi.fn()}
-        cart={mockCart}
-        onRemove={vi.fn()}
-        updateQuantity={mockUpdateQuantity}
-      />
-    );
+describe('CartSidebar — quantity controls', () => {
+  it('calls updateQuantity with +1 when increase button is clicked', () => {
+    const updateQuantity = vi.fn();
+    renderSidebar(makeCart(), { updateQuantity });
 
-    const decreaseBtn = screen.getByText('−');
-    fireEvent.click(decreaseBtn);
+    fireEvent.click(screen.getByText('+'));
+    expect(updateQuantity).toHaveBeenCalledWith('cart-item-1', +1);
+  });
 
-    expect(mockUpdateQuantity).toHaveBeenCalledWith("cart-item-1", -1);
+  it('calls updateQuantity with -1 when decrease button is clicked', () => {
+    const updateQuantity = vi.fn();
+    renderSidebar(makeCart(), { updateQuantity });
+
+    fireEvent.click(screen.getByText('−'));
+    expect(updateQuantity).toHaveBeenCalledWith('cart-item-1', -1);
+  });
+
+  it('calls onRemove with the correct cartId when remove button is clicked', () => {
+    const onRemove = vi.fn();
+    renderSidebar(makeCart(), { onRemove });
+
+    fireEvent.click(screen.getByRole('button', { name: /remove/i }));
+    expect(onRemove).toHaveBeenCalledWith('cart-item-1');
+  });
+});
+
+describe('CartSidebar — rendering', () => {
+  it('displays the product name and selected size', () => {
+    renderSidebar(makeCart());
+    expect(screen.getByText('DARK ANGEL')).toBeInTheDocument();
+    // CartSidebar renders size as: <p className="item-variant">Size: {item.selectedSize}</p>
+    expect(screen.getByText('Size: M')).toBeInTheDocument();
+  });
+
+  it('renders an empty-cart message when cart is empty', () => {
+    renderSidebar([]);
+    expect(screen.getByText(/empty/i)).toBeInTheDocument();
   });
 });

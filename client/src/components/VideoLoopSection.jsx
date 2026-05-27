@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import './VideoLoopSection.css';
-import loop1 from '../assets/videos/loop-2.mp4';
-import loop3 from '../assets/videos/loop-3.mp4';
+import loop1 from '../assets/videos/loop-2.webm';
+import loop3 from '../assets/videos/loop-3.webm';
 
 const VideoLoopSection = () => {
   const videoRefs = useRef([]);

@@ -1,43 +1,44 @@
 import React, { useState } from 'react';
 import { supabase } from '../supabaseClient';
+import useRateLimit from '../hooks/useRateLimit';
 import './Auth.css';
 
 const Login = ({ isOpen, onClose, onLoginSuccess, onOpenRegister }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const { canSubmit, recordSubmission, secondsLeft } = useRateLimit('login', 5);
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    if (!canSubmit) return;
     setLoading(true);
+    setError('');
 
     try {
       const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
         email,
-        password
+        password,
       });
 
       if (authError) throw authError;
 
-      const { data: profile, error: profileError } = await supabase
+      const { data: profile } = await supabase
         .from('profiles')
         .select('shopify_customer_id')
         .eq('id', authData.user.id)
         .single();
 
-      if (profileError) {
-        console.warn("Profile mapping row not found during login setup:", profileError.message);
-      }
-
       onLoginSuccess({
         ...authData.user,
-        shopify_id: profile?.shopify_customer_id || null
+        shopify_id: profile?.shopify_customer_id || null,
       });
 
       onClose();
     } catch (err) {
-      console.error("Login Authentication Failure:", err.message);
-      alert(err.message);
+      recordSubmission();
+      setError(err.message);
     } finally {
       setLoading(false);
     }
@@ -79,8 +80,10 @@ const Login = ({ isOpen, onClose, onLoginSuccess, onOpenRegister }) => {
             />
           </div>
 
-          <button className="auth-submit-btn" type="submit" disabled={loading}>
-            {loading ? 'PROCESSING...' : 'LOG IN ➜'}
+          {error && <p className="auth-error-msg">{error}</p>}
+
+          <button className="auth-submit-btn" type="submit" disabled={loading || !canSubmit}>
+            {loading ? 'PROCESSING...' : !canSubmit ? `WAIT ${secondsLeft}s` : 'LOG IN ➜'}
           </button>
         </form>
 

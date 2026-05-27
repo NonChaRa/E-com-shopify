@@ -28,9 +28,9 @@ export const useCart = create(
               {
                 ...product,
                 selectedSize,
-                variantId: variantId, // REQUIRED for Shopify checkout
+                variantId, // required for Shopify checkout
                 quantity: 1,
-                cartId: crypto.randomUUID(), // Use variantId as the unique cart key
+                cartId: crypto.randomUUID(),
               }
             ],
           };
@@ -42,9 +42,7 @@ export const useCart = create(
             if (item.cartId === cartId) {
               const isPreorder = item.stock <= 0 && item.available;
               const newQty = (item.quantity || 1) + delta;
-              // Silently cap pre-order items at 5 — the CartSidebar
-              // disables the + button at qty >= 5, so this is a safety guard only.
-              if (isPreorder && newQty > 5) return item;
+              if (isPreorder && newQty > 5) return item; // CartSidebar disables + at 5, safety guard
 
               return { ...item, quantity: Math.max(1, newQty) };
             }
@@ -57,10 +55,7 @@ export const useCart = create(
           cart: state.cart.filter((item) => item.cartId !== cartId)
         })),
 
-      clearCart: () => {
-        set({ cart: [] });
-        localStorage.removeItem('nail-cart-storage');
-      },
+      clearCart: () => set({ cart: [] }),
     }),
     { name: 'nail-cart-storage' }
   )

@@ -1,37 +1,33 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import './styles/Global.css';
 
-// Layout Components
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import CartSidebar from './components/CartSidebar';
 import Login from './components/Login';
 import Register from './components/Register';
-import Account from './components/Account';
 import LoyaltyPopup from './components/LoyaltyPopup';
 
-// Pages
+// Eagerly loaded — these are on the critical render path
 import Home from './pages/Home';
 import ProductPage from './components/ProductPage';
-import AllProducts from './pages/AllProducts';
-import Contact from './pages/Contact';
-import About from './pages/About';
-import PolicyPage from './pages/PolicyPage';
-import ValuePage from './pages/Values';
 import NotFound from './pages/NotFound';
 
-// Logic & API Connections
+// Lazily loaded — split into separate chunks, fetched only when navigated to
+const AllProducts = lazy(() => import('./pages/AllProducts'));
+const Contact     = lazy(() => import('./pages/Contact'));
+const About       = lazy(() => import('./pages/About'));
+const PolicyPage  = lazy(() => import('./pages/PolicyPage'));
+const ValuePage   = lazy(() => import('./pages/Values'));
+const Account     = lazy(() => import('./components/Account'));
 import { useCart } from './store/useCart';
 import { CurrencyProvider } from './store/CurrencyContext';
 import { ToastProvider } from './store/ToastContext';
 import { supabase } from './supabaseClient';
 import { fetchAllGlobalProducts, fetchProductsByCollection } from './components/lib/shopify';
 
-// ---------------------------------------------------------------------------
-// LayoutWrapper
-// Must live inside <Router> so it can use useLocation + useNavigate.
-// ---------------------------------------------------------------------------
+// LayoutWrapper must live inside <Router> to use useLocation + useNavigate
 const LayoutWrapper = ({ children, cartCount, onOpenCart, onOpenLogin, onLogout, user }) => {
   const location  = useLocation();
   const navigate  = useNavigate();
@@ -64,9 +60,6 @@ const LayoutWrapper = ({ children, cartCount, onOpenCart, onOpenLogin, onLogout,
   );
 };
 
-// ---------------------------------------------------------------------------
-// App
-// ---------------------------------------------------------------------------
 function App() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [activeAuthModal, setActiveAuthModal] = useState(null);
@@ -77,14 +70,8 @@ function App() {
 
   const { cart, addToCart, removeFromCart, updateQuantity, clearCart } = useCart();
 
-  // -------------------------------------------------------------------------
-  // AUTH — restore session on every page load
-  //
-  // Supabase persists the session in localStorage automatically.
-  // onAuthStateChange fires "INITIAL_SESSION" on mount (restoring that data),
-  // "SIGNED_IN" on fresh login, and "SIGNED_OUT" on logout.
-  // We skip TOKEN_REFRESHED to avoid a redundant profiles fetch every hour.
-  // -------------------------------------------------------------------------
+  // Restore session on page load via onAuthStateChange (fires INITIAL_SESSION on mount,
+  // SIGNED_IN on login, SIGNED_OUT on logout; TOKEN_REFRESHED skipped to avoid extra fetches)
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
@@ -94,13 +81,8 @@ function App() {
           return;
         }
 
-        if (event === 'TOKEN_REFRESHED') {
-          // Token silently refreshed — session is valid, no UI change needed.
-          return;
-        }
+        if (event === 'TOKEN_REFRESHED') return;
 
-        // INITIAL_SESSION (page refresh) or SIGNED_IN (fresh login):
-        // enrich the Supabase user with the Shopify customer ID from our profiles table.
         try {
           const { data: profile } = await supabase
             .from('profiles')
@@ -113,8 +95,7 @@ function App() {
             shopify_id: profile?.shopify_customer_id || null,
           });
         } catch {
-          // Profile row missing (e.g. brand-new signup) — still sign the user in.
-          setUser(session.user);
+          setUser(session.user); // profile row missing on brand-new signup
         }
       }
     );
@@ -122,9 +103,7 @@ function App() {
     return () => subscription.unsubscribe();
   }, []);
 
-  // -------------------------------------------------------------------------
-  // CART — invalidate local cart if the Shopify cart was already checked out
-  // -------------------------------------------------------------------------
+  // Invalidate local cart if the Shopify cart was already checked out
   useEffect(() => {
     const checkCartStatus = async () => {
       const savedCartId = localStorage.getItem('shopify_cart_id');
@@ -146,23 +125,19 @@ function App() {
         const resJson = await response.json();
 
         if (resJson?.data?.cart === null) {
-          console.log('Successful checkout detected. Resetting client cart layout...');
           clearCart();
           localStorage.removeItem('shopify_cart_id');
           localStorage.removeItem('shopify_checkout_url');
         }
       } catch (err) {
-        console.error('Error verifying headless cart retention state:', err);
+        console.error('Cart status check error:', err);
       }
     };
 
     checkCartStatus();
   }, [clearCart]);
 
-  // -------------------------------------------------------------------------
-  // LOGOUT — Supabase sign-out + local cleanup.
-  // Navigation back to "/" is handled by LayoutWrapper after this resolves.
-  // -------------------------------------------------------------------------
+  // Sign out + local cleanup; LayoutWrapper navigates to "/" after this resolves
   const handleLogout = async () => {
     const { error } = await supabase.auth.signOut();
     if (error) {
@@ -172,19 +147,16 @@ function App() {
     clearCart();
     localStorage.removeItem('shopify_cart_id');
     localStorage.removeItem('shopify_checkout_url');
-    // setUser(null) is handled by the onAuthStateChange SIGNED_OUT event above.
+    // setUser(null) is handled by onAuthStateChange SIGNED_OUT
   };
 
-  // -------------------------------------------------------------------------
-  // PRODUCT CATALOG
-  // -------------------------------------------------------------------------
   const fetchByCollection = useCallback(async (handle) => {
     setLoading(true);
     try {
       const collectionData = await fetchProductsByCollection(handle);
       setProducts(collectionData);
     } catch (err) {
-      console.error('Error fetching collection catalog:', err);
+      console.error('Collection fetch error:', err);
     } finally {
       setLoading(false);
     }
@@ -196,7 +168,7 @@ function App() {
       const catalogData = await fetchAllGlobalProducts();
       setProducts(catalogData);
     } catch (err) {
-      console.error('Global catalog fetch exception:', err);
+      console.error('Product catalog fetch error:', err);
     } finally {
       setLoading(false);
     }
@@ -206,9 +178,6 @@ function App() {
     fetchProducts();
   }, [fetchProducts]);
 
-  // -------------------------------------------------------------------------
-  // RENDER
-  // -------------------------------------------------------------------------
   return (
     <ToastProvider>
     <CurrencyProvider>
@@ -220,6 +189,7 @@ function App() {
           cartCount={cart.length}
           onOpenCart={() => setIsCartOpen(true)}
         >
+          <Suspense fallback={null}>
           <Routes>
             <Route
               path="/"
@@ -263,14 +233,12 @@ function App() {
             <Route path="/policy/:policyType" element={<PolicyPage />} />
             <Route path="/values"  element={<ValuePage />} />
 
-            {/* ----------------------------------------------------------------
-                404 — catch-all: must be the last route
-                ---------------------------------------------------------------- */}
+            {/* 404 catch-all — must be last */}
             <Route path="*" element={<NotFound />} />
           </Routes>
+          </Suspense>
         </LayoutWrapper>
 
-        {/* Global Modals & Sidebar */}
         <LoyaltyPopup onOpenAuth={(type) => setActiveAuthModal(type)} />
 
         <Login

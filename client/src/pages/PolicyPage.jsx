@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import DOMPurify from 'dompurify';
 import { fetchShopPolicies } from '../components/lib/shopify';
 import './PolicyPage.css';
 
@@ -29,7 +30,6 @@ const PolicyPage = () => {
     return <div className="pdp-loading-state">RETRIEVING STUDIO LEGAL DOCUMENTATION...</div>;
   }
 
-  // Fallback state if the specific policy is empty or unset in Shopify Admin
   if (!policyData || !policyData.body) {
     return (
       <div className="policy-wrapper">
@@ -49,7 +49,7 @@ const PolicyPage = () => {
       <main className="policy-content-area">
         <div
           className="policy-editorial-body"
-          dangerouslySetInnerHTML={{ __html: policyData.body }}
+          dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(policyData.body) }}
         />
       </main>
     </div>
