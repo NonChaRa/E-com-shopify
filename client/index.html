@@ -21,23 +21,31 @@
   <meta property="twitter:image" content="https://asteri2kstudio.com/og-image.jpg" />
 
   <!--
-    PERFORMANCE: Preconnect to third-party origins so TCP/TLS handshakes are
-    done before the browser needs resources from those domains.
-    Eliminates ~300-600ms of connection setup per origin on first load.
+    PERFORMANCE: Preconnect — TCP/TLS handshakes are done before the browser
+    needs resources from these origins, saving 300-600ms per domain on first load.
   -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preconnect" href="https://cdn.shopify.com" crossorigin />
 
-  <!--
-    PERFORMANCE: Load Google Fonts as <link> tags instead of CSS @import.
-    CSS @import is serial and render-blocking — the browser must fully parse the
-    CSS file before it discovers and fetches the imported font CSS. <link> tags
-    in <head> are discovered immediately and fetched in parallel.
-    font-display=swap is handled by each URL's display parameter.
-  -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300;1,9..40,400&display=swap" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" />
+
+  <!-- Font bundle 1: Bebas Neue + Syne + DM Sans -->
+  <link rel="preload" as="style"
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300;1,9..40,400&display=swap" />
+  <link rel="stylesheet" media="print" onload="this.media='all'"
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300;1,9..40,400&display=swap" />
+  <noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300;1,9..40,400&display=swap" />
+  </noscript>
+
+  <!-- Font bundle 2: Cormorant Garamond -->
+  <link rel="preload" as="style"
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" />
+  <link rel="stylesheet" media="print" onload="this.media='all'"
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" />
+  <noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" />
+  </noscript>
 </head>
 <body>
   <div id="root"></div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, lazy, Suspense } from 'react';
+import React, { useState, useEffect, useCallback, lazy, Suspense, startTransition } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import './styles/Global.css';
 
@@ -154,7 +154,9 @@ function App() {
     setLoading(true);
     try {
       const collectionData = await fetchProductsByCollection(handle);
-      setProducts(collectionData);
+      // startTransition marks the product-grid update as non-urgent so React
+      // won't block user interactions (clicks, input) while re-rendering cards.
+      startTransition(() => setProducts(collectionData));
     } catch (err) {
       console.error('Collection fetch error:', err);
     } finally {
@@ -166,7 +168,7 @@ function App() {
     setLoading(true);
     try {
       const catalogData = await fetchAllGlobalProducts();
-      setProducts(catalogData);
+      startTransition(() => setProducts(catalogData));
     } catch (err) {
       console.error('Product catalog fetch error:', err);
     } finally {

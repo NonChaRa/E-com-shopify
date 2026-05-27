@@ -11,7 +11,7 @@ const Navbar = ({ cartCount, onOpenCart, user, onOpenLogin, onLogout, forceSolid
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [prevScrollPos, setPrevScrollPos] = useState(window.pageYOffset);
+  const prevScrollPosRef = useRef(typeof window !== 'undefined' ? window.pageYOffset : 0);
   const [currencyOpen, setCurrencyOpen] = useState(false);
   const [dropdownPos, setDropdownPos] = useState({ top: 0, right: 0 });
   const currencyTriggerRef = useRef(null);
@@ -21,26 +21,21 @@ const Navbar = ({ cartCount, onOpenCart, user, onOpenLogin, onLogout, forceSolid
 
   useEffect(() => {
     const handleScroll = () => {
-      const currentScrollPos = window.pageYOffset;
+      const currentScrollPos = window.scrollY;
       setIsScrolled(currentScrollPos > 20);
 
       if (window.innerWidth > 1024) {
-        const scrollingUp = prevScrollPos > currentScrollPos;
+        const scrollingUp = prevScrollPosRef.current > currentScrollPos;
         setIsVisible(scrollingUp || currentScrollPos < 10);
       } else {
-        setIsVisible(true); // Persistent on mobile screens
+        setIsVisible(true);
       }
-      setPrevScrollPos(currentScrollPos);
+      prevScrollPosRef.current = currentScrollPos; // mutation, no re-render
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [prevScrollPos]);
+  }, []); // empty deps — listener registered once for the component lifetime
 
-  // Close currency dropdown on outside click.
-  // Uses 'mousedown' so it fires before the trigger's 'click'.
-  // Must exclude BOTH the trigger AND the portal dropdown from the check —
-  // otherwise the mousedown fires before the option's click and unmounts
-  // the dropdown so the click never reaches the button.
   useEffect(() => {
     if (!currencyOpen) return;
     const handler = (e) => {
@@ -122,8 +117,19 @@ const Navbar = ({ cartCount, onOpenCart, user, onOpenLogin, onLogout, forceSolid
           </div>
 
           {/* --- CENTER LOGO BLOCK --- */}
+          {/*
+            LCP FIX: The logo is the Largest Contentful Paint element (confirmed by Lighthouse).
+            fetchpriority="high" tells the browser to fetch it before lower-priority assets.
+            loading="eager" ensures it is never accidentally lazy-loaded.
+          */}
           <div className="nav-logo-centered" onClick={() => { navigate('/'); setMobileMenuOpen(false); }}>
-            <img src={logo} alt="ASTÉRI STUDIO" className="main-logo" />
+            <img
+              src={logo}
+              alt="ASTÉRI STUDIO"
+              className="main-logo"
+              fetchpriority="high"
+              loading="eager"
+            />
           </div>
 
           {/* --- RIGHT NAVIGATION BLOCK (WEB AUTH SECTIONS) --- */}

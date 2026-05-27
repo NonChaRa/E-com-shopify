@@ -11,7 +11,6 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@shopify/hydrogen-react": "^2026.4.2",
     "@supabase/supabase-js": "^2.104.1",
     "dompurify": "^3.4.5",
     "graphql-tag": "^2.12.6",
@@ -38,6 +37,7 @@
     "postcss": "^8.5.10",
     "tailwindcss": "^4.2.2",
     "vite": "^8.0.9",
+    "vite-imagetools": "^10.0.0",
     "vitest": "^4.1.6"
   }
 }

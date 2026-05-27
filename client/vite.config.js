@@ -1,16 +1,23 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import basicSsl from '@vitejs/plugin-basic-ssl';
+import { imagetools } from 'vite-imagetools';
 
 export default defineConfig({
-  plugins: [react(), basicSsl()],
+  plugins: [
+    react(),
+    // Converts imported images at build time (PNG→WebP, resize, compress).
+    // Use by appending query params to any asset import:
+    //   import hero from './foo.png?format=webp&quality=80&w=1920'
+    imagetools(),
+    basicSsl(),
+  ],
 
   build: {
     rollupOptions: {
       output: {
         // Converted from Object to Function for Vite 8 / Rolldown compatibility
         manualChunks(id) {
-          // Only split out dependencies coming from node_modules
           if (id.includes('node_modules')) {
             if (id.includes('react') || id.includes('react-dom') || id.includes('react-router-dom')) {
               return 'vendor-react';
@@ -25,7 +32,6 @@ export default defineConfig({
         },
       },
     },
-    // Raise the warning limit slightly — the supabase chunk is legitimately large
     chunkSizeWarningLimit: 600,
   },
 
