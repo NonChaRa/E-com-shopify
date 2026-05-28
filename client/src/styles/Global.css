@@ -39,6 +39,15 @@ body {
   margin: 0;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Prevent images from overflowing their containers */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
 }
 
 /* --- 3. UI ACCENTS & SHARED COMPONENTS --- */
@@ -109,6 +118,24 @@ button, input, select, textarea {
   animation: studioPageReveal 0.55s ease forwards;
 }
 
+/* Suspense fallback — thin gold progress bar at top */
+.page-loading-fallback {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--y2k-gold), var(--y2k-gold-warm), var(--y2k-gold));
+  background-size: 200% 100%;
+  animation: pageLoadBar 1.2s ease-in-out infinite;
+  z-index: 9000;
+}
+
+@keyframes pageLoadBar {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
 @keyframes studioPageReveal {
   from { opacity: 0; }
   to   { opacity: 1; }
@@ -141,11 +168,48 @@ html {
 .reveal--delay-3 { transition-delay: 0.30s; }
 .reveal--delay-4 { transition-delay: 0.40s; }
 
-/* ---- Reduced motion — skip all entrance animations ---- */
+/* ============================================================
+   ANIME.JS DATA-REVEAL SYSTEM
+   Elements marked [data-reveal] start invisible so anime.js
+   can animate them in via IntersectionObserver.
+   CSS sets the initial state so there's zero flash between
+   first render and the useEffect that wires up the observer.
+   ============================================================ */
+[data-reveal] {
+  opacity: 0;
+}
+
+/* ============================================================
+   REDUCED MOTION — make everything visible, skip all animation
+   ============================================================ */
 @media (prefers-reduced-motion: reduce) {
   .reveal {
     opacity: 1 !important;
     transform: none !important;
+    transition: none !important;
+  }
+  /* data-reveal and anime.js-controlled elements */
+  [data-reveal],
+  .pdp-archive-card,
+  .pdp-section-label,
+  .pdp-section-heading,
+  .tiktok-eyebrow, .tiktok-title, .tiktok-rule,
+  .tiktok-subtitle, .tiktok-link, .tiktok-video-wrapper,
+  .nf-code, .nf-eyebrow, .nf-headline,
+  .nf-body, .nf-btn, .nf-deco span,
+  .values-tag, .values-h1, .values-divider-line,
+  .values-subtitle-text,
+  .pillar-ghost, .pillar-num, .pillar-title, .pillar-body,
+  .values-cta-eyebrow, .values-cta-h3,
+  .values-cta-p, .values-cta-btn,
+  .contact-eyebrow, .contact-h1, .contact-rule,
+  .contact-subtitle, .contact-form-col, .contact-info-col,
+  .about-s1-eyebrow, .about-s1-title,
+  .about-s1-rule, .about-s1-body,
+  .pdp-back-btn, .pdp-gallery, .pdp-sidebar-content {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
     transition: none !important;
   }
   /* Also covers card-level animations in Home.css */

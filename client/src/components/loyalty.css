@@ -1,452 +1,257 @@
 /* ============================================================
-   ASTÉRI 2K — NAILCISSIST CULT LOYALTY POPUP
+   ASTÉRI 2K — LOYALTY POPUP
+   Clean split-panel, luxury editorial aesthetic
    ============================================================ */
 
-/* --- OVERLAY --- */
-.loyalty-overlay.popup-fade-in {
-  position: fixed !important;
+/* BACKDROP */
+.loyalty-backdrop {
+  position: fixed;
   inset: 0;
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: rgba(0, 0, 0, 0.65);
-  backdrop-filter: blur(12px);
-  z-index: 2147483647 !important;
-  animation: loyaltyBgFadeIn 0.5s ease forwards;
+  z-index: 8000;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
-@keyframes loyaltyBgFadeIn {
-  from { background: rgba(0, 0, 0, 0); backdrop-filter: blur(0px); }
-  to   { background: rgba(0, 0, 0, 0.65); backdrop-filter: blur(12px); }
-}
-
-/* --- CARD --- */
-.cult-popup-card {
-  display: flex;
-  width: 860px;
-  max-width: 92vw;
-  height: 500px;
-  position: relative;
-  overflow: hidden;
-
-  /* Paper texture base */
-  background-color: var(--y2k-paper, #f6efde);
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.6  0 0 0 0 0.5  0 0 0 0 0.3  0 0 0 0.12 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
-
-  /* Y2K double-stack shadow */
-  border: 2.5px solid #000;
-  border-radius: 18px;
-  box-shadow:
-    8px 8px 0 var(--y2k-hot-pink, #FF3FA4),
-    8px 8px 0 2px #000;
-
-  animation: cultPopupPop 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-  transform-origin: center bottom;
-}
-
-@keyframes cultPopupPop {
-  from { transform: translateY(30px) scale(0.95) rotate(-1.5deg); opacity: 0; }
-  to   { transform: translateY(0)    scale(1)    rotate(0deg);    opacity: 1; }
-}
-
-/* --- CLOSE BUTTON --- */
-.cult-popup-close {
-  position: absolute;
-  top: 14px;
-  right: 14px;
-  background: var(--y2k-lemon, #FFE94B);
-  border: 2px solid #000;
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  font-size: 13px;
-  font-weight: 800;
-  cursor: pointer;
-  color: #000;
+/* CENTERING POSITIONER */
+.loyalty-positioner {
+  position: fixed;
+  inset: 0;
+  z-index: 8001;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 2px 2px 0 #000;
-  z-index: 10;
-  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-.cult-popup-close:hover {
-  background: var(--y2k-hot-pink, #FF3FA4);
-  color: #fff;
-  transform: rotate(90deg) scale(1.1);
-  box-shadow: 3px 3px 0 #000;
-}
-
-/* --- FLOATING Y2K CHARM STICKERS --- */
-.cult-charm {
-  position: absolute;
+  padding: 20px;
   pointer-events: none;
-  z-index: 8;
-  filter: drop-shadow(2px 2px 0 #000);
 }
 
-/* Heart — top-left */
-.cult-charm--heart {
-  width: 44px;
-  height: 44px;
-  top: -12px;
-  left: 32px;
-  background: var(--y2k-hot-pink, #FF3FA4);
-  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 29'><path d='M16 29s-13-8.35-13-17a8 8 0 0 1 13-6.2A8 8 0 0 1 29 12c0 8.65-13 17-13 17z' fill='black'/></svg>");
-          mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 29'><path d='M16 29s-13-8.35-13-17a8 8 0 0 1 13-6.2A8 8 0 0 1 29 12c0 8.65-13 17-13 17z' fill='black'/></svg>");
-  -webkit-mask-size: contain;
-          mask-size: contain;
-  -webkit-mask-repeat: no-repeat;
-          mask-repeat: no-repeat;
-  transform: rotate(-15deg);
-  animation: cultCharmFloat 3.8s ease-in-out infinite;
-}
-
-/* Star — top-right of content side */
-.cult-charm--star {
-  width: 38px;
-  height: 38px;
-  top: -10px;
-  right: 60px;
-  background: var(--y2k-lemon, #FFE94B);
-  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 2l2.9 6.9 7.4.6-5.6 4.9 1.7 7.3L12 17.8 5.6 21.7l1.7-7.3L1.7 9.5l7.4-.6L12 2z' fill='black'/></svg>");
-          mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 2l2.9 6.9 7.4.6-5.6 4.9 1.7 7.3L12 17.8 5.6 21.7l1.7-7.3L1.7 9.5l7.4-.6L12 2z' fill='black'/></svg>");
-  -webkit-mask-size: contain;
-          mask-size: contain;
-  -webkit-mask-repeat: no-repeat;
-          mask-repeat: no-repeat;
-  transform: rotate(18deg);
-  animation: cultCharmFloat 4.4s ease-in-out infinite 0.6s;
-}
-
-/* Bow — bottom-left */
-.cult-charm--bow {
-  width: 48px;
-  height: 36px;
-  bottom: -8px;
-  left: 18px;
-  background: var(--y2k-bubblegum, #FFB6E1);
-  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 24'><path d='M16 12 L4 4 Q0 4 0 8 V16 Q0 20 4 20 L16 12 L28 4 Q32 4 32 8 V16 Q32 20 28 20 Z M13 9 H19 Q21 9 21 11 V13 Q21 15 19 15 H13 Q11 15 11 13 V11 Q11 9 13 9 Z' fill='black'/></svg>");
-          mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 24'><path d='M16 12 L4 4 Q0 4 0 8 V16 Q0 20 4 20 L16 12 L28 4 Q32 4 32 8 V16 Q32 20 28 20 Z M13 9 H19 Q21 9 21 11 V13 Q21 15 19 15 H13 Q11 15 11 13 V11 Q11 9 13 9 Z' fill='black'/></svg>");
-  -webkit-mask-size: contain;
-          mask-size: contain;
-  -webkit-mask-repeat: no-repeat;
-          mask-repeat: no-repeat;
-  transform: rotate(-8deg);
-  animation: cultCharmFloat 4s ease-in-out infinite 1s;
-}
-
-/* Sparkle — inside content side */
-.cult-charm--sparkle {
-  background: var(--y2k-cyan, #4DE3FF);
-  filter: drop-shadow(0 0 4px var(--y2k-cyan, #4DE3FF));
-  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 0 L14 10 L24 12 L14 14 L12 24 L10 14 L0 12 L10 10 Z' fill='black'/></svg>");
-          mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 0 L14 10 L24 12 L14 14 L12 24 L10 14 L0 12 L10 10 Z' fill='black'/></svg>");
-  -webkit-mask-size: contain;
-          mask-size: contain;
-  -webkit-mask-repeat: no-repeat;
-          mask-repeat: no-repeat;
-  animation: cultSparkle 1.8s ease-in-out infinite;
-}
-.cult-charm--sm {
-  width: 22px;
-  height: 22px;
-  bottom: 60px;
-  right: 24px;
-}
-
-@keyframes cultCharmFloat {
-  0%, 100% { transform: translateY(0)    rotate(var(--r, -12deg)); }
-  50%       { transform: translateY(-6px) rotate(calc(var(--r, -12deg) + 5deg)); }
-}
-@keyframes cultSparkle {
-  0%, 100% { transform: scale(0.8) rotate(0deg);   opacity: 0.6; }
-  50%       { transform: scale(1.2) rotate(90deg);  opacity: 1;   }
-}
-
-/* --- IMAGE PANEL (LEFT) --- */
-.cult-popup-image-side {
-  width: 46%;
-  height: 100%;
+/* CARD */
+.loyalty-card {
+  pointer-events: auto;
+  display: flex;
+  width: min(820px, 100%);
+  height: min(480px, 88vh);
+  border-radius: 20px;
+  overflow: hidden;
   position: relative;
+  border: 1.5px solid rgba(0, 0, 0, 0.12);
+  box-shadow:
+    0 32px 80px rgba(0, 0, 0, 0.28),
+    0 8px 24px rgba(0, 0, 0, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  background-color: var(--y2k-paper, #f6efde);
+}
+
+/* CLOSE BUTTON */
+.loyalty-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 10;
+  width: 32px;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: all 0.2s ease;
+}
+.loyalty-close:hover {
+  background: #0a0a0a;
+  color: #fff;
+  border-color: #0a0a0a;
+  transform: rotate(90deg);
+}
+
+/* IMAGE SIDE (LEFT) */
+.loyalty-image-side {
+  width: 44%;
   flex-shrink: 0;
   background-image: url('../assets/Loyalty-bg.avif');
   background-size: cover;
   background-position: center;
-  border-right: 2.5px solid #000;
-  overflow: hidden;
+  position: relative;
 }
-
-/* Gradient tint so image always reads — handles blank/broken image gracefully */
-.cult-popup-image-side::before {
+.loyalty-image-side::after {
   content: "";
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(135deg, rgba(255,63,164,0.35) 0%, transparent 60%),
-    linear-gradient(to top, rgba(0,0,0,0.45) 0%, transparent 50%);
-  z-index: 1;
-  background-image: url('../assets/Loyalty-bg.avif');
-  background-size: cover;
-  background-position: center;
+    linear-gradient(to right, transparent 60%, var(--y2k-paper, #f6efde) 100%),
+    linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, transparent 40%);
 }
 
-/* Fallback solid fill if image doesn't load — shows a Y2K gradient */
-.cult-popup-image-side::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    145deg,
-    var(--y2k-bubblegum, #FFB6E1) 0%,
-    var(--y2k-hot-pink, #FF3FA4) 40%,
-    var(--y2k-magenta, #C724B1) 70%,
-    var(--y2k-lilac, #C7A6FF) 100%
-  );
-  z-index: 0;
-}
-
-/* Brand watermark */
-.cult-popup-brand-overlay {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -60%);
-  font-family: var(--y2k-sticker, 'Bungee', 'Anton', sans-serif);
-  font-size: 52px;
-  color: rgba(255, 255, 255, 0.35);
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
-  mix-blend-mode: overlay;
-  pointer-events: none;
-  z-index: 2;
-  line-height: 1;
-  text-shadow: 3px 3px 0 rgba(0,0,0,0.2);
-  white-space: nowrap;
-}
-
-.cult-popup-brand-overlay-sub {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, 10%);
-  font-family: var(--y2k-marker, 'Caveat Brush', cursive);
-  font-size: 28px;
-  color: rgba(255, 255, 255, 0.5);
-  text-transform: lowercase;
-  letter-spacing: 0.06em;
-  mix-blend-mode: overlay;
-  pointer-events: none;
-  z-index: 2;
-}
-
-/* --- CONTENT PANEL (RIGHT) --- */
-.cult-popup-content-side {
+/* CONTENT SIDE (RIGHT) */
+.loyalty-content-side {
   flex: 1;
-  padding: 36px 36px 36px 32px;
+  padding: 48px 44px 44px 36px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  text-align: center;
-  background: transparent; /* inherits paper texture from card */
+  gap: 0;
   position: relative;
-  z-index: 3;
 }
 
-/* Eyebrow tag */
-.cult-popup-eyebrow {
-  font-family: var(--y2k-marker, 'Caveat Brush', cursive);
-  font-size: 1rem;
-  color: var(--y2k-hot-pink, #FF3FA4);
-  text-shadow: 1px 1px 0 #000;
-  margin-bottom: 14px;
-  display: inline-block;
-  transform: rotate(-1.5deg);
-  letter-spacing: 0.02em;
-}
-
-/* Headline */
-.cult-popup-title {
-  font-family: var(--y2k-sticker, 'Bungee', 'Anton', sans-serif);
-  font-weight: 400;
-  font-size: clamp(1.4rem, 2.2vw, 1.9rem);
-  letter-spacing: 0.04em;
-  margin-bottom: 20px;
-  color: var(--y2k-cyan, #4DE3FF);
-  text-transform: uppercase;
-  line-height: 1.05;
-  text-shadow:
-    -2px -2px 0 #fff,
-    2px -2px 0 #fff,
-    -2px 2px 0 #fff,
-    2px 2px 0 #fff,
-    4px 4px 0 var(--y2k-hot-pink, #FF3FA4),
-    5px 5px 0 #000;
-  transform: rotate(-1deg);
-  display: inline-block;
-}
-
-/* Incentive line */
-.cult-popup-incentive {
-  font-family: var(--font-body, 'Lato', sans-serif);
-  font-size: 13px;
-  letter-spacing: 0.06em;
-  line-height: 1.6;
-  margin-bottom: 10px;
-  text-transform: uppercase;
-  color: #000;
-  font-weight: 600;
-}
-
-.cult-popup-incentive strong {
-  font-family: var(--y2k-sticker, 'Bungee', sans-serif);
-  font-size: 15px;
-  color: var(--y2k-hot-pink, #FF3FA4);
-  text-shadow: 2px 2px 0 #000;
-  font-weight: 400;
-}
-
-/* Perks body */
-.cult-popup-perks {
-  font-family: var(--font-body, 'Lato', sans-serif);
-  font-size: 11px;
-  color: #555;
-  letter-spacing: 0.04em;
-  line-height: 1.7;
-  max-width: 260px;
-  margin-bottom: 16px;
-  text-transform: uppercase;
-  font-weight: 600;
-}
-
-/* CTA sub line */
-.cult-popup-cta-sub {
-  font-family: var(--y2k-marker, 'Caveat Brush', cursive);
-  font-size: 1.1rem;
-  font-weight: 400;
-  color: var(--y2k-magenta, #C724B1);
-  text-shadow: 1px 1px 0 #000;
-  letter-spacing: 0.02em;
-  margin-bottom: 22px;
-  display: inline-block;
-  transform: rotate(-1deg);
-}
-
-/* --- BUTTONS --- */
-.cult-popup-actions {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  gap: 10px;
-  max-width: 260px;
-}
-
-/* Primary — JOIN NOW */
-.cult-btn-primary {
-  width: 100%;
-  padding: 14px 0;
-  background: var(--y2k-hot-pink, #FF3FA4);
-  color: #fff;
-  border: 2.5px solid #000;
-  border-radius: 999px;
-  font-family: var(--y2k-sticker, 'Bungee', 'Anton', sans-serif);
-  font-size: 12px;
+/* EYEBROW */
+.loyalty-eyebrow {
+  font-family: var(--y2k-marker, 'Syne', sans-serif);
+  font-size: 10px;
   font-weight: 700;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.24em;
+  color: var(--y2k-gold-dark, #9A7A38);
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.loyalty-eyebrow::before {
+  content: "";
+  display: inline-block;
+  width: 20px;
+  height: 1.5px;
+  background: var(--y2k-gold, #C4A35A);
+  flex-shrink: 0;
+}
+
+/* TITLE */
+.loyalty-title {
+  font-family: var(--y2k-sticker, 'Bebas Neue', sans-serif);
+  font-size: clamp(2rem, 3.5vw, 2.8rem);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #0a0a0a;
+  line-height: 0.95;
+  margin: 0 0 20px 0;
+}
+
+/* OFFER */
+.loyalty-offer {
+  font-family: var(--font-body, 'DM Sans', sans-serif);
+  font-size: 14px;
+  font-weight: 600;
+  color: #0a0a0a;
+  letter-spacing: 0.02em;
+  margin: 0 0 12px 0;
+  line-height: 1.5;
+}
+.loyalty-offer strong {
+  color: var(--y2k-gold-dark, #9A7A38);
+  font-size: 1.1em;
+}
+
+/* DESCRIPTION */
+.loyalty-desc {
+  font-family: var(--font-body, 'DM Sans', sans-serif);
+  font-size: 12.5px;
+  color: rgba(0, 0, 0, 0.58);
+  line-height: 1.65;
+  margin: 0 0 28px 0;
+  max-width: 280px;
+}
+
+/* ACTIONS */
+.loyalty-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* PRIMARY BUTTON */
+.loyalty-btn-primary {
+  flex: 1;
+  min-width: 120px;
+  padding: 14px 20px;
+  background: #0a0a0a;
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  font-family: var(--y2k-marker, 'Syne', sans-serif);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   cursor: pointer;
-  text-shadow: 1px 1px 0 rgba(0,0,0,0.3);
-  box-shadow:
-    5px 5px 0 #000,
-    inset 0 -3px 0 rgba(0,0,0,0.18),
-    inset 0 3px 0 rgba(255,255,255,0.35);
+  transition: all 0.25s cubic-bezier(0.25, 1, 0.5, 1);
   position: relative;
   overflow: hidden;
-  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
-
-/* shimmer streak */
-.cult-btn-primary::before {
+.loyalty-btn-primary::before {
   content: "";
   position: absolute;
   top: 0; left: -75%;
   width: 50%; height: 100%;
-  background: linear-gradient(100deg, transparent 30%, rgba(255,255,255,0.7) 50%, transparent 70%);
+  background: linear-gradient(100deg, transparent 30%, rgba(255,255,255,0.25) 50%, transparent 70%);
   transform: skewX(-20deg);
-  transition: left 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+  transition: left 0.55s cubic-bezier(0.25, 1, 0.5, 1);
 }
-.cult-btn-primary:hover {
-  background: var(--y2k-magenta, #C724B1);
-  transform: translate(-2px, -2px) rotate(-1.5deg);
-  box-shadow:
-    7px 7px 0 #000,
-    inset 0 -3px 0 rgba(0,0,0,0.18),
-    inset 0 3px 0 rgba(255,255,255,0.35);
+.loyalty-btn-primary:hover {
+  background: var(--y2k-gold-dark, #9A7A38);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.18);
 }
-.cult-btn-primary:hover::before { left: 130%; }
+.loyalty-btn-primary:hover::before { left: 130%; }
 
-/* Secondary — SIGN IN */
-.cult-btn-secondary {
-  width: 100%;
-  padding: 12px 0;
-  background: #fff;
-  border: 2px solid #000;
+/* SECONDARY BUTTON */
+.loyalty-btn-secondary {
+  flex: 0 0 auto;
+  padding: 14px 24px;
+  background: transparent;
+  color: rgba(0, 0, 0, 0.7);
+  border: 1.5px solid rgba(0, 0, 0, 0.2);
   border-radius: 999px;
-  color: #000;
-  font-family: var(--y2k-sticker, 'Bungee', 'Anton', sans-serif);
+  font-family: var(--y2k-marker, 'Syne', sans-serif);
   font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.15em;
+  font-weight: 600;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   cursor: pointer;
-  box-shadow: 3px 3px 0 #000;
-  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: all 0.22s ease;
+  white-space: nowrap;
 }
-.cult-btn-secondary:hover {
-  background: var(--y2k-lemon, #FFE94B);
-  transform: translate(-1px, -1px);
-  box-shadow: 4px 4px 0 #000;
+.loyalty-btn-secondary:hover {
+  background: rgba(0, 0, 0, 0.06);
+  border-color: rgba(0, 0, 0, 0.4);
+  color: #000;
 }
 
-/* --- RESPONSIVE --- */
-@media (max-width: 768px) {
-  .cult-popup-card {
+/* MOBILE */
+@media (max-width: 640px) {
+  .loyalty-positioner { padding: 12px; align-items: flex-end; }
+  .loyalty-card {
     flex-direction: column;
+    width: 100%;
     height: auto;
-    width: 88vw;
-    max-width: 400px;
-    box-shadow:
-      5px 5px 0 var(--y2k-hot-pink, #FF3FA4),
-      5px 5px 0 2px #000;
+    max-height: 92dvh;
+    border-radius: 20px 20px 0 0;
+    border-bottom: none;
   }
-  .cult-popup-image-side {
+  .loyalty-image-side {
     width: 100%;
     height: 160px;
-    border-right: none;
-    border-bottom: 2.5px solid #000;
-    border-radius: 14px 14px 0 0;
-    overflow: hidden;
+    flex-shrink: 0;
   }
-  .cult-popup-content-side {
-    padding: 32px 24px 36px 24px;
+  .loyalty-image-side::after {
+    background: linear-gradient(to bottom, transparent 50%, var(--y2k-paper, #f6efde) 100%);
   }
-  .cult-charm--heart { left: 16px; }
-  .cult-charm--star  { right: 16px; }
-  .cult-charm--bow   { display: none; }
+  .loyalty-content-side {
+    padding: 28px 28px 36px 28px;
+  }
+  .loyalty-desc { max-width: 100%; }
+  .loyalty-actions { flex-direction: column; }
+  .loyalty-btn-primary,
+  .loyalty-btn-secondary { flex: 1; text-align: center; }
 }
 
-/* --- REDUCED MOTION --- */
+/* REDUCED MOTION */
 @media (prefers-reduced-motion: reduce) {
-  .cult-charm,
-  .cult-charm--sparkle {
-    animation: none !important;
-  }
-  .cult-popup-card {
-    animation: none !important;
-    transform: none !important;
-    opacity: 1 !important;
-  }
+  .loyalty-card,
+  .loyalty-backdrop { animation: none !important; transition: none !important; }
 }

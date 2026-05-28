@@ -1,0 +1,94 @@
+/* ============================================================
+   PAGE INTRO — full-screen brand reveal on first visit
+   Dark canvas + floating gold shapes + animated logo
+   ============================================================ */
+
+.page-intro-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: #0a0a0a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Subtle radial ambient gradients */
+.page-intro-ambient {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 28% 38%, rgba(196,163,90,0.07) 0%, transparent 55%),
+    radial-gradient(ellipse at 72% 68%, rgba(255,182,225,0.05) 0%, transparent 48%);
+}
+
+/* Individual shape wrappers */
+.page-intro-shape {
+  position: absolute;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* The pill shape itself */
+.shape-pill {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  border: 1px solid rgba(196,163,90,0.16);
+  box-shadow: 0 8px 32px rgba(196,163,90,0.05);
+}
+
+/* Center content stack */
+.page-intro-content {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+/* Animated brand logo */
+.page-intro-logo {
+  height: 130px;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 0 48px rgba(196,163,90,0.3)) drop-shadow(0 0 12px rgba(196,163,90,0.15));
+}
+
+/* "Bangkok Studio" sub-label */
+.page-intro-tagline {
+  font-family: var(--y2k-marker, 'Syne', sans-serif);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.32em;
+  color: rgba(255,255,255,0.42);
+  text-transform: uppercase;
+  margin: 0;
+}
+
+/* Progress bar that fills over the intro duration */
+.page-intro-progress {
+  width: 110px;
+  height: 1.5px;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    var(--y2k-gold, #C4A35A) 35%,
+    var(--y2k-gold-warm, #E8C97A) 65%,
+    transparent 100%
+  );
+  transform-origin: left;
+  border-radius: 2px;
+}
+
+/* ---- Reduced motion — skip all animations ---- */
+@media (prefers-reduced-motion: reduce) {
+  .page-intro-overlay {
+    display: none !important;
+  }
+}

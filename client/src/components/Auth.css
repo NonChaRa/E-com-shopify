@@ -1,67 +1,74 @@
-/* --- ASTÉRI 2K AUTH MODALS (Login + Register) --- */
+/* ============================================================
+   ASTÉRI 2K — AUTH MODALS (Login + Register)
+   Split-panel design: form left, hero image right
+   ============================================================ */
 
-:root {
-  --muted-text: #555;
-  --field-border: rgba(0, 0, 0, 0.2);
-}
-
-.modal-overlay {
+/* ---- BACKDROP ---- */
+.auth-backdrop {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.45);
-  backdrop-filter: blur(10px);
+  inset: 0;
+  z-index: 5000;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* ---- CENTERING POSITIONER ---- */
+.auth-modal-positioner {
+  position: fixed;
+  inset: 0;
+  z-index: 5001;
   display: flex;
-  justify-content: center;
   align-items: center;
-  z-index: 2000;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.35s ease, visibility 0.35s ease;
+  justify-content: center;
+  padding: 16px;
+  pointer-events: none;
 }
 
-.modal-overlay.active {
-  opacity: 1;
-  visibility: visible;
-}
-
-/* --- THE MODAL CARD --- */
-.auth-modal {
-  background-color: var(--y2k-paper);
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.6  0 0 0 0 0.5  0 0 0 0 0.3  0 0 0 0.13 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
-  padding: 56px 52px;
-  width: 100%;
-  max-width: 460px;
-  position: relative;
-  border: 2.5px solid #000;
-  border-radius: 18px;
+/* ---- SPLIT MODAL ---- */
+.auth-split-modal {
+  pointer-events: auto;
+  display: flex;
+  width: min(900px, 100%);
+  height: min(560px, 90vh);
+  border-radius: 20px;
+  overflow: hidden;
+  border: 2px solid #000;
   box-shadow:
-    6px 6px 0 var(--y2k-hot-pink),
-    6px 6px 0 1.5px #000;
-  text-align: center;
-  transform: translateY(24px) rotate(-0.5deg);
-  opacity: 0;
-  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.35s ease;
+    8px 8px 0 var(--y2k-gold, #C4A35A),
+    8px 8px 0 1.5px #000,
+    0 24px 64px rgba(0, 0, 0, 0.5);
 }
 
-.modal-overlay.active .auth-modal {
-  transform: translateY(0) rotate(0deg);
-  opacity: 1;
+/* Register variant is taller (3 fields) */
+.auth-split-modal--register {
+  height: min(640px, 92vh);
+}
+
+/* ---- FORM SIDE (LEFT) ---- */
+.auth-form-side {
+  flex: 0 0 420px;
+  background-color: var(--y2k-paper, #f6efde);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.6  0 0 0 0 0.5  0 0 0 0 0.3  0 0 0 0.13 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  padding: 44px 40px 36px 40px;
+  position: relative;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
 }
 
 /* ---- CLOSE BUTTON ---- */
 .close-modal {
   position: absolute;
-  top: 18px;
-  right: 20px;
-  background: var(--y2k-lemon);
+  top: 16px;
+  right: 18px;
+  background: var(--y2k-lemon, #FFE94B);
   border: 2px solid #000;
   border-radius: 50%;
   width: 30px;
   height: 30px;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 800;
   cursor: pointer;
   color: #000;
@@ -71,46 +78,69 @@
   justify-content: center;
   box-shadow: 2px 2px 0 #000;
   transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 2;
 }
 .close-modal:hover {
-  background: var(--y2k-hot-pink);
+  background: var(--y2k-hot-pink, #1969ac);
   color: #fff;
   transform: rotate(90deg) scale(1.1);
   box-shadow: 3px 3px 0 #000;
 }
 
+/* ---- BRAND MARK ---- */
+.auth-brand-mark {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--y2k-marker, 'Syne', sans-serif);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: rgba(0, 0, 0, 0.45);
+  text-transform: uppercase;
+  margin-bottom: 28px;
+}
+
+.auth-brand-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--y2k-gold, #C4A35A);
+  border: 1.5px solid #000;
+  box-shadow: 1px 1px 0 #000;
+  flex-shrink: 0;
+}
+
 /* ---- HEADER ---- */
 .auth-header {
-  margin-bottom: 32px;
+  margin-bottom: 28px;
 }
 
 .auth-header h2 {
-  font-family: var(--y2k-sticker);
-  color: var(--y2k-hot-pink);
-  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  font-family: var(--y2k-sticker, 'Bebas Neue', sans-serif);
+  color: var(--y2k-hot-pink, #1969ac);
+  font-size: clamp(1.7rem, 3.5vw, 2.2rem);
   font-weight: 400;
   letter-spacing: 0.03em;
   text-transform: uppercase;
-  margin-bottom: 10px;
+  margin: 0 0 8px 0;
   text-shadow:
-    -1.5px -1.5px 0 #fff,
-    1.5px -1.5px 0 #fff,
-    -1.5px 1.5px 0 #fff,
-    1.5px 1.5px 0 #fff,
-    4px 4px 0 var(--y2k-cyan),
-    5px 5px 0 #000;
-  transform: rotate(-1deg);
+    -1px -1px 0 #fff,
+    1px -1px 0 #fff,
+    -1px 1px 0 #fff,
+    1px 1px 0 #fff,
+    3px 3px 0 var(--y2k-cyan, #4DE3FF),
+    4px 4px 0 #000;
+  transform: rotate(-0.8deg);
   display: inline-block;
 }
 
 .auth-subtitle {
-  font-family: var(--y2k-marker);
-  color: var(--y2k-magenta);
-  font-size: 1rem;
-  margin-bottom: 0;
+  font-family: var(--font-body, 'DM Sans', sans-serif);
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.52);
   display: block;
-  text-shadow: 1px 1px 0 #000;
-  transform: rotate(-1.5deg);
 }
 
 /* ---- FORM ---- */
@@ -118,30 +148,36 @@
   display: flex;
   flex-direction: column;
   gap: 0;
+  flex: 1;
 }
 
 .input-group {
-  margin-bottom: 22px;
+  margin-bottom: 18px;
   text-align: left;
 }
 
 .input-group label {
-  font-family: var(--y2k-sticker);
-  font-size: 10px;
-  letter-spacing: 0.15em;
-  color: var(--y2k-magenta);
+  font-family: var(--y2k-sticker, 'Bebas Neue', sans-serif);
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  color: rgba(0, 0, 0, 0.5);
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 7px;
   text-transform: uppercase;
+}
+
+/* Password wrapper to hold input + eye toggle */
+.auth-input-wrapper {
+  position: relative;
 }
 
 .auth-input {
   background: #fff;
   border: 2px solid #000;
   border-radius: 10px;
-  padding: 14px 16px;
+  padding: 13px 16px;
   color: #000;
-  font-family: var(--font-body);
+  font-family: var(--font-body, 'DM Sans', sans-serif);
   font-size: 14px;
   width: 100%;
   box-sizing: border-box;
@@ -149,61 +185,85 @@
   transition: all 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
+.auth-input-wrapper .auth-input {
+  padding-right: 44px;
+}
+
 .auth-input:focus {
   outline: none;
-  border-color: var(--y2k-hot-pink);
-  box-shadow: 3px 3px 0 var(--y2k-hot-pink);
-  background: var(--y2k-paper);
+  border-color: var(--y2k-hot-pink, #1969ac);
+  box-shadow: 3px 3px 0 var(--y2k-hot-pink, #1969ac);
+  background: var(--y2k-paper, #f6efde);
   transform: translate(-1px, -1px);
 }
 
 .auth-input::placeholder {
-  color: rgba(0, 0, 0, 0.3);
+  color: rgba(0, 0, 0, 0.28);
   font-style: italic;
 }
 
+/* Eye toggle button */
+.password-toggle {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  padding: 4px;
+  transition: color 0.18s ease;
+}
+.password-toggle:hover { color: #000; }
+
 /* ---- SUBMIT BUTTON ---- */
 .auth-submit-btn {
-  background: var(--y2k-hot-pink);
+  background: var(--y2k-hot-pink, #1969ac);
   color: #fff;
-  font-family: var(--y2k-sticker);
-  font-size: 13px;
+  font-family: var(--y2k-sticker, 'Bebas Neue', sans-serif);
+  font-size: 12px;
   letter-spacing: 0.15em;
   font-weight: 700;
-  padding: 16px;
+  padding: 15px;
   width: 100%;
   border: 2.5px solid #000;
   border-radius: 999px;
   cursor: pointer;
   text-transform: uppercase;
-  text-shadow: 1px 1px 0 rgba(0,0,0,0.3);
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.3);
   box-shadow:
-    5px 5px 0 #000,
-    inset 0 -4px 0 rgba(0,0,0,0.18),
-    inset 0 4px 0 rgba(255,255,255,0.35);
+    4px 4px 0 #000,
+    inset 0 -3px 0 rgba(0, 0, 0, 0.18),
+    inset 0 3px 0 rgba(255, 255, 255, 0.32);
   position: relative;
   overflow: hidden;
   transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-  margin-top: 8px;
+  margin-top: 6px;
 }
 
-/* shimmer streak */
 .auth-submit-btn::before {
   content: "";
   position: absolute;
-  top: 0; left: -75%;
-  width: 50%; height: 100%;
-  background: linear-gradient(100deg, transparent 30%, rgba(255,255,255,0.7) 50%, transparent 70%);
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(100deg, transparent 30%, rgba(255, 255, 255, 0.65) 50%, transparent 70%);
   transform: skewX(-20deg);
-  transition: left 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+  transition: left 0.55s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .auth-submit-btn:hover:not(:disabled) {
-  background: var(--y2k-magenta);
-  transform: translate(-2px, -2px) rotate(-1deg);
-  box-shadow: 7px 7px 0 #000,
-    inset 0 -4px 0 rgba(0,0,0,0.18),
-    inset 0 4px 0 rgba(255,255,255,0.35);
+  background: var(--y2k-gold, #C4A35A);
+  color: #000;
+  text-shadow: none;
+  transform: translate(-2px, -2px) rotate(-0.8deg);
+  box-shadow: 6px 6px 0 #000,
+    inset 0 -3px 0 rgba(0, 0, 0, 0.18),
+    inset 0 3px 0 rgba(255, 255, 255, 0.32);
 }
 .auth-submit-btn:hover:not(:disabled)::before { left: 130%; }
 
@@ -221,86 +281,182 @@
   text-shadow: none;
 }
 
-/* ---- CONSENT CHECKBOX ---- */
+/* ---- CHECKBOX ---- */
 .checkbox-group {
   display: flex;
   align-items: flex-start;
-  gap: 12px;
-  margin-bottom: 24px;
+  gap: 10px;
+  margin-bottom: 18px;
   text-align: left;
 }
 
 .checkbox-group input[type="checkbox"] {
-  accent-color: var(--y2k-hot-pink);
+  accent-color: var(--y2k-hot-pink, #1969ac);
   margin-top: 3px;
   cursor: pointer;
-  width: 16px;
-  height: 16px;
+  width: 15px;
+  height: 15px;
   flex-shrink: 0;
 }
 
 .checkbox-group label {
-  font-family: var(--font-body);
+  font-family: var(--font-body, 'DM Sans', sans-serif);
   font-size: 11px;
   line-height: 1.6;
-  color: var(--muted-text);
+  color: rgba(0, 0, 0, 0.55);
   cursor: pointer;
   font-weight: 500;
 }
 
 /* ---- TOGGLE LINK ---- */
 .auth-toggle-text {
-  font-family: var(--y2k-sticker);
-  font-size: 10px;
+  font-family: var(--y2k-sticker, 'Bebas Neue', sans-serif);
+  font-size: 9px;
   letter-spacing: 0.12em;
-  color: var(--muted-text);
-  margin-top: 28px;
+  color: rgba(0, 0, 0, 0.45);
+  margin-top: auto;
+  padding-top: 20px;
   text-transform: uppercase;
 }
 
 .toggle-link {
-  color: var(--y2k-hot-pink);
+  color: var(--y2k-hot-pink, #1969ac);
   font-weight: 700;
   cursor: pointer;
-  margin-left: 8px;
-  text-shadow: 1px 1px 0 #000;
+  margin-left: 6px;
+  text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.8);
   transition: color 0.18s;
   text-decoration: underline;
 }
-.toggle-link:hover { color: var(--y2k-magenta); }
+.toggle-link:hover { color: var(--y2k-gold-dark, #9A7A38); }
 
-/* ---- ERROR / SUCCESS STATES ---- */
+/* ---- ERROR / SUCCESS ---- */
 .auth-error-msg {
   color: #c0392b;
-  font-family: var(--font-body);
-  font-size: 12px;
+  font-family: var(--font-body, 'DM Sans', sans-serif);
+  font-size: 11.5px;
   font-weight: 500;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.02em;
   text-align: left;
-  margin: -8px 0 8px;
+  margin: -6px 0 10px;
 }
 
 .auth-success-state {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  padding: 16px 0;
+  padding: 20px 0;
+  flex: 1;
+  justify-content: center;
 }
 
 .auth-success-msg {
-  font-family: var(--font-body);
+  font-family: var(--font-body, 'DM Sans', sans-serif);
   font-size: 14px;
-  line-height: 1.6;
+  line-height: 1.65;
   color: #2d7a4f;
   text-align: center;
 }
 
-/* ---- MOBILE ---- */
-@media (max-width: 480px) {
-  .auth-modal {
-    padding: 44px 28px;
-    max-width: 95vw;
-    box-shadow: 4px 4px 0 var(--y2k-hot-pink), 4px 4px 0 1px #000;
+/* ---- HERO SIDE (RIGHT) ---- */
+.auth-hero-side {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  min-width: 0;
+}
+
+.auth-hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.auth-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.72) 0%,
+    rgba(0, 0, 0, 0.2) 50%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 40px 36px;
+}
+
+.auth-hero-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.auth-hero-eyebrow {
+  font-family: var(--y2k-marker, 'Syne', sans-serif);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  color: var(--y2k-gold-warm, #E8C97A);
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.auth-hero-title {
+  font-family: var(--y2k-serif, 'Cormorant Garamond', Georgia, serif);
+  font-size: clamp(1.35rem, 2.2vw, 1.7rem);
+  font-weight: 500;
+  color: #fff;
+  margin: 0;
+  line-height: 1.2;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.auth-hero-desc {
+  font-family: var(--font-body, 'DM Sans', sans-serif);
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.72);
+  margin: 0;
+  line-height: 1.6;
+  max-width: 280px;
+}
+
+/* ============================================================
+   MOBILE — stack form on top, hide hero
+   ============================================================ */
+@media (max-width: 700px) {
+  .auth-modal-positioner {
+    padding: 0;
+    align-items: flex-end;
   }
-  .auth-header h2 { font-size: 1.8rem; }
+
+  .auth-split-modal,
+  .auth-split-modal--register {
+    width: 100%;
+    height: auto;
+    max-height: 96dvh;
+    border-radius: 20px 20px 0 0;
+    border-bottom: none;
+    box-shadow:
+      0 -4px 0 var(--y2k-gold, #C4A35A),
+      0 -24px 60px rgba(0, 0, 0, 0.45);
+  }
+
+  .auth-form-side {
+    flex: 1;
+    width: 100%;
+    padding: 36px 28px 40px 28px;
+  }
+
+  .auth-hero-side {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .auth-form-side {
+    padding: 32px 22px 36px 22px;
+  }
 }

@@ -1,262 +1,428 @@
-/* --- ABOUT PAGE --- */
+/* ============================================================
+   ASTÉRI 2K — ABOUT PAGE
+   Editorial Y2K luxury scrapbooking aesthetic
+   ============================================================ */
 
-.about-page-wrapper {
-  padding-top: 100px;
+.about-page {
   background-color: var(--y2k-paper);
-  color: #000;
+  overflow-x: hidden;
 }
 
-/* ====================================================
-   SECTION 1: THE GREY YEARS — dark, editorial opener
-   ==================================================== */
-.story-section.monochrome-bg {
+/* ============================================================
+   SECTION 1 — THE GREY YEARS (dark)
+   ============================================================ */
+.about-s1 {
   background-color: #0c0c0c;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.04 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
-  color: #fff;
-  padding: 120px 20px 140px;
-  text-align: center;
+  background-image:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.045 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  padding: 140px 8% 100px;
+  position: relative;
+  overflow: hidden;
 }
 
-/* Gold accent line at top */
-.story-section.monochrome-bg::before {
-  content: "";
-  display: block;
-  width: 40px;
-  height: 1px;
-  background: var(--y2k-gold);
-  margin: 0 auto 40px;
-}
-
-.monochrome-bg .serif-title {
-  color: #fff;
-}
-
-.monochrome-bg .narrative-text p {
-  color: rgba(255,255,255,0.55);
-}
-
-/* ====================================================
-   SECTION 2: THE TURNING POINT — split editorial
-   ==================================================== */
-.bg-off-white {
-  background-color: var(--y2k-paper);
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.6  0 0 0 0 0.5  0 0 0 0 0.3  0 0 0 0.08 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
-  padding: 120px 8%;
-  color: #000;
-}
-
-.bg-off-white .caps-title {
-  font-family: var(--y2k-sticker) !important;
-  font-size: clamp(2.5rem, 5vw, 4.5rem) !important;
-  color: #000 !important;
-  letter-spacing: 0.03em !important;
-  line-height: 0.92 !important;
-  margin-bottom: 28px !important;
-  display: block !important;
-}
-
-.bg-off-white .narrative-text-small {
-  color: rgba(0,0,0,0.6) !important;
-  font-size: 0.95rem !important;
-  line-height: 1.8 !important;
-}
-
-/* ====================================================
-   SECTION 3: RECLAIMING THE ASTÉRI — editorial feature
-   ==================================================== */
-.radiance-section {
-  background-color: #0c0c0c;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.04 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
-  padding: 120px 8%;
-  color: #fff;
-}
-
-.feature-header {
-  text-align: center;
-  margin-bottom: 64px;
-}
-
-/* ====================================================
-   SECTION 4: MISSION
-   ==================================================== */
-.mission-statement-section {
-  background-color: var(--y2k-paper);
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.6  0 0 0 0 0.5  0 0 0 0 0.3  0 0 0 0.1 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
-  padding: 140px 8%;
-  text-align: center;
-  border-top: 1px solid rgba(0,0,0,0.08);
-}
-
-.mission-container {
-  max-width: 760px;
+.about-s1-inner {
+  max-width: 720px;
   margin: 0 auto;
+  position: relative;
+  z-index: 1;
 }
 
-.mission-statement-section .caps-title {
-  font-family: var(--y2k-marker) !important;
-  font-size: 9px !important;
-  letter-spacing: 0.22em !important;
-  color: rgba(0,0,0,0.35) !important;
-  text-transform: uppercase !important;
-  margin-bottom: 28px !important;
-}
-
-/* ====================================================
-   TYPOGRAPHY
-   ==================================================== */
-.serif-title {
-  font-family: var(--y2k-sticker);
-  font-size: clamp(3.5rem, 8vw, 7.5rem);
-  font-weight: 400;
-  line-height: 0.9;
-  letter-spacing: 0.03em;
+.about-s1-eyebrow {
+  font-family: var(--y2k-marker);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.3em;
   text-transform: uppercase;
-  margin-bottom: 40px;
+  color: var(--y2k-gold);
   display: block;
-}
-
-.caps-title {
-  font-family: var(--y2k-sticker);
-  font-size: clamp(2.5rem, 5vw, 4.5rem);
-  font-weight: 400;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
   margin-bottom: 20px;
-  line-height: 0.92;
 }
 
-.editorial-title {
+.about-s1-title {
   font-family: var(--y2k-sticker);
-  font-size: clamp(3.5rem, 8vw, 7.5rem);
+  font-size: clamp(4rem, 9vw, 8.5rem);
   font-weight: 400;
-  text-align: center;
-  letter-spacing: 0.03em;
-  color: #fff;
-  margin-bottom: 16px;
-  text-transform: uppercase;
   line-height: 0.9;
-  display: block;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: #fff;
+  margin: 0 0 36px;
 }
 
-.editorial-subtitle {
+.about-s1-rule {
+  width: 48px;
+  height: 1.5px;
+  background: var(--y2k-gold);
+  margin-bottom: 36px;
+}
+
+.about-s1-body p {
   font-family: var(--font-body);
-  font-size: 0.9rem;
-  font-weight: 400;
-  color: rgba(255,255,255,0.45);
-  text-align: center;
-  max-width: 480px;
-  margin: 0 auto;
-  line-height: 1.65;
-  letter-spacing: 0.02em;
+  font-size: 0.97rem;
+  line-height: 1.85;
+  color: rgba(255, 255, 255, 0.52);
+  margin-bottom: 20px;
 }
-
-.narrative-text p,
-.narrative-text-small {
-  font-family: var(--font-body);
-  font-size: 0.95rem;
-  line-height: 1.82;
-  font-weight: 400;
-}
-
-.final-statement {
-  font-family: var(--y2k-serif);
-  font-size: clamp(1.3rem, 2.5vw, 1.9rem);
-  font-weight: 400;
-  font-style: italic;
-  line-height: 1.55;
-  color: rgba(0,0,0,0.65);
-  text-align: center;
-  max-width: 700px;
-  margin: 0 auto;
-}
+.about-s1-body p:last-child { margin-bottom: 0; }
 
 /* Drop cap */
-.drop-cap::first-letter {
+.about-drop-cap::first-letter {
   font-family: var(--y2k-sticker);
-  font-size: 78px;
+  font-size: 80px;
+  line-height: 58px;
   float: left;
-  line-height: 56px;
   padding-right: 14px;
-  margin-top: 6px;
+  margin-top: 4px;
   color: var(--y2k-gold);
 }
 
-/* ====================================================
-   LAYOUT
-   ==================================================== */
-.story-container-narrow {
-  max-width: 720px;
-  margin: 0 auto;
+/* ============================================================
+   GHOST NUMBERS
+   ============================================================ */
+.about-ghost-num {
+  position: absolute;
+  top: 24px;
+  right: 4%;
+  font-family: var(--y2k-sticker);
+  font-size: clamp(12rem, 24vw, 22rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: rgba(255, 255, 255, 0.04);
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+.about-ghost-num--cream {
+  color: rgba(0, 0, 0, 0.04);
 }
 
-/* Split grid */
-.editorial-split-grid {
+/* ============================================================
+   TORN EDGE DIVIDERS
+   ============================================================ */
+.torn-edge {
+  height: 52px;
+  width: 100%;
+  display: block;
+  line-height: 0;
+}
+
+.torn-edge--dark-to-cream {
+  background: var(--y2k-paper);
+  /* Clip the bottom portion revealing the cream below */
+  clip-path: polygon(
+    0% 0%,
+    0% 100%, 2.5% 35%, 5% 88%, 7.5% 22%, 10% 75%,
+    12.5% 18%, 15% 65%, 17.5% 28%, 20% 82%, 22.5% 15%,
+    25% 70%, 27.5% 30%, 30% 85%, 32.5% 20%, 35% 72%,
+    37.5% 25%, 40% 80%, 42.5% 12%, 45% 68%, 47.5% 28%,
+    50% 82%, 52.5% 18%, 55% 72%, 57.5% 30%, 60% 85%,
+    62.5% 15%, 65% 65%, 67.5% 22%, 70% 78%, 72.5% 25%,
+    75% 70%, 77.5% 18%, 80% 75%, 82.5% 28%, 85% 80%,
+    87.5% 20%, 90% 68%, 92.5% 32%, 95% 85%, 97.5% 22%,
+    100% 62%, 100% 0%
+  );
+  margin-top: -1px;
+  background-color: var(--y2k-paper);
+}
+/* The section before this is dark, so the torn-edge shows cream on top of dark */
+.about-s1 + .torn-edge--dark-to-cream,
+.about-s3 + .torn-edge--dark-to-cream {
+  background-color: var(--y2k-paper);
+}
+
+.torn-edge--cream-to-dark {
+  background: #0c0c0c;
+  clip-path: polygon(
+    0% 0%,
+    0% 100%, 2.5% 35%, 5% 88%, 7.5% 22%, 10% 75%,
+    12.5% 18%, 15% 65%, 17.5% 28%, 20% 82%, 22.5% 15%,
+    25% 70%, 27.5% 30%, 30% 85%, 32.5% 20%, 35% 72%,
+    37.5% 25%, 40% 80%, 42.5% 12%, 45% 68%, 47.5% 28%,
+    50% 82%, 52.5% 18%, 55% 72%, 57.5% 30%, 60% 85%,
+    62.5% 15%, 65% 65%, 67.5% 22%, 70% 78%, 72.5% 25%,
+    75% 70%, 77.5% 18%, 80% 75%, 82.5% 28%, 85% 80%,
+    87.5% 20%, 90% 68%, 92.5% 32%, 95% 85%, 97.5% 22%,
+    100% 62%, 100% 0%
+  );
+  margin-top: -1px;
+}
+
+/* ============================================================
+   SECTION 2 — THE TURNING POINT (cream)
+   ============================================================ */
+.about-s2 {
+  background-color: var(--y2k-paper);
+  background-image:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.6  0 0 0 0 0.5  0 0 0 0 0.3  0 0 0 0.07 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  padding: 100px 8% 100px;
+  position: relative;
+  overflow: hidden;
+}
+
+.about-s2-inner {
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
   gap: 80px;
   max-width: 1200px;
   margin: 0 auto;
+  position: relative;
+  z-index: 1;
 }
 
-.split-image { width: 100%; }
+/* Polaroid photo frame */
+.about-s2-photo-wrap { display: flex; justify-content: center; }
 
-.split-image img {
+.about-polaroid {
+  background: #fff;
+  padding: 14px 14px 52px 14px;
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.18),
+    0 2px 8px rgba(0, 0, 0, 0.1);
+  transform: rotate(-3deg);
+  position: relative;
+  max-width: 400px;
   width: 100%;
-  height: 560px;
-  object-fit: cover;
-  border-radius: 4px;
-  display: block;
-  box-shadow: 6px 6px 0 var(--y2k-gold), 6px 6px 0 1px rgba(0,0,0,0.15);
 }
 
-.split-content { text-align: left; }
+.about-polaroid img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  display: block;
+}
 
-/* Three-column image grid */
-.editorial-three-grid {
+.about-polaroid-caption {
+  position: absolute;
+  bottom: 14px;
+  left: 0; right: 0;
+  text-align: center;
+  font-family: var(--y2k-marker);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: rgba(0, 0, 0, 0.4);
+  text-transform: uppercase;
+}
+
+/* Washi tape strips */
+.about-tape {
+  position: absolute;
+  width: 68px;
+  height: 18px;
+  background: rgba(196, 163, 90, 0.48);
+  border-radius: 1px;
+  z-index: 2;
+}
+.about-tape--tl {
+  top: -9px;
+  left: 12px;
+  transform: rotate(-8deg);
+}
+.about-tape--tr {
+  top: -9px;
+  right: 12px;
+  transform: rotate(8deg);
+}
+
+/* Section 2 text */
+.about-s2-text { display: flex; flex-direction: column; gap: 0; }
+
+.about-section-label {
+  font-family: var(--y2k-marker);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--y2k-gold-dark);
+  display: block;
+  margin-bottom: 14px;
+}
+.about-section-label--light { color: rgba(196, 163, 90, 0.75); }
+
+.about-s2-title {
+  font-family: var(--y2k-sticker);
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: #0a0a0a;
+  line-height: 0.9;
+  margin: 0 0 28px;
+}
+
+.about-s2-text p {
+  font-family: var(--font-body);
+  font-size: 0.97rem;
+  line-height: 1.82;
+  color: rgba(0, 0, 0, 0.62);
+  margin-bottom: 16px;
+}
+.about-s2-text p em { font-style: italic; color: #0a0a0a; }
+.about-s2-text p:last-child { margin-bottom: 0; }
+
+/* ============================================================
+   SECTION 3 — RECLAIMING (dark)
+   ============================================================ */
+.about-s3 {
+  background-color: #0c0c0c;
+  background-image:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.04 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  padding: 100px 8% 120px;
+  position: relative;
+  overflow: hidden;
+}
+
+.about-s3-header {
+  text-align: center;
+  margin-bottom: 64px;
+  position: relative;
+  z-index: 1;
+}
+
+.about-s3-title {
+  font-family: var(--y2k-sticker);
+  font-size: clamp(3.5rem, 8vw, 7.5rem);
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: #fff;
+  line-height: 0.9;
+  margin: 0 0 20px;
+}
+
+.about-s3-subtitle {
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  color: rgba(255, 255, 255, 0.44);
+  max-width: 440px;
+  margin: 0 auto;
+  line-height: 1.65;
+}
+
+/* Three-image collage grid */
+.about-s3-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  gap: 24px;
   max-width: 1300px;
   margin: 0 auto;
+  position: relative;
+  z-index: 1;
 }
 
-.grid-item { position: relative; overflow: hidden; border-radius: 4px; }
+.about-img-frame {
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px;
+}
 
-.grid-item img {
+.about-img-frame img {
   width: 100%;
   height: 520px;
   object-fit: cover;
   display: block;
   transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1);
 }
+.about-img-frame:hover img { transform: scale(1.03); }
 
-.grid-item:nth-child(2) { margin-top: 48px; }
-.grid-item:nth-child(3) { margin-top: 24px; }
+/* Staggered heights for scrapbook feel */
+.about-img-frame--2 { margin-top: 48px; }
+.about-img-frame--3 { margin-top: 24px; }
 
-.grid-item:hover img { transform: scale(1.03); }
+.about-img-caption {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 32px 16px 14px;
+  background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, transparent 100%);
+  font-family: var(--y2k-marker);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.7);
+  text-align: center;
+}
 
-/* ====================================================
+/* ============================================================
+   SECTION 4 — MISSION (cream)
+   ============================================================ */
+.about-s4 {
+  background-color: var(--y2k-paper);
+  background-image:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.6  0 0 0 0 0.5  0 0 0 0 0.3  0 0 0 0.09 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  padding: 120px 8% 140px;
+}
+
+.about-s4-inner {
+  max-width: 760px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.about-s4-rule {
+  width: 60px;
+  height: 1.5px;
+  background: var(--y2k-gold);
+  margin: 20px auto 40px;
+}
+.about-s4-rule--bottom { margin: 40px auto 0; }
+
+.about-s4-title {
+  font-family: var(--y2k-sticker);
+  font-size: clamp(2.8rem, 6vw, 5.5rem);
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: #0a0a0a;
+  line-height: 0.9;
+  margin: 0 0 40px;
+}
+
+.about-s4-quote {
+  font-family: var(--y2k-serif);
+  font-size: clamp(1.2rem, 2.2vw, 1.75rem);
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.58;
+  color: rgba(0, 0, 0, 0.62);
+}
+
+/* ============================================================
+   ANIME.JS INITIAL STATES — zero flash on first render
+   ============================================================ */
+.about-s1-eyebrow,
+.about-s1-title,
+.about-s1-rule,
+.about-s1-body {
+  opacity: 0;
+}
+
+/* ============================================================
    RESPONSIVE
-   ==================================================== */
+   ============================================================ */
 @media (max-width: 1024px) {
-  .editorial-split-grid {
+  .about-s2-inner {
     grid-template-columns: 1fr;
-    gap: 40px;
+    gap: 48px;
   }
-  .split-image img { height: 420px; }
-  .editorial-three-grid { grid-template-columns: 1fr 1fr; }
-  .grid-item:nth-child(2) { margin-top: 0; }
-  .grid-item:nth-child(3) { margin-top: 0; }
+  .about-polaroid { max-width: 360px; transform: rotate(-2deg); }
+  .about-s3-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
+  .about-img-frame--2, .about-img-frame--3 { margin-top: 0; }
+  .about-img-frame img { height: 400px; }
 }
 
 @media (max-width: 768px) {
-  .story-section.monochrome-bg { padding: 80px 8% 100px; }
-  .bg-off-white { padding: 80px 8%; }
-  .radiance-section { padding: 80px 8%; }
-  .mission-statement-section { padding: 100px 8%; }
-  .editorial-three-grid { grid-template-columns: 1fr; }
-  .grid-item img { height: 400px; }
-  .split-image img { height: 320px; }
-  .final-statement { font-size: 1.2rem; }
+  .about-s1 { padding: 120px 7% 80px; }
+  .about-s2 { padding: 72px 7% 72px; }
+  .about-s3 { padding: 72px 7% 80px; }
+  .about-s4 { padding: 80px 7% 100px; }
+  .about-s3-grid { grid-template-columns: 1fr; }
+  .about-img-frame img { height: 320px; }
+  .about-polaroid { transform: rotate(-1.5deg); }
+  .about-ghost-num { font-size: clamp(8rem, 28vw, 14rem); }
+}
+
+@media (max-width: 480px) {
+  .about-s1-title { font-size: clamp(3rem, 13vw, 5rem); }
+  .about-s2-title { font-size: 2.2rem; }
+  .about-polaroid { padding: 10px 10px 44px 10px; }
 }

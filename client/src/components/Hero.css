@@ -11,6 +11,19 @@
   box-sizing: border-box;
 }
 
+/* Gradient vignette for CTA area legibility */
+.hero-editorial::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 55%;
+  background: linear-gradient(to top, rgba(0,0,0,0.48) 0%, transparent 100%);
+  z-index: 2;
+  pointer-events: none;
+}
+
 /* Hero background — now a real <img class="hero-bg-img"> for LCP performance */
 .hero-bg-img {
   position: absolute;
@@ -40,8 +53,9 @@
   font-weight: 600;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.75);
+  color: rgba(255,255,255,0.9);
   margin-bottom: 12px;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.5);
 }
 
 .hero-editorial-title {
@@ -61,9 +75,10 @@
   font-family: var(--y2k-marker);
   font-size: 14px;
   font-weight: 400;
-  color: rgba(255,255,255,0.8);
+  color: rgba(255,255,255,0.92);
   letter-spacing: 0.08em;
   margin: 0;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.4);
 }
 
 .hero-content-wrapper {

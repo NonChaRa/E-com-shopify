@@ -8,6 +8,8 @@ import CartSidebar from './components/CartSidebar';
 import Login from './components/Login';
 import Register from './components/Register';
 import LoyaltyPopup from './components/LoyaltyPopup';
+import PageIntro from './components/PageIntro';
+import PageTransition from './components/PageTransition';
 
 // Eagerly loaded — these are on the critical render path
 import Home from './pages/Home';
@@ -44,6 +46,7 @@ const LayoutWrapper = ({ children, cartCount, onOpenCart, onOpenLogin, onLogout,
 
   return (
     <div className="app-wrapper">
+      <PageTransition />
       <Navbar
         cartCount={cartCount}
         onOpenCart={onOpenCart}
@@ -63,6 +66,7 @@ const LayoutWrapper = ({ children, cartCount, onOpenCart, onOpenLogin, onLogout,
 function App() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [activeAuthModal, setActiveAuthModal] = useState(null);
+  const [showIntro, setShowIntro] = useState(() => !sessionStorage.getItem('introShown'));
 
   const [products, setProducts]   = useState([]);
   const [loading, setLoading]     = useState(true);
@@ -180,9 +184,15 @@ function App() {
     fetchProducts();
   }, [fetchProducts]);
 
+  const handleIntroComplete = () => {
+    sessionStorage.setItem('introShown', '1');
+    setShowIntro(false);
+  };
+
   return (
     <ToastProvider>
     <CurrencyProvider>
+      {showIntro && <PageIntro onComplete={handleIntroComplete} />}
       <Router>
         <LayoutWrapper
           user={user}
@@ -191,7 +201,7 @@ function App() {
           cartCount={cart.length}
           onOpenCart={() => setIsCartOpen(true)}
         >
-          <Suspense fallback={null}>
+          <Suspense fallback={<div className="page-loading-fallback" aria-label="Loading…" />}>
           <Routes>
             <Route
               path="/"

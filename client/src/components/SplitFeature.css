@@ -46,9 +46,10 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0) 70%);
+  background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.15) 45%, rgba(0,0,0,0) 100%);
   z-index: 2;
   pointer-events: none;
+  transition: background 0.5s ease;
 }
 
 /* Thin gold accent line at top of each panel — replaces cartoonish floating charms */
@@ -79,8 +80,9 @@
   font-weight: 600;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.65);
+  color: rgba(255,255,255,0.88);
   margin-bottom: 10px;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.4);
 }
 
 .feature-collection-name {
@@ -90,7 +92,9 @@
   color: #fff;
   margin: 0 0 28px 0;
   letter-spacing: 0.02em;
-  text-shadow: 3px 3px 0 rgba(0,0,0,0.2);
+  text-shadow:
+    3px 3px 0 rgba(0,0,0,0.35),
+    0 2px 12px rgba(0,0,0,0.3);
 }
 
 /* SHOP BUTTON ON PANELS */

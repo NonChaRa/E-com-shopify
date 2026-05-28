@@ -1,232 +1,282 @@
-/* --- Y2K VALUES PAGE --- */
+/* ============================================================
+   ASTÉRI 2K — VALUES PAGE
+   Magazine editorial luxury, scrapbook accents
+   ============================================================ */
 
-.values-page-container {
+.values-page {
+  background-color: var(--y2k-paper);
+  background-image:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.6  0 0 0 0 0.5  0 0 0 0 0.3  0 0 0 0.08 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  min-height: 100vh;
+}
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+.values-header {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 160px 40px 120px 40px;
-  min-height: 100vh;
-  background-color: var(--y2k-paper);
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.6  0 0 0 0 0.5  0 0 0 0 0.3  0 0 0 0.1 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
-  position: relative;
+  padding: 160px 8% 80px;
 }
 
-/* --- HERO HEADER --- */
-.values-header {
-  max-width: 760px;
-  margin-bottom: 100px;
-  position: relative;
-}
-
-.values-context-tag {
-  font-family: var(--y2k-sticker);
-  font-size: 11px;
+.values-tag {
+  font-family: var(--y2k-marker);
+  font-size: 10px;
   font-weight: 700;
-  letter-spacing: 0.18em;
-  background: var(--y2k-lemon);
-  color: #000;
-  padding: 6px 14px;
-  border: 1.5px solid #000;
-  border-radius: 999px;
+  letter-spacing: 0.28em;
   text-transform: uppercase;
-  display: inline-block;
-  margin-bottom: 24px;
-  transform: rotate(-3deg);
+  color: var(--y2k-gold-dark);
+  display: block;
+  margin-bottom: 20px;
 }
 
-.values-header h1 {
+.values-h1 {
   font-family: var(--y2k-sticker);
-  font-size: clamp(2.6rem, 5vw, 4.2rem);
+  font-size: clamp(3rem, 6vw, 5.5rem);
   font-weight: 400;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.03em;
   text-transform: uppercase;
-  color: var(--y2k-hot-pink);
-  margin-bottom: 28px;
-  line-height: 1.05;
-  text-shadow:
-    -2px -2px 0 #fff,
-    2px -2px 0 #fff,
-    -2px 2px 0 #fff,
-    2px 2px 0 #fff,
-    5px 5px 0 var(--y2k-cyan),
-    6px 6px 0 #000;
-  transform: rotate(-1.2deg);
-  display: inline-block;
+  color: #0a0a0a;
+  margin: 0 0 24px;
+  line-height: 0.95;
 }
 
-.values-subtitle {
+.values-divider-line {
+  width: 52px;
+  height: 1.5px;
+  background: var(--y2k-gold);
+  margin-bottom: 24px;
+}
+
+.values-subtitle-text {
   font-family: var(--font-body);
-  font-size: 1.05rem;
-  line-height: 1.75;
-  color: #1a1a1a;
-  letter-spacing: 0.01em;
-  font-weight: 500;
+  font-size: 1rem;
+  line-height: 1.72;
+  color: rgba(0, 0, 0, 0.58);
+  max-width: 560px;
+  font-weight: 400;
 }
 
-/* --- PILLARS GRID --- */
-.values-pillars-grid {
-  display: flex;
-  flex-direction: column;
-  border-top: 2px dashed rgba(0, 0, 0, 0.3);
-  margin-bottom: 100px;
+/* ============================================================
+   PILLAR ROWS
+   ============================================================ */
+.values-pillars {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 8% 80px;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .pillar-row {
   display: grid;
-  grid-template-columns: 1fr 1.2fr;
-  padding: 60px 0;
-  border-bottom: 2px dashed rgba(0, 0, 0, 0.15);
-  gap: 40px;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 48px;
+  padding: 72px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
   position: relative;
+  align-items: start;
 }
 
-/* Charm sticker on each pillar */
-.pillar-row::before {
-  content: "";
+/* Ghost number behind each row */
+.pillar-ghost {
   position: absolute;
-  top: 50px;
-  right: -10px;
-  width: 38px;
-  height: 38px;
-  background: var(--y2k-hot-pink);
-  filter: drop-shadow(2px 2px 0 #000);
-  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 29'><path d='M16 29s-13-8.35-13-17a8 8 0 0 1 13-6.2A8 8 0 0 1 29 12c0 8.65-13 17-13 17z' fill='black'/></svg>");
-          mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 29'><path d='M16 29s-13-8.35-13-17a8 8 0 0 1 13-6.2A8 8 0 0 1 29 12c0 8.65-13 17-13 17z' fill='black'/></svg>");
-  -webkit-mask-size: contain;
-          mask-size: contain;
-  -webkit-mask-repeat: no-repeat;
-          mask-repeat: no-repeat;
-  transform: rotate(15deg);
-  --r: 15deg;
-  animation: y2kCharmFloat 4s ease-in-out infinite;
-  opacity: 0.85;
-}
-.pillar-row:nth-child(2)::before {
-  background: var(--y2k-cyan);
-  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 2l2.9 6.9 7.4.6-5.6 4.9 1.7 7.3L12 17.8 5.6 21.7l1.7-7.3L1.7 9.5l7.4-.6L12 2z' fill='black'/></svg>");
-          mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 2l2.9 6.9 7.4.6-5.6 4.9 1.7 7.3L12 17.8 5.6 21.7l1.7-7.3L1.7 9.5l7.4-.6L12 2z' fill='black'/></svg>");
-}
-.pillar-row:nth-child(3)::before {
-  background: var(--y2k-lemon);
-  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 24'><path d='M16 12 L4 4 Q0 4 0 8 V16 Q0 20 4 20 L16 12 L28 4 Q32 4 32 8 V16 Q32 20 28 20 Z M13 9 H19 Q21 9 21 11 V13 Q21 15 19 15 H13 Q11 15 11 13 V11 Q11 9 13 9 Z' fill='black'/></svg>");
-          mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 24'><path d='M16 12 L4 4 Q0 4 0 8 V16 Q0 20 4 20 L16 12 L28 4 Q32 4 32 8 V16 Q32 20 28 20 Z M13 9 H19 Q21 9 21 11 V13 Q21 15 19 15 H13 Q11 15 11 13 V11 Q11 9 13 9 Z' fill='black'/></svg>");
+  top: 32px;
+  right: 0;
+  font-family: var(--y2k-sticker);
+  font-size: clamp(8rem, 16vw, 14rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: rgba(0, 0, 0, 0.055);
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
 }
 
 .pillar-meta {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
+  padding-left: 20px;
+  border-left: 2px solid var(--y2k-gold);
 }
 
-.pillar-number {
-  font-family: var(--y2k-sticker);
-  font-size: 14px;
+.pillar-num {
+  font-family: var(--y2k-marker);
+  font-size: 10px;
   font-weight: 700;
-  letter-spacing: 0.1em;
-  color: var(--y2k-hot-pink);
-  text-shadow: 2px 2px 0 #000;
+  letter-spacing: 0.22em;
+  color: var(--y2k-gold-dark);
+  text-transform: uppercase;
 }
 
 .pillar-title {
   font-family: var(--y2k-sticker);
-  font-size: clamp(1.3rem, 2vw, 1.8rem);
-  font-weight: 600;
+  font-size: clamp(1.4rem, 2.2vw, 2rem);
+  font-weight: 400;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: var(--y2k-cyan);
-  text-shadow:
-    -1.5px -1.5px 0 #fff,
-    1.5px -1.5px 0 #fff,
-    -1.5px 1.5px 0 #fff,
-    1.5px 1.5px 0 #fff,
-    3px 3px 0 #000;
+  color: #0a0a0a;
+  line-height: 1.05;
 }
 
-.pillar-description p {
+.pillar-body {
   font-family: var(--font-body);
-  font-size: 0.98rem;
+  font-size: 0.97rem;
   line-height: 1.85;
-  color: #222;
-  letter-spacing: 0.01em;
-  font-weight: 500;
+  color: rgba(0, 0, 0, 0.6);
+  position: relative;
+  z-index: 1;
+  padding-top: 10px;
 }
 
-/* --- CTA SECTION --- */
-.values-cta-section {
-  width: 100%;
-  padding-top: 40px;
+/* ============================================================
+   CTA SECTION
+   ============================================================ */
+.values-cta {
+  padding: 0 8% 140px;
 }
 
-.values-cta-card {
-  background-color: var(--y2k-paper-warm);
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.6  0 0 0 0 0.5  0 0 0 0 0.3  0 0 0 0.14 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
-  padding: 90px 40px;
-  text-align: center;
+.values-cta-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  background: #0a0a0a;
+  background-image:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.04 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  padding: 80px 60px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  border: 3px solid #000;
-  border-radius: 14px;
-  box-shadow: 8px 8px 0 var(--y2k-hot-pink), 8px 8px 0 1.5px #000;
+  text-align: center;
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
 }
 
-.values-cta-card h3 {
+.values-cta-inner::before {
+  content: "ASTÉRI";
+  position: absolute;
+  bottom: -40px;
+  right: -20px;
   font-family: var(--y2k-sticker);
-  font-size: 1.4rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  margin-bottom: 14px;
-  color: var(--y2k-magenta);
-  text-shadow: 3px 3px 0 #000;
-  transform: rotate(-1.5deg);
-  display: inline-block;
+  font-size: clamp(8rem, 15vw, 14rem);
+  color: rgba(255, 255, 255, 0.03);
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
 }
 
-.values-cta-card p {
+.values-cta-eyebrow {
   font-family: var(--y2k-marker);
-  font-size: 1.2rem;
-  letter-spacing: 0.02em;
-  color: #000;
-  text-shadow: 1px 1px 0 var(--y2k-lemon);
-  text-transform: none;
-  margin-bottom: 35px;
-}
-
-.values-shop-btn {
-  background: var(--y2k-hot-pink);
-  color: #fff;
-  border: 2.5px solid #000;
-  padding: 16px 44px;
-  font-family: var(--y2k-sticker);
-  font-size: 13px;
+  font-size: 10px;
   font-weight: 700;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.3em;
+  color: var(--y2k-gold);
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 16px;
+}
+
+.values-cta-rule {
+  width: 40px;
+  height: 1px;
+  background: rgba(196, 163, 90, 0.45);
+  margin-bottom: 24px;
+}
+
+.values-cta-h3 {
+  font-family: var(--y2k-sticker);
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  color: #fff;
+  text-transform: uppercase;
+  margin: 0 0 16px;
+  line-height: 1;
+}
+
+.values-cta-p {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.5);
+  max-width: 360px;
+  line-height: 1.65;
+  margin: 0 0 36px;
+}
+
+.values-cta-btn {
+  background: transparent;
+  color: var(--y2k-gold);
+  border: 1.5px solid var(--y2k-gold);
+  padding: 14px 36px;
   border-radius: 999px;
-  text-shadow: 1px 1px 0 rgba(0,0,0,0.3);
+  font-family: var(--y2k-marker);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
   cursor: pointer;
-  box-shadow: 5px 5px 0 #000;
-  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: all 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+  position: relative;
+  overflow: hidden;
+}
+.values-cta-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--y2k-gold);
+  transform: translateX(-101%);
+  transition: transform 0.32s cubic-bezier(0.25, 1, 0.5, 1);
+  z-index: -1;
+}
+.values-cta-btn:hover {
+  color: #0a0a0a;
+}
+.values-cta-btn:hover::before { transform: translateX(0); }
+
+/* ============================================================
+   ANIME.JS INITIAL STATES
+   CSS sets opacity:0 so there's no flash between render
+   and the useEffect IntersectionObserver setup.
+   Global.css prefers-reduced-motion overrides to opacity:1.
+   ============================================================ */
+.values-tag,
+.values-h1,
+.values-divider-line,
+.values-subtitle-text,
+.pillar-ghost,
+.pillar-num,
+.pillar-title,
+.pillar-body,
+.values-cta-eyebrow,
+.values-cta-h3,
+.values-cta-p,
+.values-cta-btn {
+  opacity: 0;
 }
 
-.values-shop-btn:hover {
-  background-color: var(--y2k-magenta);
-  transform: translate(-2px, -2px) rotate(-2deg);
-  box-shadow: 7px 7px 0 #000;
-}
-
-/* --- RESPONSIVE --- */
-@media (max-width: 768px) {
-  .values-page-container {
-    padding-top: 120px;
-    padding-left: 24px;
-    padding-right: 24px;
-  }
-  .values-header { margin-bottom: 60px; }
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 900px) {
   .pillar-row {
     grid-template-columns: 1fr;
-    padding: 40px 0;
-    gap: 16px;
+    gap: 20px;
+    padding: 52px 0;
   }
-  .pillar-row::before { display: none; }
-  .values-cta-card { padding: 60px 20px; box-shadow: 5px 5px 0 var(--y2k-hot-pink), 5px 5px 0 1px #000; }
+  .pillar-ghost { font-size: clamp(6rem, 20vw, 10rem); }
+}
+
+@media (max-width: 768px) {
+  .values-header { padding: 120px 7% 60px; }
+  .values-pillars { padding: 0 7% 60px; }
+  .values-cta { padding: 0 7% 100px; }
+  .values-cta-inner { padding: 60px 32px; }
+  .pillar-row { padding: 44px 0; }
+}
+
+@media (max-width: 480px) {
+  .values-cta-inner { padding: 50px 24px; }
+  .pillar-meta { padding-left: 14px; }
 }

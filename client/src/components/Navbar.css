@@ -37,16 +37,18 @@
   transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-/* Scrolled / hovered state: paper-warm fill + Y2K border */
+/* Scrolled / hovered state: frosted glass pill */
 .navbar-editorial:hover,
 .navbar-editorial.scrolled,
 .navbar-editorial.mega-expanded {
-  background-color: var(--y2k-paper) !important;
-  border: 2px solid #000 !important;
+  background: rgba(246, 239, 222, 0.88) !important;
+  backdrop-filter: blur(18px) saturate(160%) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(160%) !important;
+  border: 1.5px solid rgba(196, 163, 90, 0.55) !important;
   box-shadow:
-    0 4px 0 #000,
-    0 8px 24px rgba(196, 163, 90, 0.15),
-    4px 4px 0 var(--y2k-gold) !important;
+    0 4px 0 rgba(0,0,0,0.88),
+    0 12px 36px rgba(0,0,0,0.1),
+    inset 0 1px 0 rgba(255,255,255,0.6) !important;
 }
 
 .navbar-editorial.mega-expanded {
@@ -107,6 +109,7 @@
   position: relative;
   padding-bottom: 6px;
   transition: color 0.3s ease;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.45);
 }
 
 /* Underline accent */
@@ -124,11 +127,12 @@
 .nav-item-wrapper { cursor: pointer; }
 .nav-item-wrapper:hover .nav-link::after { width: 100%; }
 
-/* When navbar is solid (scrolled / hover / mega) — switch links to black */
+/* When navbar is solid (scrolled / hover / mega) — switch links to black, remove text shadow */
 .navbar-editorial:hover .nav-link,
 .navbar-editorial.scrolled .nav-link,
 .navbar-editorial.mega-expanded .nav-link {
   color: #000 !important;
+  text-shadow: none !important;
 }
 
 .nav-arrow {
@@ -137,6 +141,7 @@
   margin-left: 4px;
   display: inline-block;
   transition: transform 0.4s ease, color 0.3s ease;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.45);
 }
 .nav-arrow.open { transform: rotate(180deg); }
 
@@ -144,6 +149,7 @@
 .navbar-editorial.scrolled .nav-arrow,
 .navbar-editorial.mega-expanded .nav-arrow {
   color: #000 !important;
+  text-shadow: none !important;
 }
 
 .bag-count-editorial {
@@ -377,10 +383,12 @@
     width: 100% !important;
     height: 65px !important;
     border-radius: 0 !important;
-    background-color: var(--y2k-paper) !important;
+    background: rgba(246, 239, 222, 0.94) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
     border: none !important;
-    border-bottom: 2.5px solid #000 !important;
-    box-shadow: 0 2px 0 var(--y2k-gold) !important;
+    border-bottom: 1.5px solid rgba(196, 163, 90, 0.4) !important;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08) !important;
   }
 
   .nav-top-row {

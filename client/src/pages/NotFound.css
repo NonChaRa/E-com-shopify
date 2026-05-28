@@ -47,6 +47,16 @@
   width: 100%;
 }
 
+/* ---- anime.js initial hidden states ---- */
+.nf-code,
+.nf-eyebrow,
+.nf-headline,
+.nf-body,
+.nf-btn,
+.nf-deco span {
+  opacity: 0;
+}
+
 /* ---- Eyebrow tag ---- */
 .nf-eyebrow {
   font-family: var(--y2k-marker);

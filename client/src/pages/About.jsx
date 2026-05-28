@@ -1,24 +1,70 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
+import { animate, stagger } from 'animejs';
 import './About.css';
-import nail1 from '../assets/about/nail-1.png'; // Adjust extension if needed
+import nail1 from '../assets/about/nail-1.png';
 import nail2 from '../assets/about/nail-2.png';
 import nail3 from '../assets/about/nail-3.png';
 import couple from '../assets/about/couple.png';
 
 const About = () => {
+  const pageRef = useRef(null);
+
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
   }, []);
 
-  return (
-    <div className="about-page-wrapper">
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-      {/* PHASE 1: THE GREY YEARS */}
-      <section className="story-section monochrome-bg">
-        <div className="story-container-narrow">
-          <h1 className="serif-title">The Faded Child</h1>
-          <div className="narrative-text">
-            <p className="drop-cap">
+    // Section 1 stagger entrance
+    animate(['.about-s1-eyebrow', '.about-s1-title', '.about-s1-rule', '.about-s1-body'], {
+      translateY: [28, 0],
+      opacity: [0, 1],
+      duration: 760,
+      delay: stagger(120, { start: 80 }),
+      easing: 'easeOutExpo',
+    });
+
+    // Scroll-triggered reveals for sections 2–4
+    const targets = pageRef.current?.querySelectorAll('[data-reveal]') ?? [];
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const el = entry.target;
+          const delay = parseInt(el.dataset.revealDelay ?? '0', 10);
+          const from = el.dataset.revealFrom ?? 'bottom';
+          animate(el, {
+            translateY: from === 'bottom' ? [28, 0] : [0, 0],
+            translateX: from === 'left' ? [-32, 0] : from === 'right' ? [32, 0] : [0, 0],
+            opacity: [0, 1],
+            duration: 720,
+            delay,
+            easing: 'easeOutExpo',
+          });
+          observer.unobserve(el);
+        });
+      },
+      { threshold: 0.12 }
+    );
+    targets.forEach((el) => observer.observe(el));
+
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div className="about-page" ref={pageRef}>
+
+      {/* ── SECTION 1 — THE GREY YEARS ── */}
+      <section className="about-s1">
+        <span className="about-ghost-num" aria-hidden="true">01</span>
+        <div className="about-s1-inner">
+          <span className="about-s1-eyebrow">THE ORIGIN STORY</span>
+          <h1 className="about-s1-title">The Faded<br />Child</h1>
+          <div className="about-s1-rule" aria-hidden="true" />
+          <div className="about-s1-body">
+            <p className="about-drop-cap">
               Before Astéri was a studio, it was a survival mechanism.
               My childhood wasn't filled with the bright colors of play;
               it was painted in the grey shades of responsibility.
@@ -37,58 +83,89 @@ const About = () => {
         </div>
       </section>
 
-      {/* PHASE 2: THE ANCHOR (Support & Shift) */}
-      <section className="editorial-feature bg-off-white">
-        <div className="editorial-split-grid">
-          <div className="split-image">
-            <img src={couple} alt="Support and Love" />
+      {/* Torn edge divider: dark → cream */}
+      <div className="torn-edge torn-edge--dark-to-cream" aria-hidden="true" />
+
+      {/* ── SECTION 2 — THE TURNING POINT ── */}
+      <section className="about-s2">
+        <span className="about-ghost-num about-ghost-num--cream" aria-hidden="true">02</span>
+        <div className="about-s2-inner">
+          <div className="about-s2-photo-wrap" data-reveal data-reveal-from="left">
+            <div className="about-polaroid">
+              <div className="about-tape about-tape--tl" aria-hidden="true" />
+              <div className="about-tape about-tape--tr" aria-hidden="true" />
+              <img src={couple} alt="Support and Love" />
+              <span className="about-polaroid-caption">Bangkok · 2024</span>
+            </div>
           </div>
-          <div className="split-content">
-            <h2 className="caps-title">The Turning Point</h2>
-            <p className="narrative-text-small">
+          <div className="about-s2-text">
+            <span className="about-section-label" data-reveal data-reveal-delay="60">02 / TURNING POINT</span>
+            <h2 className="about-s2-title" data-reveal data-reveal-delay="150">The Anchor</h2>
+            <p data-reveal data-reveal-delay="230">
               Everything changed when I met my partner. He didn't just support my
-              dreams; he supported *me*. For the first time in my life, I was
+              dreams; he supported <em>me</em>. For the first time in my life, I was
               given the safety to stop running. He held the world at bay so I
               could finally learn how to take care of myself.
             </p>
-            <p className="narrative-text-small">
+            <p data-reveal data-reveal-delay="310">
               In that stillness, the grey began to lift. I found my hands reaching
               for brushes again. I found myself looking in the mirror and
-              wanting to feel *pretty*—not for a meeting, but for my soul.
+              wanting to feel <em>pretty</em>—not for a meeting, but for my soul.
             </p>
           </div>
         </div>
       </section>
 
-      {/* PHASE 3: THE RADIANCE (Creativity & Beauty) */}
-      <section className="editorial-feature radiance-section">
-          <div className="feature-header">
-            {/* Changed class to editorial-title */}
-            <h2 className="editorial-title">Reclaiming the Astéri</h2>
-            <p className="editorial-subtitle">
-              Beauty was always there, waiting for the situation to allow it to bloom.
-            </p>
-          </div>
+      {/* Torn edge divider: cream → dark */}
+      <div className="torn-edge torn-edge--cream-to-dark" aria-hidden="true" />
 
-          <div className="editorial-three-grid">
-            <div className="grid-item"><img src={nail1} alt="Nail 1" /></div>
-            <div className="grid-item"><img src={nail2} alt="Nail 2" /></div>
-            <div className="grid-item"><img src={nail3} alt="Nail 3" /></div>
+      {/* ── SECTION 3 — RECLAIMING ── */}
+      <section className="about-s3">
+        <span className="about-ghost-num" aria-hidden="true">03</span>
+        <div className="about-s3-header">
+          <span className="about-section-label about-section-label--light" data-reveal>03 / RECLAIMING</span>
+          <h2 className="about-s3-title" data-reveal data-reveal-delay="100">
+            Reclaiming<br />The Astéri
+          </h2>
+          <p className="about-s3-subtitle" data-reveal data-reveal-delay="200">
+            Beauty was always there, waiting for the situation to allow it to bloom.
+          </p>
+        </div>
+        <div className="about-s3-grid">
+          <div className="about-img-frame about-img-frame--1" data-reveal>
+            <img src={nail1} alt="Nail art 1" />
           </div>
+          <div className="about-img-frame about-img-frame--2" data-reveal data-reveal-delay="110">
+            <img src={nail2} alt="Nail art 2" />
+          </div>
+          <div className="about-img-frame about-img-frame--3" data-reveal data-reveal-delay="220">
+            <img src={nail3} alt="Nail art 3" />
+            <span className="about-img-caption">Handpainted in Bangkok</span>
+          </div>
+        </div>
       </section>
 
-      {/* PHASE 4: THE MISSION */}
-      <section className="mission-statement-section">
-          <div className="mission-container">
-            <h2 className="caps-title">Our Shared Creativity</h2>
-            <p className="final-statement">
-              I regained my strength so I could share it with you. Astéri Studio
-              is my way of inviting every woman to reclaim her own beauty.
-              No matter how 'grey' the world gets, your fingertips can always be
-              a canvas for your inner light.
-            </p>
-          </div>
+      {/* Torn edge divider: dark → cream */}
+      <div className="torn-edge torn-edge--dark-to-cream" aria-hidden="true" />
+
+      {/* ── SECTION 4 — MISSION ── */}
+      <section className="about-s4">
+        <div className="about-s4-inner">
+          <span className="about-section-label" data-reveal>04 / THE MISSION</span>
+          <div className="about-s4-rule" data-reveal data-reveal-delay="80" aria-hidden="true" />
+          <h2 className="about-s4-title" data-reveal data-reveal-delay="160">
+            Our Shared<br />Creativity
+          </h2>
+          <p className="about-s4-quote" data-reveal data-reveal-delay="260">
+            I regained my strength so I could share it with you. Astéri Studio
+            is my way of inviting every woman to reclaim her own beauty.
+            No matter how 'grey' the world gets, your fingertips can always be
+            a canvas for your inner light.
+          </p>
+          <div className="about-s4-rule about-s4-rule--bottom" data-reveal data-reveal-delay="340" aria-hidden="true" />
+        </div>
       </section>
+
     </div>
   );
 };
