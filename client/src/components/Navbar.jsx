@@ -187,9 +187,9 @@ const Navbar = ({ cartCount, onOpenCart, user, onOpenLogin, onLogout, forceSolid
               <div className="mega-column">
                 <h4 className="mega-col-title">SHOP BY LENGTH</h4>
                 <ul className="mega-list">
-                  <li onClick={() => {navigate('/shop?collection=short'); setOpenMenu(null);}}>SHORT SETS</li>
-                  <li onClick={() => {navigate('/shop?collection=medium'); setOpenMenu(null);}}>MEDIUM SETS</li>
-                  <li onClick={() => {navigate('/shop?collection=long'); setOpenMenu(null);}}>LONG SETS</li>
+                  <li onClick={() => {navigate('/shop'); setOpenMenu(null);}}>SHORT SETS</li>
+                  <li onClick={() => {navigate('/shop'); setOpenMenu(null);}}>MEDIUM SETS</li>
+                  <li onClick={() => {navigate('/shop'); setOpenMenu(null);}}>LONG SETS</li>
                 </ul>
               </div>
               <div className="mega-column">

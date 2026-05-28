@@ -8,6 +8,19 @@ export const GET_PRODUCTS_QUERY = `
           description
           descriptionHtml
           handle
+          tags
+          colorMetafield: metafield(namespace: "shopify", key: "color-pattern") {
+            value
+            references(first: 10) {
+              edges {
+                node {
+                  ... on Metaobject {
+                    handle
+                  }
+                }
+              }
+            }
+          }
           priceRange {
             minVariantPrice {
               amount
@@ -49,6 +62,19 @@ export const GET_COLLECTION_PRODUCTS = `
             handle
             description
             descriptionHtml
+            tags
+            colorMetafield: metafield(namespace: "shopify", key: "color-pattern") {
+              value
+              references(first: 10) {
+                edges {
+                  node {
+                    ... on Metaobject {
+                      handle
+                    }
+                  }
+                }
+              }
+            }
             priceRange {
               minVariantPrice {
                 amount

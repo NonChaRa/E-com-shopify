@@ -1,5 +1,21 @@
 import { GET_PRODUCTS_QUERY, GET_SHOP_POLICIES, GET_COLLECTION_PRODUCTS } from './queries';
 
+
+// Parses the Category metafield `colorMetafield.value` into a lowercase string array.
+// Shopify returns metafield values as JSON-encoded strings, e.g.:
+//   '["Orange","Rose gold","Red"]' → ["orange","rose gold","red"]
+// Falls back to comma-splitting for plain (non-JSON) strings.
+const parseMetafieldColors = (rawValue) => {
+  if (!rawValue) return [];
+  try {
+    const parsed = JSON.parse(rawValue);
+    const items = Array.isArray(parsed) ? parsed : [String(parsed)];
+    return items.map(item => String(item).toLowerCase().trim()).filter(Boolean);
+  } catch {
+    return rawValue.split(',').map(s => s.toLowerCase().trim()).filter(Boolean);
+  }
+};
+
 /**
  * Appends Shopify CDN image transformation params.
  * Shopify CDN supports ?width=N&format=webp natively — no extra processing needed.
@@ -57,6 +73,16 @@ const transformShopifyProducts = (edges) =>
       stock: edge.node.quantityAvailable || 0,
       available: edge.node.availableForSale,
     })) || [],
+    colors: (() => {
+      const refEdges = node.colorMetafield?.references?.edges;
+      if (refEdges && refEdges.length > 0) {
+        return refEdges.map(edge =>
+          edge.node.handle.toLowerCase().replace(/-/g, ' ')
+        );
+      }
+
+      return parseMetafieldColors(node.colorMetafield?.value);
+    })(),
   }));
 
 export const fetchProductsByCollection = async (collectionHandle) => {

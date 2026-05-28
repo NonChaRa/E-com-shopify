@@ -55,7 +55,7 @@ export default function LoyaltyPopup({onOpenAuth}) {
           <h2 className="cult-popup-title">THE ASTERI2K<br/>BLESSING</h2>
 
           <p className="cult-popup-incentive">
-            ENJOY <strong>฿200 OFF</strong> YOUR FIRST ORDER OVER ฿2,000.
+            ENJOY <strong>15% OFF</strong> YOUR FIRST ORDER OVER ฿1,000.
           </p>
 
           <p className="cult-popup-perks">

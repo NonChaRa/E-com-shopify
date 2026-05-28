@@ -6,6 +6,28 @@ import { SkeletonShopCard } from '../components/SkeletonCard';
 import useInView from '../hooks/useInView';
 import './AllProducts.css';
 
+const CANONICAL_COLORS = [
+  'white', 'yellow', 'orange', 'green', 'blue', 'pastel blue',
+  'purple', 'silver', 'pink', 'red', 'blood red', 'beige', 'gold', 'rose gold',
+];
+
+const COLOR_SWATCHES = {
+  'white':       '#FFFFFF',
+  'yellow':      '#F5D53E',
+  'orange':      '#E8802A',
+  'green':       '#3D9C57',
+  'blue':        '#2B6CB0',
+  'pastel blue': '#A8D1ED',
+  'purple':      '#7C3AED',
+  'silver':      '#A8A9AD',
+  'pink':        '#F472B6',
+  'red':         '#DC2626',
+  'blood red':   '#7B0000',
+  'beige':       '#E8D5B0',
+  'gold':        'linear-gradient(135deg, #C9961B 0%, #F5E17A 50%, #D4AF37 100%)',
+  'rose gold':   'linear-gradient(135deg, #B76E79 0%, #D4A5A5 50%, #C0817D 100%)',
+};
+
 const AllProducts = ({ allProducts, loading, fetchByCollection, fetchAllProducts }) => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -20,8 +42,21 @@ const AllProducts = ({ allProducts, loading, fetchByCollection, fetchAllProducts
 
   const [activeFilters, setActiveFilters] = useState({
     availability: [],
+    color: [],
     size: [],
   });
+
+  const availableColors = useMemo(() => {
+    const colorsInProducts = new Set(
+      (allProducts || []).flatMap(p => p.colors || [])
+    );
+    return CANONICAL_COLORS.filter(c => colorsInProducts.has(c));
+  }, [allProducts]);
+
+  const totalActiveFilters =
+    activeFilters.availability.length +
+    activeFilters.color.length +
+    activeFilters.size.length;
 
   useEffect(() => {
     const requestedCollection = searchParams.get('collection');
@@ -44,7 +79,7 @@ const AllProducts = ({ allProducts, loading, fetchByCollection, fetchAllProducts
   };
 
   const clearAllFilters = () => {
-    setActiveFilters({ availability: [], size: [] });
+    setActiveFilters({ availability: [], color: [], size: [] });
     setSearchTerm('');
   };
 
@@ -56,10 +91,12 @@ const AllProducts = ({ allProducts, loading, fetchByCollection, fetchAllProducts
           const hasStock = p.variants.some(v => v.stock > 0);
           return status === 'in-stock' ? hasStock : !hasStock;
         });
+      const matchesColor = activeFilters.color.length === 0 ||
+        (p.colors || []).some(c => activeFilters.color.includes(c));
       const matchesSize = activeFilters.size.length === 0 ||
         p.variants.some(v => activeFilters.size.includes(v.title));
 
-      return matchesSearch && matchesAvailability && matchesSize;
+      return matchesSearch && matchesAvailability && matchesColor && matchesSize;
     });
 
     if (sortBy === 'price-low') result.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
@@ -80,7 +117,7 @@ const AllProducts = ({ allProducts, loading, fetchByCollection, fetchAllProducts
         <div className="utility-inner">
           <div className="utility-left">
             <button className="pdp-filter-trigger" onClick={() => setIsSidebarOpen(true)}>
-              FILTERS
+              FILTERS{totalActiveFilters > 0 ? ` (${totalActiveFilters})` : ''}
             </button>
           </div>
 
@@ -125,6 +162,27 @@ const AllProducts = ({ allProducts, loading, fetchByCollection, fetchAllProducts
                   <input type="checkbox" checked={activeFilters.availability.includes('pre-order')} onChange={() => toggleFilter('availability', 'pre-order')} />
                   <span>MADE TO ORDER</span>
                 </label>
+              </div>
+
+              <div className="filter-section">
+                <h4 className="filter-label">COLOR</h4>
+                <div className="color-swatch-grid">
+                  {CANONICAL_COLORS.map(color => (
+                      <button
+                        key={color}
+                        className={`color-swatch-btn${activeFilters.color.includes(color) ? ' active' : ''}`}
+                        onClick={() => toggleFilter('color', color)}
+                        aria-label={`Filter by ${color}`}
+                        aria-pressed={activeFilters.color.includes(color)}
+                      >
+                        <span
+                          className="swatch-dot"
+                          style={{ background: COLOR_SWATCHES[color] || '#ccc' }}
+                        />
+                        <span className="swatch-label">{color}</span>
+                      </button>
+                  ))}
+                </div>
               </div>
 
               <div className="filter-section">

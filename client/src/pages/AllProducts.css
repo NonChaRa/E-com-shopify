@@ -423,6 +423,76 @@
     transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
+/* --- COLOR SWATCHES --- */
+.color-swatch-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px 8px;
+}
+
+.color-swatch-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 6px 2px;
+  border-radius: 8px;
+  transition: background 0.15s ease;
+}
+
+.color-swatch-btn:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.swatch-dot {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: block;
+  flex-shrink: 0;
+  /* Subtle inner ring keeps light swatches (white, beige, silver) visible */
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.14);
+  transition: box-shadow 0.18s ease, transform 0.18s ease;
+}
+
+/* Active: gold ring outside the dot */
+.color-swatch-btn.active .swatch-dot {
+  box-shadow:
+    inset 0 0 0 1px rgba(0, 0, 0, 0.14),
+    0 0 0 2.5px #fff,
+    0 0 0 4px var(--y2k-gold-dark);
+  transform: scale(1.1);
+}
+
+.swatch-label {
+  font-family: var(--y2k-marker);
+  font-size: 7px;
+  letter-spacing: 0.07em;
+  color: rgba(0, 0, 0, 0.5);
+  text-align: center;
+  text-transform: uppercase;
+  line-height: 1.3;
+  word-break: break-word;
+}
+
+.color-swatch-btn.active .swatch-label {
+  color: #000;
+  font-weight: 700;
+}
+
+/* Colors that have no matching products — shown but not interactive */
+.color-swatch-btn.unavailable {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.color-swatch-btn.unavailable:hover {
+  background: transparent;
+}
+
 /* Empty state */
 .pdp-empty-state {
   font-family: var(--y2k-marker);
