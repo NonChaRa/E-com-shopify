@@ -1,4 +1,7 @@
 import { GET_PRODUCTS_QUERY, GET_SHOP_POLICIES, GET_COLLECTION_PRODUCTS } from './queries';
+import { createLogger } from '../../utils/logger';
+
+const log = createLogger('shopify');
 
 
 // Parses the Category metafield `colorMetafield.value` into a lowercase string array.
@@ -49,7 +52,7 @@ export async function shopifyFetch(query, variables = {}) {
 
     return await response.json();
   } catch (error) {
-    console.error('Shopify fetch error:', error);
+    log.error('Shopify fetch error', { error, action: 'shopifyFetch' });
     return null;
   }
 }
@@ -61,6 +64,7 @@ const transformShopifyProducts = (edges) =>
     handle: node.handle,
     description: node.description || '',
     descriptionHtml: node.descriptionHtml || '',
+    tags: node.tags || [],
     price: node.priceRange?.minVariantPrice?.amount || '0.00',
     // Serve WebP at optimal widths — Shopify CDN transforms images server-side
     image_url: optimizeShopifyImage(node.images?.edges[0]?.node?.url || '', { width: 800 }),
@@ -91,7 +95,7 @@ export const fetchProductsByCollection = async (collectionHandle) => {
     const rawEdges = response?.data?.collection?.products?.edges || [];
     return transformShopifyProducts(rawEdges);
   } catch (err) {
-    console.error('Collection fetch error:', err);
+    log.error('Collection fetch error', { error: err, action: 'fetchProductsByCollection', data: { collectionHandle } });
     return [];
   }
 };
@@ -102,7 +106,7 @@ export const fetchAllGlobalProducts = async (limit = 24) => {
     const rawEdges = response?.data?.products?.edges || [];
     return transformShopifyProducts(rawEdges);
   } catch (err) {
-    console.error('Global catalog fetch error:', err);
+    log.error('Global catalog fetch error', { error: err, action: 'fetchAllGlobalProducts' });
     return [];
   }
 };
@@ -112,7 +116,7 @@ export const fetchShopPolicies = async () => {
     const response = await shopifyFetch(GET_SHOP_POLICIES);
     return response?.data?.shop || null;
   } catch (err) {
-    console.error('Policy fetch error:', err);
+    log.error('Policy fetch error', { error: err, action: 'fetchShopPolicies' });
     return null;
   }
 };

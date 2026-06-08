@@ -4,6 +4,9 @@ import { shopifyFetch } from './lib/shopify';
 import { CREATE_CART_MUTATION, CART_BUYER_IDENTITY_UPDATE } from './lib/queries';
 import { useCurrency } from '../store/CurrencyContext';
 import { useToast } from '../store/ToastContext';
+import { createLogger } from '../utils/logger';
+
+const log = createLogger('CartSidebar');
 
 const CartSidebar = ({ isOpen, onClose, cart, onRemove, updateQuantity, user }) => {
   const [isSyncing, setIsSyncing] = useState(false);
@@ -49,7 +52,7 @@ const CartSidebar = ({ isOpen, onClose, cart, onRemove, updateQuantity, user }) 
           window.location.href = checkoutUrl;
         }
       } catch (err) {
-        console.error("Checkout Error:", err);
+        log.error('Checkout failed', { error: err, action: 'handleCheckout' });
         showToast('Checkout failed. Please try again.', 'error');
       } finally {
         setIsSyncing(false);

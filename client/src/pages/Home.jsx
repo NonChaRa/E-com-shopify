@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Hero from '../components/Hero';
 import SplitFeature from '../components/SplitFeature';
 import VideoLoopSection from '../components/VideoLoopSection';
+import ModelGallery from '../components/ModelGallery';
 import EditorialHero from '../components/EditorialHero';
 import { useCurrency } from '../store/CurrencyContext';
 import { useToast } from '../store/ToastContext';
@@ -69,6 +70,9 @@ const ProductCard = ({ p, navigate, addToCart, priority = false }) => {
       onMouseLeave={() => setShowSizes(false)}
     >
       <div className="editorial-image-wrapper">
+        {p.tags?.includes('new-arrival') && (
+          <span className="new-arrival-badge">NEW</span>
+        )}
         <img
           src={p.image_url}
           alt={p.name}
@@ -136,6 +140,7 @@ const ProductCard = ({ p, navigate, addToCart, priority = false }) => {
 // ---------------------------------------------------------------------------
 const Home = ({ allProducts, fetchByCollection, fetchAllProducts, loading, addToCart }) => {
   const [activeCollection, setActiveCollection] = useState('ALL');
+  const [newArrivalMode, setNewArrivalMode] = useState(false);
   const navigate = useNavigate();
 
   // Scroll-reveal refs
@@ -145,6 +150,7 @@ const Home = ({ allProducts, fetchByCollection, fetchAllProducts, loading, addTo
 
   const handleCollectionChange = async (shopifyHandle, displayName) => {
     setActiveCollection(displayName);
+    setNewArrivalMode(false);
     if (shopifyHandle === 'all') {
       await fetchAllProducts();
     } else {
@@ -152,12 +158,24 @@ const Home = ({ allProducts, fetchByCollection, fetchAllProducts, loading, addTo
     }
   };
 
+  const handleNewArrivals = async () => {
+    setActiveCollection('NEW ARRIVALS');
+    setNewArrivalMode(true);
+    // Reload all products in case a collection filter was active
+    await fetchAllProducts();
+  };
+
   useEffect(() => {
     fetchAllProducts();
     setActiveCollection('ALL');
   }, []);
 
-  const displayProducts = allProducts?.slice(0, 8) ?? [];
+  const displayProducts = useMemo(() => {
+    if (newArrivalMode) {
+      return (allProducts || []).filter(p => p.tags?.includes('new-arrival'));
+    }
+    return (allProducts || []).slice(0, 8);
+  }, [allProducts, newArrivalMode]);
 
   return (
     <>
@@ -178,6 +196,12 @@ const Home = ({ allProducts, fetchByCollection, fetchAllProducts, loading, addTo
             <h1 className="collection-title">COLLECTION</h1>
           </div>
           <div className="collection-categories">
+            <span
+              className={`category-link new-arrival-link ${activeCollection === 'NEW ARRIVALS' ? 'active' : ''}`}
+              onClick={handleNewArrivals}
+            >
+              ✦ New Arrivals
+            </span>
             <span
               className={`category-link ${activeCollection === 'IMPERIAL BLUE' ? 'active' : ''}`}
               onClick={() => handleCollectionChange('imperial-blue', 'IMPERIAL BLUE')}
@@ -224,12 +248,16 @@ const Home = ({ allProducts, fetchByCollection, fetchAllProducts, loading, addTo
           <button
             className="editorial-explore-btn"
             onClick={() => {
-              fetchAllProducts();
-              handleCollectionChange('all', 'ALL');
-              navigate('/shop');
+              if (newArrivalMode) {
+                navigate('/shop?filter=new-arrival');
+              } else {
+                fetchAllProducts();
+                handleCollectionChange('all', 'ALL');
+                navigate('/shop');
+              }
             }}
           >
-            Explore All Sets
+            {newArrivalMode ? 'View All New Arrivals' : 'Explore All Sets'}
           </button>
         </div>
 
@@ -261,6 +289,7 @@ const Home = ({ allProducts, fetchByCollection, fetchAllProducts, loading, addTo
 
         <SplitFeature />
         <VideoLoopSection />
+        <ModelGallery />
       </main>
       <EditorialHero />
     </>

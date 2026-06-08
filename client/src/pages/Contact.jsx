@@ -2,7 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabaseClient';
 import useRateLimit from '../hooks/useRateLimit';
 import { animate, stagger } from 'animejs';
+import { createLogger } from '../utils/logger';
 import './Contact.css';
+
+const log = createLogger('Contact');
 
 const Contact = () => {
   const [formData, setFormData] = useState({ name: '', surname: '', email: '', message: '' });
@@ -70,7 +73,7 @@ const Contact = () => {
       setStatusMsg('Thank you. Your inquiry has been transmitted to the studio.');
       setFormData({ name: '', surname: '', email: '', message: '' });
     } catch (err) {
-      console.error('Contact submission error:', err);
+      log.error('Contact form submission failed', { error: err, action: 'handleSubmit' });
       setStatusType('error');
       setStatusMsg('Transmission failed. Please retry or reach out via social channels.');
     } finally {

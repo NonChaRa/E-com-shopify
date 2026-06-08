@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../supabaseClient';
+import { createLogger } from '../utils/logger';
 import './Account.css';
+
+const log = createLogger('Account');
 
 const Account = ({ user }) => {
   const [orders, setOrders] = useState([]);
@@ -23,7 +26,7 @@ const Account = ({ user }) => {
         if (error) throw error;
         setOrders(data || []);
       } catch (err) {
-        console.error("Studio Sync Error:", err.message);
+        log.error('Order history fetch failed', { error: err, action: 'fetchOrders', userId: user?.id });
       } finally {
         setLoading(false);
       }

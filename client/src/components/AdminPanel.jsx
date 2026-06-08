@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
-import { createClient } from '@supabase/supabase-js';
+import { supabase } from '../supabaseClient';
+import { createLogger } from '../utils/logger';
 
-const supabase = createClient(
-  import.meta.env.VITE_SUPABASE_URL,
-  import.meta.env.VITE_SUPABASE_ANON_KEY
-);
+const log = createLogger('AdminPanel');
 
 const API_BASE = import.meta.env.VITE_API_URL ?? 'http://localhost:5000';
 
@@ -36,9 +34,13 @@ const AdminPanel = ({ onRefresh }) => {
         .from('product-images')
         .getPublicUrl(filePath);
 
+      const { data: { session } } = await supabase.auth.getSession();
       const response = await fetch(`${API_BASE}/api/products`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session?.access_token ?? ''}`,
+        },
         body: JSON.stringify({ ...formData, image_url: urlData.publicUrl }),
       });
 
@@ -49,7 +51,7 @@ const AdminPanel = ({ onRefresh }) => {
       setFormData({ name: '', price: '', category: 'Classic' });
       setFile(null);
     } catch (err) {
-      console.error(err);
+      log.error('Product upload failed', { error: err, action: 'handleSubmit', data: { name: formData.name } });
       setError(err.message || 'Error uploading product.');
     } finally {
       setLoading(false);

@@ -3,7 +3,10 @@ import { createPortal } from 'react-dom';
 import { supabase } from '../supabaseClient';
 import { useToast } from '../store/ToastContext';
 import useRateLimit from '../hooks/useRateLimit';
+import { createLogger } from '../utils/logger';
 import './InquiryModal.css';
+
+const log = createLogger('InquiryModal');
 
 const InquiryModal = ({ product, size, onClose }) => {
   const [email, setEmail] = useState('');
@@ -26,7 +29,7 @@ const InquiryModal = ({ product, size, onClose }) => {
     setLoading(false);
 
     if (error) {
-      console.error('Inquiry error:', error.message);
+      log.error('Inquiry submission failed', { error, action: 'handleSubmit', data: { product: product.name, size } });
       showToast('Something went wrong. Please try again.', 'error');
     } else {
       recordSubmission();

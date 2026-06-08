@@ -60,6 +60,7 @@ const AllProducts = ({ allProducts, loading, fetchByCollection, fetchAllProducts
 
   useEffect(() => {
     const requestedCollection = searchParams.get('collection');
+    // new-arrival is a tag filter applied client-side — always load all products first
     if (requestedCollection) {
       fetchByCollection(requestedCollection);
     } else {
@@ -83,8 +84,12 @@ const AllProducts = ({ allProducts, loading, fetchByCollection, fetchAllProducts
     setSearchTerm('');
   };
 
+  const filterParam = searchParams.get('filter');
+  const isNewArrivalFilter = filterParam === 'new-arrival';
+
   const filteredProducts = useMemo(() => {
     let result = (allProducts || []).filter(p => {
+      const matchesNewArrival = !isNewArrivalFilter || p.tags?.includes('new-arrival');
       const matchesSearch = p.name.toLowerCase().includes(searchTerm.toLowerCase());
       const matchesAvailability = activeFilters.availability.length === 0 ||
         activeFilters.availability.some(status => {
@@ -96,7 +101,7 @@ const AllProducts = ({ allProducts, loading, fetchByCollection, fetchAllProducts
       const matchesSize = activeFilters.size.length === 0 ||
         p.variants.some(v => activeFilters.size.includes(v.title));
 
-      return matchesSearch && matchesAvailability && matchesColor && matchesSize;
+      return matchesNewArrival && matchesSearch && matchesAvailability && matchesColor && matchesSize;
     });
 
     if (sortBy === 'price-low') result.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
@@ -104,13 +109,17 @@ const AllProducts = ({ allProducts, loading, fetchByCollection, fetchAllProducts
     if (sortBy === 'alpha-az') result.sort((a, b) => a.name.localeCompare(b.name));
 
     return result;
-  }, [allProducts, searchTerm, sortBy, activeFilters]);
+  }, [allProducts, searchTerm, sortBy, activeFilters, isNewArrivalFilter]);
 
   return (
     <div className="all-products-wrapper">
       <header className="shop-header-minimal">
-        <h1 className="shop-main-title">THE ARCHIVE</h1>
-        <p className="shop-sub-title">EXPLORE THE FULL RANGE OF ASTÉRI HANDMADE SETS</p>
+        <h1 className="shop-main-title">{isNewArrivalFilter ? 'NEW ARRIVALS' : 'THE ARCHIVE'}</h1>
+        <p className="shop-sub-title">
+          {isNewArrivalFilter
+            ? 'FRESHLY ADDED TO THE STUDIO — HANDMADE SETS'
+            : 'EXPLORE THE FULL RANGE OF ASTÉRI HANDMADE SETS'}
+        </p>
       </header>
 
       <nav className="shop-utility-bar">
@@ -221,6 +230,9 @@ const AllProducts = ({ allProducts, loading, fetchByCollection, fetchAllProducts
               filteredProducts.map((p) => (
                 <div key={p.id} className="pdp-card" onClick={() => navigate(`/product/${encodeURIComponent(p.id)}`)}>
                   <div className="pdp-card-img-frame">
+                    {p.tags?.includes('new-arrival') && (
+                      <span className="pdp-new-arrival-badge">NEW</span>
+                    )}
                     <img src={p.image_url} alt={p.name} loading="lazy" />
                   </div>
                   <div className="pdp-card-info">

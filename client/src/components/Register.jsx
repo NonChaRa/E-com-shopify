@@ -6,7 +6,10 @@ import { shopifyFetch } from './lib/shopify';
 import { CUSTOMER_CREATE_MUTATION } from './lib/queries';
 import useRateLimit from '../hooks/useRateLimit';
 import heroImg from '../assets/Loyalty-bg.avif';
+import { createLogger } from '../utils/logger';
 import './Auth.css';
+
+const log = createLogger('Register');
 
 const backdropVariants = {
   hidden: { opacity: 0 },
@@ -61,7 +64,7 @@ const Register = ({ isOpen, onClose }) => {
         const shopifyErrors = shopifyResponse?.data?.customerCreate?.customerUserErrors;
         if (!shopifyErrors?.length) shopifyId = shopifyResponse?.data?.customerCreate?.customer?.id || null;
       } catch (shopErr) {
-        console.error('Shopify sync error:', shopErr.message);
+        log.warn('Shopify customer sync failed (non-fatal)', { error: shopErr, action: 'shopifySync' });
       }
       const { error: profileError } = await supabase
         .from('profiles')
@@ -71,7 +74,7 @@ const Register = ({ isOpen, onClose }) => {
       setSuccess(true);
       setEmail(''); setPassword(''); setConfirmPassword(''); setPrivacyConsent(false);
     } catch (err) {
-      console.error('Registration error:', err.message);
+      log.error('Registration failed', { error: err, action: 'handleRegister' });
       setError(err.message);
     } finally {
       setLoading(false);

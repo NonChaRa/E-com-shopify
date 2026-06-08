@@ -23,11 +23,15 @@ const About       = lazy(() => import('./pages/About'));
 const PolicyPage  = lazy(() => import('./pages/PolicyPage'));
 const ValuePage   = lazy(() => import('./pages/Values'));
 const Account     = lazy(() => import('./components/Account'));
+const SizingGuide = lazy(() => import('./pages/SizingGuide'));
 import { useCart } from './store/useCart';
 import { CurrencyProvider } from './store/CurrencyContext';
 import { ToastProvider } from './store/ToastContext';
 import { supabase } from './supabaseClient';
 import { fetchAllGlobalProducts, fetchProductsByCollection } from './components/lib/shopify';
+import { createLogger } from './utils/logger';
+
+const log = createLogger('App');
 
 // LayoutWrapper must live inside <Router> to use useLocation + useNavigate
 const LayoutWrapper = ({ children, cartCount, onOpenCart, onOpenLogin, onLogout, user }) => {
@@ -134,7 +138,7 @@ function App() {
           localStorage.removeItem('shopify_checkout_url');
         }
       } catch (err) {
-        console.error('Cart status check error:', err);
+        log.error('Cart status check error', { error: err, action: 'checkCartStatus' });
       }
     };
 
@@ -145,7 +149,7 @@ function App() {
   const handleLogout = async () => {
     const { error } = await supabase.auth.signOut();
     if (error) {
-      console.error('Sign out error:', error.message);
+      log.error('Sign out error', { error, action: 'handleLogout' });
       return;
     }
     clearCart();
@@ -162,7 +166,7 @@ function App() {
       // won't block user interactions (clicks, input) while re-rendering cards.
       startTransition(() => setProducts(collectionData));
     } catch (err) {
-      console.error('Collection fetch error:', err);
+      log.error('Collection fetch error', { error: err, action: 'fetchByCollection', data: { handle } });
     } finally {
       setLoading(false);
     }
@@ -174,7 +178,7 @@ function App() {
       const catalogData = await fetchAllGlobalProducts();
       startTransition(() => setProducts(catalogData));
     } catch (err) {
-      console.error('Product catalog fetch error:', err);
+      log.error('Product catalog fetch error', { error: err, action: 'fetchProducts' });
     } finally {
       setLoading(false);
     }
@@ -240,8 +244,9 @@ function App() {
                 />
               }
             />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/about"   element={<About />} />
+            <Route path="/contact"      element={<Contact />} />
+            <Route path="/about"        element={<About />} />
+            <Route path="/sizing-guide" element={<SizingGuide />} />
             <Route path="/policy/:policyType" element={<PolicyPage />} />
             <Route path="/values"  element={<ValuePage />} />
 

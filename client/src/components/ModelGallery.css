@@ -1,0 +1,229 @@
+/* ============================================================
+   MODEL GALLERY — editorial lookbook section
+   Layout: large feature left + 3 stacked right
+   ============================================================ */
+
+.model-gallery-section {
+  padding: 80px 8%;
+  border-top: 1px solid rgba(0,0,0,0.08);
+  background: var(--y2k-paper);
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.65s ease, transform 0.65s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.model-gallery-section.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --- HEADER --- */
+.model-gallery-header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 40px;
+}
+
+.model-eyebrow {
+  font-family: var(--y2k-marker);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.55);
+}
+
+.model-title {
+  font-family: var(--y2k-sticker);
+  font-size: clamp(2.8rem, 6vw, 5.5rem);
+  text-transform: uppercase;
+  color: #0a0a0a;
+  margin: 0;
+  line-height: 0.9;
+  letter-spacing: 0.02em;
+}
+
+/* --- GRID --- */
+.model-gallery-grid {
+  display: grid;
+  grid-template-columns: 55fr 42fr;
+  gap: 16px;
+  align-items: start;
+}
+
+/* Left — large feature */
+.model-feature {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #f0ece4;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.10);
+  transition: box-shadow 0.4s ease;
+}
+
+.model-feature::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  z-index: 2;
+  border-radius: 12px 12px 0 0;
+  background: linear-gradient(90deg, transparent, var(--y2k-gold), var(--y2k-gold-warm), transparent);
+  opacity: 0.85;
+}
+
+.model-feature:hover {
+  box-shadow: 0 20px 56px rgba(0,0,0,0.16);
+}
+
+.model-feature img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+  transition: transform 0.85s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.model-feature:hover img {
+  transform: scale(1.03);
+}
+
+/* Right — stacked detail shots */
+.model-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.model-stack-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #f0ece4;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  transition: box-shadow 0.4s ease;
+  flex: 1;
+}
+
+.model-stack-item:hover {
+  box-shadow: 0 12px 36px rgba(0,0,0,0.14);
+}
+
+.model-stack-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform 0.75s cubic-bezier(0.25, 1, 0.5, 1);
+  aspect-ratio: 4 / 3;
+}
+
+.model-stack-item:hover img {
+  transform: scale(1.04);
+}
+
+/* Shimmer overlay on hover (matches editorial-card style) */
+.model-feature::after,
+.model-stack-item::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  background: linear-gradient(125deg, transparent 40%, rgba(255,255,255,0.14) 50%, transparent 60%);
+}
+.model-feature:hover::after,
+.model-stack-item:hover::after {
+  opacity: 1;
+}
+
+/* --- CTA --- */
+.model-gallery-cta {
+  display: flex;
+  justify-content: center;
+  margin-top: 44px;
+}
+
+.model-shop-btn {
+  position: relative;
+  background-color: transparent;
+  color: #0a0a0a;
+  padding: 14px 44px;
+  border-radius: 999px;
+  font-family: var(--y2k-marker);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  cursor: pointer;
+  border: 1.5px solid rgba(0,0,0,0.35);
+  transition: all 0.22s ease;
+}
+
+.model-shop-btn:hover {
+  background-color: #0a0a0a;
+  color: #fff;
+  border-color: #0a0a0a;
+  box-shadow: 4px 4px 0 var(--y2k-gold);
+  transform: translate(-2px, -2px);
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 1024px) {
+  .model-gallery-section {
+    padding: 60px 5%;
+  }
+}
+
+@media (max-width: 768px) {
+  .model-gallery-section {
+    padding: 60px 24px;
+  }
+
+  .model-gallery-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  /* Aspect ratio lives on the wrapper — img fills it via object-fit, no squish */
+  .model-feature {
+    border-radius: 10px;
+    aspect-ratio: 3 / 4;
+  }
+
+  .model-feature img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    /* Remove inline aspect-ratio so the wrapper's ratio drives sizing */
+    aspect-ratio: unset;
+    max-height: unset;
+  }
+
+  .model-stack {
+    flex-direction: row;
+    gap: 10px;
+  }
+
+  .model-stack-item img {
+    aspect-ratio: 1 / 1;
+  }
+
+  /* Bebas Neue glyphs extend above the line box at line-height < 1.
+     Padding gives them room so no ancestor clips the tops of letters. */
+  .model-title {
+    font-size: clamp(2.2rem, 9vw, 3.2rem);
+    line-height: 1;
+    padding-top: 0.06em;
+  }
+
+  .model-gallery-cta {
+    margin-top: 32px;
+  }
+}

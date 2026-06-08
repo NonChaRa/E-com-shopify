@@ -175,13 +175,31 @@ const Navbar = ({ cartCount, onOpenCart, user, onOpenLogin, onLogout, forceSolid
 
         {/* Desktop Only Dropdowns */}
         <div className={`mega-menu-container desktop-only ${openMenu ? 'active' : ''}`} onMouseLeave={() => setOpenMenu(null)}>
+          {openMenu === 'tutorials' && (
+            <div className="mega-menu-content">
+              <div className="mega-column">
+                <h4 className="mega-col-title">FIT & SIZING</h4>
+                <ul className="mega-list">
+                  <li onClick={() => { navigate('/sizing-guide'); setOpenMenu(null); }}>NAIL SIZE GUIDE</li>
+                  <li onClick={() => { navigate('/sizing-guide'); setOpenMenu(null); }}>FIND YOUR FIT</li>
+                </ul>
+              </div>
+              <div className="mega-column">
+                <h4 className="mega-col-title">APPLICATION</h4>
+                <ul className="mega-list">
+                  <li>HOW TO APPLY (COMING SOON)</li>
+                  <li>HOW TO REMOVE (COMING SOON)</li>
+                </ul>
+              </div>
+            </div>
+          )}
           {openMenu === 'shop' && (
             <div className="mega-menu-content">
               <div className="mega-column">
                 <h4 className="mega-col-title">PRESS-ON NAILS</h4>
                 <ul className="mega-list">
                   <li onClick={() => {navigate('/shop'); setOpenMenu(null);}}>ALL PRODUCTS</li>
-                  <li onClick={() => {navigate('/shop'); setOpenMenu(null);}}>NEW ARRIVALS</li>
+                  <li onClick={() => {navigate('/shop?filter=new-arrival'); setOpenMenu(null);}}>NEW ARRIVALS</li>
                 </ul>
               </div>
               <div className="mega-column">
@@ -214,8 +232,12 @@ const Navbar = ({ cartCount, onOpenCart, user, onOpenLogin, onLogout, forceSolid
 
               <div className="mobile-drawer-header-tag">SHOP BY DESIGN</div>
               <div className="mobile-drawer-child-item" onClick={() => handleMobileNav('/shop')}>ALL CREATIONS</div>
+              <div className="mobile-drawer-child-item" onClick={() => handleMobileNav('/shop?filter=new-arrival')}>NEW ARRIVALS</div>
               <div className="mobile-drawer-child-item" onClick={() => handleMobileNav('/shop?collection=blue-imperial')}>BLUE IMPERIAL</div>
               <div className="mobile-drawer-child-item" onClick={() => handleMobileNav('/shop?collection=gadom')}>GADOM</div>
+
+              <div className="mobile-drawer-header-tag">TUTORIALS</div>
+              <div className="mobile-drawer-child-item" onClick={() => handleMobileNav('/sizing-guide')}>NAIL SIZE GUIDE</div>
 
               <div className="mobile-drawer-header-tag">THE MANIFESTO</div>
               <div className="mobile-drawer-child-item" onClick={() => handleMobileNav('/about')}>ABOUT THE STUDIO</div>

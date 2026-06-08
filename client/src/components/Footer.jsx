@@ -2,7 +2,10 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaInstagram, FaFacebookF, FaYoutube, FaTiktok } from 'react-icons/fa';
 import useRateLimit from '../hooks/useRateLimit';
+import { createLogger } from '../utils/logger';
 import './Footer.css';
+
+const log = createLogger('Footer');
 
 const NEWSLETTER_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/newsletter-subscribe`;
 
@@ -33,7 +36,7 @@ const Footer = () => {
       setStatusMsg('WELCOME TO THE ARCHIVE LIST. ✿');
       setEmail('');
     } catch (err) {
-      console.error(err);
+      log.error('Newsletter subscribe failed', { error: err, action: 'handleSubscribe' });
       setStatusMsg('Subscription failed. Please verify formatting.');
     } finally {
       setSubmitting(false);
