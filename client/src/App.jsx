@@ -70,7 +70,9 @@ const LayoutWrapper = ({ children, cartCount, onOpenCart, onOpenLogin, onLogout,
 function App() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [activeAuthModal, setActiveAuthModal] = useState(null);
-  const [showIntro, setShowIntro] = useState(() => !sessionStorage.getItem('introShown'));
+  const [showIntro, setShowIntro] = useState(
+    () => window.location.pathname === '/' && !sessionStorage.getItem('introShown')
+  );
 
   const [products, setProducts]   = useState([]);
   const [loading, setLoading]     = useState(true);
