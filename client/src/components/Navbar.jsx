@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import './Navbar.css';
 import logo from '../assets/Asteri2k.gif';
 import { useNavigate } from 'react-router-dom';
 import { useCurrency } from '../store/CurrencyContext';
 import { CURRENCIES } from '../store/currencies';
+import { useToast } from '../store/ToastContext';
 
 const Navbar = ({ cartCount, onOpenCart, user, onOpenLogin, onLogout, forceSolid }) => {
   const [openMenu, setOpenMenu] = useState(null);
@@ -17,7 +19,13 @@ const Navbar = ({ cartCount, onOpenCart, user, onOpenLogin, onLogout, forceSolid
   const currencyTriggerRef = useRef(null);
   const currencyDropdownRef = useRef(null);
   const { currency, changeCurrency } = useCurrency();
+  const { showToast } = useToast();
   const navigate = useNavigate();
+
+  const handleLogoutClick = async () => {
+    await onLogout();
+    showToast('Signed out. See you soon. ✦', 'info');
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -134,14 +142,35 @@ const Navbar = ({ cartCount, onOpenCart, user, onOpenLogin, onLogout, forceSolid
 
           {/* --- RIGHT NAVIGATION BLOCK (WEB AUTH SECTIONS) --- */}
           <div className="nav-group right">
-            {user && (
-              <div className="nav-item-wrapper desktop-only" onClick={() => navigate('/account')}>
-                <span className="nav-link">PROFILE</span>
-              </div>
-            )}
+            <AnimatePresence initial={false}>
+              {user && (
+                <motion.div
+                  className="nav-item-wrapper desktop-only"
+                  onClick={() => navigate('/account')}
+                  initial={{ opacity: 0, x: -12 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -12 }}
+                  transition={{ duration: 0.28, ease: [0.25, 0.4, 0.25, 1] }}
+                >
+                  <span className="nav-link">PROFILE</span>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
             {/* Persistent Desktop Login / Logout Button */}
-            <div className="nav-item-wrapper desktop-only" onClick={user ? onLogout : onOpenLogin}>
-              <span className="nav-link">{user ? 'LOGOUT' : 'LOGIN'}</span>
+            <div className="nav-item-wrapper desktop-only" onClick={user ? handleLogoutClick : onOpenLogin}>
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.span
+                  key={user ? 'logout' : 'login'}
+                  className="nav-link"
+                  initial={{ opacity: 0, y: -6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 6 }}
+                  transition={{ duration: 0.2, ease: [0.25, 0.4, 0.25, 1] }}
+                >
+                  {user ? 'LOGOUT' : 'LOGIN'}
+                </motion.span>
+              </AnimatePresence>
             </div>
 
             <button className="mobile-action-icon mobile-only" onClick={user ? () => navigate('/account') : onOpenLogin} aria-label="Account">
@@ -253,7 +282,7 @@ const Navbar = ({ cartCount, onOpenCart, user, onOpenLogin, onLogout, forceSolid
                   <div
                     className="mobile-drawer-child-item mobile-logout-link"
                     onClick={() => {
-                      onLogout();
+                      handleLogoutClick();
                       setMobileMenuOpen(false);
                     }}
                   >

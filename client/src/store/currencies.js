@@ -2,7 +2,7 @@ export const CURRENCIES = {
   THB: { code: 'THB', symbol: '฿',  label: 'Thai Baht',         flag: '🇹🇭' },
   USD: { code: 'USD', symbol: '$',  label: 'US Dollar',          flag: '🇺🇸' },
   AUD: { code: 'AUD', symbol: 'A$', label: 'Australian Dollar',  flag: '🇦🇺' },
-  CNY: { code: 'CNY', symbol: '¥',  label: 'Chinese Yuan',       flag: '🇨🇳' },
+  CNY: { code: 'CNY', symbol: 'CN¥', label: 'Chinese Yuan',       flag: '🇨🇳' },
   KRW: { code: 'KRW', symbol: '₩',  label: 'Korean Won',         flag: '🇰🇷' },
   JPY: { code: 'JPY', symbol: '¥',  label: 'Japanese Yen',       flag: '🇯🇵' },
 };

@@ -22,8 +22,9 @@ const Contact     = lazy(() => import('./pages/Contact'));
 const About       = lazy(() => import('./pages/About'));
 const PolicyPage  = lazy(() => import('./pages/PolicyPage'));
 const ValuePage   = lazy(() => import('./pages/Values'));
-const Account     = lazy(() => import('./components/Account'));
-const SizingGuide = lazy(() => import('./pages/SizingGuide'));
+const Account       = lazy(() => import('./components/Account'));
+const SizingGuide   = lazy(() => import('./pages/SizingGuide'));
+const ResetPassword = lazy(() => import('./pages/ResetPassword'));
 import { useCart } from './store/useCart';
 import { CurrencyProvider } from './store/CurrencyContext';
 import { ToastProvider } from './store/ToastContext';
@@ -250,7 +251,8 @@ function App() {
             <Route path="/about"        element={<About />} />
             <Route path="/sizing-guide" element={<SizingGuide />} />
             <Route path="/policy/:policyType" element={<PolicyPage />} />
-            <Route path="/values"  element={<ValuePage />} />
+            <Route path="/values"         element={<ValuePage />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
 
             {/* 404 catch-all — must be last */}
             <Route path="*" element={<NotFound />} />
@@ -273,6 +275,7 @@ function App() {
         <Register
           isOpen={activeAuthModal === 'register'}
           onClose={() => setActiveAuthModal(null)}
+          onOpenLogin={() => setActiveAuthModal('login')}
         />
 
         <CartSidebar

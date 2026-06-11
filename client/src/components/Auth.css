@@ -308,6 +308,39 @@
   font-weight: 500;
 }
 
+/* ---- OTP INPUT ---- */
+.auth-otp-input {
+  font-size: 26px !important;
+  letter-spacing: 0.4em !important;
+  text-align: center !important;
+  font-family: var(--y2k-sticker, 'Bebas Neue', sans-serif) !important;
+  padding: 16px !important;
+}
+
+/* ---- PASSWORD LABEL ROW (label + forgot link on same line) ---- */
+.auth-field-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 7px;
+}
+
+.auth-field-row label {
+  margin-bottom: 0;
+}
+
+.auth-forgot-link {
+  font-family: var(--y2k-sticker, 'Bebas Neue', sans-serif);
+  font-size: 8px;
+  letter-spacing: 0.12em;
+  color: var(--y2k-hot-pink, #1969ac);
+  cursor: pointer;
+  text-decoration: underline;
+  text-transform: uppercase;
+  transition: color 0.18s;
+}
+.auth-forgot-link:hover { color: var(--y2k-gold-dark, #9A7A38); }
+
 /* ---- TOGGLE LINK ---- */
 .auth-toggle-text {
   font-family: var(--y2k-sticker, 'Bebas Neue', sans-serif);
